@@ -1,4 +1,4 @@
-package de.bas.deploymentmanager;
+package de.bas.deploymentmanager.frontend.rest;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
