@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 @Setter
 @Builder
 public class Deployment {
+    private Long id;
+    private Long stageId;
     private String user;
     private LocalDateTime createTime;
 

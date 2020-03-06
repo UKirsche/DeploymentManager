@@ -5,12 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
 @Builder
 public class Image {
-
+    private Long id;
     private Long applicationId;
     private String tag;
     private String user;
@@ -20,8 +21,5 @@ public class Image {
     private Integer minorVersion;
     private String incrementalVersion;
     private Integer buildNumber;
-    private Deployment deploymentEtw;
-    private Deployment deploymentInt;
-    private Deployment deploymentPrd;
-
+    private List<Deployment> deployments;
 }
