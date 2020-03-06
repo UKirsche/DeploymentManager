@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 @Setter
 @Builder
 public class Image {
+
+    private Long applicationId;
     private String tag;
     private String user;
     private LocalDateTime createDate;
@@ -17,7 +19,7 @@ public class Image {
     private Integer majorVersion;
     private Integer minorVersion;
     private String incrementalVersion;
-    private String buildNumber;
+    private Integer buildNumber;
     private Deployment deploymentEtw;
     private Deployment deploymentInt;
     private Deployment deploymentPrd;
