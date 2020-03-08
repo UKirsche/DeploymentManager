@@ -1,6 +1,7 @@
 package de.bas.deploymentmanager.logic.domain.application.boundary;
 
 import de.bas.deploymentmanager.logic.domain.application.entity.Application;
+import de.bas.deploymentmanager.logic.domain.application.entity.Image;
 
 import java.util.List;
 
@@ -10,5 +11,9 @@ public interface ApplicationService {
 
     Application getApplication(String identifier);
 
-    String generateNewImage(String identifier, Integer majorVersion, Integer minorVersion);
+    String generateNewImage(String identifier, String version, String minorVersion);
+
+    Application createNewApplication(Application model);
+
+    List<Image> getImages(String identifier);
 }

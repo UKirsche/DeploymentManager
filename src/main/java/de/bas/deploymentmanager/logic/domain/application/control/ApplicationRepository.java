@@ -9,4 +9,6 @@ public interface ApplicationRepository {
 
     Application getByIfentifier(String identifier);
 
+    Application save(Application application);
+
 }

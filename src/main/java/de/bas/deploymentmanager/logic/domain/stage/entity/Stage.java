@@ -11,6 +11,6 @@ import java.util.List;
 @Builder
 public class Stage {
     private String name;
-    private List<App> applications;
+    private List<Host> hosts;
 
 }

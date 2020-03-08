@@ -1,16 +1,20 @@
 package de.bas.deploymentmanager.logic.domain.application.entity;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
 @Setter
-@Builder
+@Table(name = "IMAGE")
+@Entity
 public class Image {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
     private Long applicationId;
     private String tag;

@@ -5,10 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ImageInfo {
+public class ImageModel {
     private String user;
     private String image;
-    private Integer majorVersion;
-    private Integer minorVersion;
+    private String version;
     private String incrementalVersion;
 }
