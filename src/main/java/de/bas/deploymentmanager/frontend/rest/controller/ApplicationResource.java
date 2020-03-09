@@ -29,7 +29,7 @@ public class ApplicationResource {
     @GET
     @Path("/{application}")
     public Application getApplication(@PathParam("application") String application) {
-        return null;
+        return applicationService.getApplication(application);
     }
 
 }

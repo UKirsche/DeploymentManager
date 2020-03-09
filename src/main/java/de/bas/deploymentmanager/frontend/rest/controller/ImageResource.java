@@ -1,9 +1,9 @@
 package de.bas.deploymentmanager.frontend.rest.controller;
 
-import de.bas.deploymentmanager.frontend.rest.domain.ImageModel;
 import de.bas.deploymentmanager.logic.domain.application.boundary.ApplicationService;
 import de.bas.deploymentmanager.logic.domain.application.entity.Application;
 import de.bas.deploymentmanager.logic.domain.application.entity.Image;
+import de.bas.deploymentmanager.logic.domain.application.entity.NewTagModel;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -24,11 +24,8 @@ public class ImageResource {
     }
 
     @POST
-    public String generateNewImage(ImageModel imageModel, @PathParam("application") String application) {
-        String version = imageModel.getVersion();
-        String image = imageModel.getImage();
-        String user = imageModel.getUser();
-        return null;
+    public String generateNewImage(NewTagModel newTagModel, @PathParam("application") String identifier) {
+        return applicationService.generateNewImage(identifier, newTagModel);
     }
 
     @GET

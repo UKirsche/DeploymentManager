@@ -1,13 +1,12 @@
-package de.bas.deploymentmanager.frontend.rest.domain;
+package de.bas.deploymentmanager.logic.domain.application.entity;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ImageModel {
+public class NewTagModel {
     private String user;
     private String image;
     private String version;
-    private String incrementalVersion;
 }

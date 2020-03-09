@@ -16,7 +16,8 @@ public class ApplicationRepositoryImpl extends AbstractRepository implements App
 
     @Override
     public Application getByIfentifier(String identifier) {
-        return null;
+        TypedQuery<Application> selectAll = entityManager.createQuery("SELECT a FROM Application a WHERE a.identifier =:identifier", Application.class);
+        return selectAll.setParameter("identifier", identifier).getSingleResult();
     }
 
     @Override

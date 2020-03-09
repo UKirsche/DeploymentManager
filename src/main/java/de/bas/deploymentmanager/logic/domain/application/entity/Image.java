@@ -16,14 +16,31 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
+
+    @Column(name = "APPLICATION_ID")
     private Long applicationId;
+
+    @Column(name = "TAG")
     private String tag;
+
+    @Column(name = "CREATE_USER")
     private String user;
+
+    @Column(name = "CREATE_DATE")
     private LocalDateTime createDate;
+
+    @Column(name = "IMAGE")
     private String image;
+
+    @Column(name = "MAJOR_VERSION")
     private Integer majorVersion;
+
+    @Column(name = "MINOR_VERSION")
     private Integer minorVersion;
-    private String incrementalVersion;
+
+    @Column(name = "BUILD_NUMBER")
     private Integer buildNumber;
+
+    @Transient
     private List<Deployment> deployments;
 }
