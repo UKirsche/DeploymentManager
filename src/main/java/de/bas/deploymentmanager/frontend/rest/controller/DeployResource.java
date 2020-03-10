@@ -1,8 +1,8 @@
 package de.bas.deploymentmanager.frontend.rest.controller;
 
 
-import de.bas.deploymentmanager.logic.domain.stage.boundary.StageService;
-import de.bas.deploymentmanager.logic.domain.stage.entity.DeployModel;
+import de.bas.deploymentmanager.logic.business.deploy.DeployFlow;
+import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -15,11 +15,15 @@ import javax.ws.rs.core.Response;
 public class DeployResource {
 
     @Inject
-    private StageService stageService;
+    private DeployFlow deployFlow;
 
     @POST
-    public Response imageDeployed(@PathParam("application") String identifier, @PathParam("tag") String tag, DeployModel deployModel) {
-        stageService.imageDeployed(identifier, tag, deployModel);
+    public Response imageDeployed(@PathParam("application") String identifier
+            , @PathParam("tag") String tag
+            , @QueryParam("stage") StageEnum stage
+            , @QueryParam("host") String host
+            , @QueryParam("port") String port) {
+        deployFlow.imageDeployed(identifier, stage, tag, host);
         return Response.created(null).build();
     }
 }

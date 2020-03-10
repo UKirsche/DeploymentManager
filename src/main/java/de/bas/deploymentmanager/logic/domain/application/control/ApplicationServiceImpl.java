@@ -2,12 +2,15 @@ package de.bas.deploymentmanager.logic.domain.application.control;
 
 import de.bas.deploymentmanager.logic.domain.application.boundary.ApplicationService;
 import de.bas.deploymentmanager.logic.domain.application.entity.Application;
+import de.bas.deploymentmanager.logic.domain.application.entity.Deployment;
 import de.bas.deploymentmanager.logic.domain.application.entity.Image;
 import de.bas.deploymentmanager.logic.domain.application.entity.NewTagModel;
+import de.bas.deploymentmanager.logic.domain.stage.entity.Stage;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,6 +49,23 @@ public class ApplicationServiceImpl implements ApplicationService {
         Image save = imageRepository.save(image);
 
         return save.getTag();
+    }
+
+    @Override
+    public Image markImageAsDeployed(String identifier, String tag, Stage stage) {
+        Image image = imageRepository.getImageByIdentifierTag(identifier, tag);
+        addDeployment(image, stage.getId());
+        return image;
+    }
+
+    private void addDeployment(Image image, Long satgeId) {
+        Deployment deployment = new Deployment();
+        deployment.setCreateTime(LocalDateTime.now());
+        deployment.setStageId(satgeId);
+        if (image.getDeployments() == null) {
+            image.setDeployments(new ArrayList<>());
+        }
+        image.getDeployments().add(deployment);
     }
 
     private Image createNewImage(Long applicationId, int majorVersion, int minorVersion, NewTagModel newTagModel, Integer buildNumber) {

@@ -1,16 +1,26 @@
 package de.bas.deploymentmanager.logic.domain.stage.entity;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.List;
 
 @Getter
 @Setter
-@Builder
+@Entity
+@Table(name = "STAGE")
 public class Stage {
-    private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    private Long id;
+
+    @Column(name = "NAME")
+    @Enumerated(value = EnumType.STRING)
+    private StageEnum name;
+
+    @OneToMany()
     private List<Host> hosts;
 
 }

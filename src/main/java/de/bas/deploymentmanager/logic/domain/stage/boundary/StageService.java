@@ -1,6 +1,7 @@
 package de.bas.deploymentmanager.logic.domain.stage.boundary;
 
-import de.bas.deploymentmanager.logic.domain.stage.entity.DeployModel;
+import de.bas.deploymentmanager.logic.domain.stage.entity.Stage;
+import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
 
 public interface StageService {
 
@@ -10,7 +11,10 @@ public interface StageService {
      *
      * @param identifier
      * @param tag
-     * @param deployModel
+     * @param host
      */
-    void imageDeployed(String identifier, String tag, DeployModel deployModel);
+    void imageDeployed(String identifier, String tag, String host);
+
+
+    Stage getStage(StageEnum stage);
 }

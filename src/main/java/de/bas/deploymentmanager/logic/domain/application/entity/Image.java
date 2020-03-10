@@ -41,6 +41,6 @@ public class Image {
     @Column(name = "BUILD_NUMBER")
     private Integer buildNumber;
 
-    @Transient
+    @OneToMany()
     private List<Deployment> deployments;
 }

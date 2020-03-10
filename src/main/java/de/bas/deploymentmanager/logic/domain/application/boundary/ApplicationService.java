@@ -3,6 +3,7 @@ package de.bas.deploymentmanager.logic.domain.application.boundary;
 import de.bas.deploymentmanager.logic.domain.application.entity.Application;
 import de.bas.deploymentmanager.logic.domain.application.entity.Image;
 import de.bas.deploymentmanager.logic.domain.application.entity.NewTagModel;
+import de.bas.deploymentmanager.logic.domain.stage.entity.Stage;
 
 import java.util.List;
 
@@ -31,6 +32,8 @@ public interface ApplicationService {
      * @return {image}:{tag}
      */
     String generateNewImage(String identifier, NewTagModel newTagModel);
+
+    Image markImageAsDeployed(String identifier, String tag, Stage stage);
 
     Application createNewApplication(Application model);
 

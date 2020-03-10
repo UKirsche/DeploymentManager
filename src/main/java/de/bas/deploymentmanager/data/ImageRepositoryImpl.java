@@ -41,4 +41,15 @@ public class ImageRepositoryImpl extends AbstractRepository implements ImageRepo
         return saved;
     }
 
+    @Override
+    public Image getImageByIdentifierTag(String identifier, String tag) {
+        TypedQuery<Image> selectAll = entityManager.createQuery("SELECT image FROM Image image, Application app " +
+                "WHERE app.id = image.applicationId " +
+                "AND app.identifier =:identifier " +
+                "AND image.tag =:tag", Image.class);
+        selectAll.setParameter("identifier", identifier);
+        selectAll.setParameter("tag", tag);
+        return selectAll.getSingleResult();
+    }
+
 }

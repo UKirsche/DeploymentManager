@@ -11,4 +11,6 @@ public interface ImageRepository {
     Optional<Image> getLastImageOfVersion(Long applicationId, Integer majorVersion, Integer minorVersion);
 
     Image save(Image image);
+
+    Image getImageByIdentifierTag(String identifier, String tag);
 }

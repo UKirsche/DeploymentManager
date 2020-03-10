@@ -1,0 +1,7 @@
+create table HOST
+(
+    ID       SERIAL PRIMARY KEY,
+    STAGE_ID INTEGER REFERENCES STAGE (ID),
+    NAME     VARCHAR(30),
+    URL      VARCHAR(30)
+);
