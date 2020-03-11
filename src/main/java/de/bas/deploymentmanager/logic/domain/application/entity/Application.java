@@ -23,6 +23,12 @@ public class Application {
     @Column(name = "NAME")
     private String name;
 
+    @Column(name = "BUILD_JOB")
+    private String buildJob;
+
+    @Column(name = "DEPLOY_JOB")
+    private String deployJob;
+
     @Column(name = "DESCRIPTION")
     private String description;
 

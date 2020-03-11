@@ -122,4 +122,9 @@ public class ApplicationServiceImpl implements ApplicationService {
         Application application = applicationRepository.getByIfentifier(identifier);
         return imageRepository.getImagesForApplication(application.getId());
     }
+
+    @Override
+    public Image getImage(Long applicationId, String tag) {
+        return imageRepository.getImageByApplicationIdTag(applicationId, tag);
+    }
 }

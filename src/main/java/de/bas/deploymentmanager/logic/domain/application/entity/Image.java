@@ -41,6 +41,10 @@ public class Image {
     @Column(name = "BUILD_NUMBER")
     private Integer buildNumber;
 
+    public String getImageWithTag() {
+        return String.format("%s:%s", image, tag);
+    }
+
     @OneToMany()
     private List<Deployment> deployments;
 }

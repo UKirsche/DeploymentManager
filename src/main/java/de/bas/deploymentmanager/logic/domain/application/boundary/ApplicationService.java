@@ -38,4 +38,6 @@ public interface ApplicationService {
     Application createNewApplication(Application model);
 
     List<Image> getImages(String identifier);
+
+    Image getImage(Long applicationId, String tag);
 }

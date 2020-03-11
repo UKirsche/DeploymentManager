@@ -13,4 +13,6 @@ public interface ImageRepository {
     Image save(Image image);
 
     Image getImageByIdentifierTag(String identifier, String tag);
+
+    Image getImageByApplicationIdTag(Long applicationId, String tag);
 }
