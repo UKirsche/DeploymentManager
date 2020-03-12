@@ -4,6 +4,7 @@
   http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
 
     <display-name>HelloPrime</display-name>
+
     <welcome-file-list>
         <welcome-file>/content/application/table.xhtml</welcome-file>
     </welcome-file-list>

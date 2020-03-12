@@ -2,6 +2,7 @@ package de.bas.deploymentmanager.frontend.jsf.application;
 
 import de.bas.deploymentmanager.logic.domain.application.boundary.ApplicationService;
 import de.bas.deploymentmanager.logic.domain.application.entity.Application;
+import de.bas.deploymentmanager.logic.domain.dicd.boundary.CiCdService;
 import lombok.Getter;
 
 import javax.annotation.PostConstruct;
@@ -19,21 +20,20 @@ public class ApplicationTableBean {
     @Inject
     private ApplicationService applicationService;
 
+    @Inject
+    private CiCdService ciCdService;
+
     @Getter
     private List<Application> list;
 
 
     @PostConstruct
     public void init() {
-        List<Application> applications = new ArrayList<>();
-        for (int i = 1; i < 10; i++) {
-            Application application = new Application();
-            application.setName(UUID.randomUUID().toString());
-            application.setId((long) i);
-            application.setBuildJob("pipe_" + i);
-            applications.add(application);
-        }
-        this.list = applications;
+        this.list = applicationService.getAllApplications();
+    }
+
+    public void build(String buildJob) {
+        ciCdService.buildApplication(buildJob);
     }
 
 

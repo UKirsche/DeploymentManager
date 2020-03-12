@@ -16,7 +16,28 @@
     </ui:define>
 
     <ui:define name="description">
+        #{layoutMB.template}
         Alle konfigurierten Anwendungen
+    </ui:define>
+
+    <ui:define name="menu">
+        <ul class="sidebar-menu">
+            <li>
+                <p:link href="index.xhtml" onclick="clearBreadCrumbs()">
+                    <i class="fa fa-home"></i>
+                    <span>Home</span>
+                </p:link>
+            </li>
+            <li class="header">
+                General
+            </li>
+            <li>
+                <p:link href="/content/stages/table.xhtml">
+                    <i class="fa fa-car"></i>
+                    <span>Stages</span>
+                </p:link>
+            </li>
+        </ul>
     </ui:define>
 
     <ui:define name="body">
@@ -51,9 +72,9 @@
                     </p:splitButton>
 
                     <p:separator/>
-                    <!--@elvariable id="c" type="de.bas.deploymentmanager.logic.domain.application.entity.Application"-->
-                    <p:dataTable widgetVar="carsTable" var="c" value="#{applicationTableBean.list}" rows="5"
-                                 rowKey="#{c.id}" lazy="true" paginator="true"
+                    <!--@elvariable id="app" type="de.bas.deploymentmanager.logic.domain.application.entity.Application"-->
+                    <p:dataTable widgetVar="carsTable" var="app" value="#{applicationTableBean.list}" rows="5"
+                                 rowKey="#{app.id}" lazy="true" paginator="true"
                                  paginatorPosition="bottom"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {JumpToPageDropdown}"
                                  currentPageReportTemplate="[ {startRecord} to {endRecord} of {totalRecords} ]"
@@ -67,10 +88,17 @@
                         <p:ajax event="toggleSelect" update="@(.ui-button, .ui-confirm-dialog)"/>
 
                         <p:column headerText="Name">
-                            <h:outputText value="#{c.name}"/>
+                            <h:outputText value="#{app.name}"/>
                         </p:column>
-                        <p:column headerText="JobName">
-                            <h:outputText value="#{c.buildJob}"/>
+                        <p:column headerText="Bescheibung">
+                            <h:outputText value="#{app.description}"/>
+                        </p:column>
+                        <p:column headerText="Build Job">
+                            <h:outputText value="#{app.buildJob}"/>
+                            <p:commandButton actionListener="#{applicationTableBean.build(app.buildJob)}" icon="fa-gear"/>
+                        </p:column>
+                        <p:column headerText="Deploy Job">
+                            <h:outputText value="#{app.deployJob}"/>
                         </p:column>
                     </p:dataTable>
                 </div>

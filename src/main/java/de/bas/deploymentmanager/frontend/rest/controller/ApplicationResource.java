@@ -27,7 +27,7 @@ public class ApplicationResource {
     @GET
     public List<Application> getAllApplications() {
         log.debug("Lade alle Applications");
-        ciCdService.deployImage("test", "imageName", StageEnum.ETW);
+        ciCdService.deployImage("pipe_zustaendigestelle", "imageName", StageEnum.ETW);
         return applicationService.getAllApplications();
     }
 

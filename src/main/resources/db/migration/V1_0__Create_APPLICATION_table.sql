@@ -8,5 +8,7 @@ create table APPLICATION
     DESCRIPTION VARCHAR (100)
 );
 
-INSERT INTO APPLICATION (id, IDENTIFIER, NAME, DESCRIPTION)
-VALUES (DEFAULT, 'dmp', 'dmp-Fachanwendung', 'DMP');
+INSERT INTO APPLICATION (id, IDENTIFIER, NAME, DESCRIPTION, BUILD_JOB, DEPLOY_JOB)
+VALUES
+(DEFAULT, 'dmp', 'dmp-Fachanwendung', 'DMP', 'pipe_dmp', 'pipe_dmp_deploy'),
+(DEFAULT, 'zus', 'Zuständige Stelle', 'ZUS', 'pipe_zustaendigestelle', 'pipe_zustaendigestelle_deploy');

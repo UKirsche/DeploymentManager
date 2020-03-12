@@ -27,4 +27,9 @@ public class CiCdServiceImpl implements CiCdService {
         Response build = jenkinsClient.build(jobName, parameter);
 
     }
+
+    @Override
+    public void buildApplication(String jobName) {
+        Response build = jenkinsClient.build(jobName,null);
+    }
 }
