@@ -23,7 +23,7 @@ public class DeployResource {
             , @QueryParam("stage") StageEnum stage
             , @QueryParam("host") String host
             , @QueryParam("port") String port) {
-        deployFlow.imageDeployed(identifier, stage, tag, host);
+        deployFlow.imageDeployed(identifier, stage, tag, host, port);
         return Response.created(null).build();
     }
 }

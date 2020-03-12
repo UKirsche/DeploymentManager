@@ -25,9 +25,10 @@ public class DeployFlowImpl implements DeployFlow {
     }
 
     @Override
-    public void imageDeployed(String identifier, StageEnum stageName, String tag, String host) {
+    public void imageDeployed(String identifier, StageEnum stageName, String tag, String host, String port) {
         Stage stage = stageService.getStage(stageName);
-        applicationService.markImageAsDeployed(identifier, tag, stage);
+        Image image = applicationService.markImageAsDeployed(identifier, tag, stage);
+        stageService.imageDeployed(identifier, image, host, port);
 
     }
 

@@ -9,9 +9,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 
-@RegisterRestClient(baseUri = "http://jenkins.bvaetw.de:8080")
+@RegisterRestClient(baseUri = "http://localhost:8090")
 @Path("/job/{jobName}")
-@ClientHeaderParam(name = "Authorization", value = "Basic bHViaXR6OjAwMjI0MTM1")
+@ClientHeaderParam(name = "Authorization", value = "Basic bWFuYWdlcjptYW5hZ2Vy")
 public interface JenkinsClient {
 
     @POST

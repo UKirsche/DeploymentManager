@@ -10,7 +10,6 @@ import de.bas.deploymentmanager.logic.domain.stage.entity.Stage;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +21,9 @@ public class ApplicationServiceImpl implements ApplicationService {
     private ApplicationRepository applicationRepository;
     @Inject
     private ImageRepository imageRepository;
+
+    @Inject
+    private DeploymentRepository deploymentRepository;
 
     @Override
     public List<Application> getAllApplications() {
@@ -62,10 +64,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         Deployment deployment = new Deployment();
         deployment.setCreateTime(LocalDateTime.now());
         deployment.setStageId(satgeId);
-        if (image.getDeployments() == null) {
-            image.setDeployments(new ArrayList<>());
-        }
-        image.getDeployments().add(deployment);
+        deploymentRepository.save(deployment);
     }
 
     private Image createNewImage(Long applicationId, int majorVersion, int minorVersion, NewTagModel newTagModel, Integer buildNumber) {

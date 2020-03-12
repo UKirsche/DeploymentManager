@@ -3,7 +3,19 @@ package de.bas.deploymentmanager.logic.business.deploy;
 import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
 
 public interface DeployFlow {
-    void imageDeployed(String identifier, StageEnum stage, String tag, String host);
+    /**
+     * Image wurde erfolgreich auf dem Host deployed
+     * <p>
+     * Image mit dem Tag wird ein Deployment erstellt
+     * Auf dem {@link de.bas.deploymentmanager.logic.domain.stage.entity.Host} wird eine {@link de.bas.deploymentmanager.logic.domain.stage.entity.App} angelegt
+     *
+     * @param identifier
+     * @param stage
+     * @param tag
+     * @param host
+     * @param port
+     */
+    void imageDeployed(String identifier, StageEnum stage, String tag, String host, String port);
 
     void deployImgae(String identifier, StageEnum stage, String tag, String host);
 }

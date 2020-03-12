@@ -10,3 +10,6 @@ create table IMAGE
     MINOR_VERSION  INTEGER,
     BUILD_NUMBER   INTEGER
 );
+
+INSERT INTO IMAGE
+VALUES (DEFAULT, 2, '1.0-1', 'System', null, 'etw-docker-03/zus/zus', 1, 0, 1)
