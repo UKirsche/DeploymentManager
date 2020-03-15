@@ -6,6 +6,7 @@ import de.bas.deploymentmanager.logic.domain.project.entity.Image;
 import de.bas.deploymentmanager.logic.domain.project.entity.NewImageModel;
 import de.bas.deploymentmanager.logic.domain.project.entity.Project;
 import de.bas.deploymentmanager.logic.domain.stage.entity.Stage;
+import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -56,14 +57,14 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Image markImageAsDeployed(String identifier, String tag, Stage stage) {
         Image image = imageRepository.getImageByIdentifierTag(identifier, tag);
-        addDeployment(image, stage.getId());
+        addDeployment(image, stage.getName());
         return image;
     }
 
-    private void addDeployment(Image image, Long satgeId) {
+    private void addDeployment(Image image, StageEnum satgeId) {
         Deployment deployment = new Deployment();
         deployment.setCreateTime(LocalDateTime.now());
-        deployment.setStageId(satgeId);
+        deployment.setStage(satgeId);
         deploymentRepository.save(deployment);
     }
 
@@ -125,5 +126,10 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Image getImage(Long applicationId, String tag) {
         return imageRepository.getImageByApplicationIdTag(applicationId, tag);
+    }
+
+    @Override
+    public Project getProject(Long id) {
+        return projectRepository.getById(id);
     }
 }

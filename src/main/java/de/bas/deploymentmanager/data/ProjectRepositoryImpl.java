@@ -27,4 +27,9 @@ public class ProjectRepositoryImpl extends AbstractRepository implements Project
         return saved;
 
     }
+
+    @Override
+    public Project getById(Long id) {
+        return entityManager.find(Project.class, id);
+    }
 }

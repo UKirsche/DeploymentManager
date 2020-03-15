@@ -1,5 +1,6 @@
 package de.bas.deploymentmanager.logic.domain.project.entity;
 
+import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,10 +18,11 @@ public class Deployment {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "STAGE_ID")
-    private Long stageId;
+    @Column(name = "STAGE")
+    @Enumerated(EnumType.STRING)
+    private StageEnum stage;
 
-    @Column(name = "USER")
+    @Column(name = "USER_")
     private String user;
 
     @Column(name = "CREATE_TIME")

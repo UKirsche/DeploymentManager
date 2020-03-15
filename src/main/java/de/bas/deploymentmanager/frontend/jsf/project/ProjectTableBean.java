@@ -10,14 +10,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.Serializable;
 import java.util.List;
 
-@RequestScoped
+@ViewScoped
 @Named
-public class ProjectTableBean {
+public class ProjectTableBean implements Serializable {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 
@@ -49,7 +50,7 @@ public class ProjectTableBean {
     }
 
     public String edit(Project project) {
-        return "table.xhtml";
+        return "form.xhtml?faces-redirect=true&id=" + project.getId();
     }
 
 

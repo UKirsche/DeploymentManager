@@ -18,26 +18,10 @@
         #{layoutMB.template}
         Alle konfigurierten Anwendungen
     </ui:define>
-
     <ui:define name="menu">
-        <ul class="sidebar-menu">
-            <li>
-                <p:link href="index.xhtml" onclick="clearBreadCrumbs()">
-                    <i class="fa fa-home"></i>
-                    <span>Home</span>
-                </p:link>
-            </li>
-            <li class="header">
-                General
-            </li>
-            <li>
-                <p:link href="/content/stages/table.xhtml">
-                    <i class="fa fa-car"></i>
-                    <span>Stages</span>
-                </p:link>
-            </li>
-        </ul>
+        <ui:include src="/content/menu.xhtml"/>
     </ui:define>
+
 
     <ui:define name="body">
         <h:form>
@@ -94,7 +78,6 @@
                         </p:column>
                         <p:column headerText="Build Job">
                             <h:outputText value="#{app.buildJob}"/>
-                            <p:commandButton actionListener="#{projectTableBean.build(app.buildJob)}" icon="fa-gear"/>
                         </p:column>
                         <p:column headerText="Deploy Job">
                             <h:outputText value="#{app.deployJob}"/>

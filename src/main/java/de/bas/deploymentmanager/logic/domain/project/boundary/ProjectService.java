@@ -40,4 +40,6 @@ public interface ProjectService {
     List<Image> getImages(String identifier);
 
     Image getImage(Long applicationId, String tag);
+
+    Project getProject(Long id);
 }
