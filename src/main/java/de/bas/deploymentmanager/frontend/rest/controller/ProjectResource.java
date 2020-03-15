@@ -1,8 +1,8 @@
 package de.bas.deploymentmanager.frontend.rest.controller;
 
-import de.bas.deploymentmanager.logic.domain.application.boundary.ApplicationService;
-import de.bas.deploymentmanager.logic.domain.application.entity.Application;
 import de.bas.deploymentmanager.logic.domain.dicd.boundary.CiCdService;
+import de.bas.deploymentmanager.logic.domain.project.boundary.ProjectService;
+import de.bas.deploymentmanager.logic.domain.project.entity.Project;
 import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,33 +14,33 @@ import java.util.List;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@Path("/application")
-public class ApplicationResource {
+@Path("/projects")
+public class ProjectResource {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Inject
-    private ApplicationService applicationService;
+    private ProjectService projectService;
 
     @Inject
     private CiCdService ciCdService;
 
     @GET
-    public List<Application> getAllApplications() {
-        log.debug("Lade alle Applications");
+    public List<Project> getAllProjects() {
+        log.debug("Lade alle Projects");
         ciCdService.deployImage("pipe_zustaendigestelle", "imageName", StageEnum.ETW);
-        return applicationService.getAllApplications();
+        return projectService.getAllProjects();
     }
 
-    @PUT
-    public Application neueApplicationAnlegen(Application model) {
-        return applicationService.createNewApplication(model);
+    @POST
+    public Project createNewProject(Project model) {
+        return projectService.createNewProject(model);
     }
 
     @GET
     @Path("/{application}")
-    public Application getApplication(@PathParam("application") String application) {
+    public Project getApplication(@PathParam("application") String application) {
         log.debug("Lade Application {}", application);
-        return applicationService.getApplication(application);
+        return projectService.getProject(application);
     }
 
 }

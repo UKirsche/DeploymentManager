@@ -1,9 +1,9 @@
 package de.bas.deploymentmanager.frontend.rest.controller;
 
-import de.bas.deploymentmanager.logic.domain.application.boundary.ApplicationService;
-import de.bas.deploymentmanager.logic.domain.application.entity.Application;
-import de.bas.deploymentmanager.logic.domain.application.entity.Image;
-import de.bas.deploymentmanager.logic.domain.application.entity.NewTagModel;
+import de.bas.deploymentmanager.logic.domain.project.boundary.ProjectService;
+import de.bas.deploymentmanager.logic.domain.project.entity.Image;
+import de.bas.deploymentmanager.logic.domain.project.entity.NewImageModel;
+import de.bas.deploymentmanager.logic.domain.project.entity.Project;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -16,21 +16,21 @@ import java.util.List;
 public class ImageResource {
 
     @Inject
-    private ApplicationService applicationService;
+    private ProjectService projectService;
 
     @GET
     public List<Image> getAllImages(@PathParam("application") String application) {
-        return applicationService.getImages(application);
+        return projectService.getImages(application);
     }
 
     @POST
-    public String generateNewImage(NewTagModel newTagModel, @PathParam("application") String identifier) {
-        return applicationService.generateNewImage(identifier, newTagModel);
+    public String generateNewImage(NewImageModel newImageModel, @PathParam("application") String identifier) {
+        return projectService.generateNewImage(identifier, newImageModel);
     }
 
     @GET
     @Path("/{tag}")
-    public Application getImage(@PathParam("tag") String tag) {
+    public Project getImage(@PathParam("tag") String tag) {
         return null;
     }
 }

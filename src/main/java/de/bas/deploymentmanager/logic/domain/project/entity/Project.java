@@ -1,4 +1,4 @@
-package de.bas.deploymentmanager.logic.domain.application.entity;
+package de.bas.deploymentmanager.logic.domain.project.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,8 +9,8 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "APPLICATION")
-public class Application {
+@Table(name = "PROJECT")
+public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

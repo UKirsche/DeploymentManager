@@ -1,6 +1,6 @@
 package de.bas.deploymentmanager.logic.domain.stage.control;
 
-import de.bas.deploymentmanager.logic.domain.application.entity.Image;
+import de.bas.deploymentmanager.logic.domain.project.entity.Image;
 import de.bas.deploymentmanager.logic.domain.stage.boundary.StageService;
 import de.bas.deploymentmanager.logic.domain.stage.entity.App;
 import de.bas.deploymentmanager.logic.domain.stage.entity.Host;
@@ -38,7 +38,7 @@ public class StageServiceImpl implements StageService {
         if (host.getApplications() == null || host.getApplications().isEmpty()) {
             return;
         }
-        Optional<App> oldVersion = host.getApplications().stream().filter(app -> app.getApplicationIdentifier().equals(identifier)).findFirst();
+        Optional<App> oldVersion = host.getApplications().stream().filter(app -> app.getProjectIdentifier().equals(identifier)).findFirst();
         oldVersion.ifPresent(app -> {
             host.getApplications().remove(app);
             log.info("Alte Version wurde vom Host {} entfernt", host.getUrl());
@@ -52,7 +52,7 @@ public class StageServiceImpl implements StageService {
         neuesDeployment.setImage(image.getImageWithTag());
         neuesDeployment.setImageId(image.getId());
         neuesDeployment.setName(identifier);
-        neuesDeployment.setApplicationIdentifier(identifier);
+        neuesDeployment.setProjectIdentifier(identifier);
         if (host.getApplications() == null) {
             host.setApplications(new ArrayList<>());
         }

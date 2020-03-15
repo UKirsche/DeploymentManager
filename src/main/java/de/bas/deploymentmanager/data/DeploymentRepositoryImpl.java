@@ -1,7 +1,7 @@
 package de.bas.deploymentmanager.data;
 
-import de.bas.deploymentmanager.logic.domain.application.control.DeploymentRepository;
-import de.bas.deploymentmanager.logic.domain.application.entity.Deployment;
+import de.bas.deploymentmanager.logic.domain.project.control.DeploymentRepository;
+import de.bas.deploymentmanager.logic.domain.project.entity.Deployment;
 
 public class DeploymentRepositoryImpl extends AbstractRepository implements DeploymentRepository {
     @Override

@@ -1,6 +1,6 @@
-package de.bas.deploymentmanager.logic.domain.application.control;
+package de.bas.deploymentmanager.logic.domain.project.control;
 
-import de.bas.deploymentmanager.logic.domain.application.entity.Image;
+import de.bas.deploymentmanager.logic.domain.project.entity.Image;
 
 import java.util.List;
 import java.util.Optional;

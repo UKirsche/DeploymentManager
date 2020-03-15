@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:adm="http://github.com/adminfaces"
                 template="#{layoutMB.template}">
 
     <ui:define name="metadata">
@@ -51,7 +50,7 @@
                         <p:spacer width="5"/>
 
                         <p:spacer width="5"/>
-                        <p:commandButton value="View selected" update="@(.ui-dialog)" styleClass="btn-info"
+                        <p:commandButton value="View selected" action="#{projectTableBean.edit()}" styleClass="btn-info"
                                          disabled=""
                                          oncomplete="PF('selectedCars').show()" icon="fa fa-search"/>
                     </div>
@@ -72,8 +71,8 @@
                     </p:splitButton>
 
                     <p:separator/>
-                    <!--@elvariable id="app" type="de.bas.deploymentmanager.logic.domain.application.entity.Application"-->
-                    <p:dataTable widgetVar="carsTable" var="app" value="#{applicationTableBean.list}" rows="5"
+                    <!--@elvariable id="app" type="de.bas.deploymentmanager.logic.domain.project.entity.Project"-->
+                    <p:dataTable widgetVar="carsTable" var="app" value="#{projectTableBean.list}" rows="5"
                                  rowKey="#{app.id}" lazy="true" paginator="true"
                                  paginatorPosition="bottom"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {JumpToPageDropdown}"
@@ -95,10 +94,14 @@
                         </p:column>
                         <p:column headerText="Build Job">
                             <h:outputText value="#{app.buildJob}"/>
-                            <p:commandButton actionListener="#{applicationTableBean.build(app.buildJob)}" icon="fa-gear"/>
+                            <p:commandButton actionListener="#{projectTableBean.build(app.buildJob)}" icon="fa-gear"/>
                         </p:column>
                         <p:column headerText="Deploy Job">
                             <h:outputText value="#{app.deployJob}"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton value="View" action="#{projectTableBean.edit(app)}" styleClass="btn-info"
+                                             icon="fa fa-search"/>
                         </p:column>
                     </p:dataTable>
                 </div>

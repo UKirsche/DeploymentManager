@@ -1,6 +1,6 @@
 package de.bas.deploymentmanager.logic.domain.stage.boundary;
 
-import de.bas.deploymentmanager.logic.domain.application.entity.Image;
+import de.bas.deploymentmanager.logic.domain.project.entity.Image;
 import de.bas.deploymentmanager.logic.domain.stage.entity.Stage;
 import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
 

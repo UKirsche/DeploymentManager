@@ -19,8 +19,8 @@ public class App {
     @Column(name = "IMAGE_ID")
     private Long imageId;
 
-    @Column(name = "APPLICATION_IDENFIFIER")
-    private String applicationIdentifier;
+    @Column(name = "PROJECT_IDENFIFIER")
+    private String projectIdentifier;
 
     @Column(name = "PORT")
     private String port;

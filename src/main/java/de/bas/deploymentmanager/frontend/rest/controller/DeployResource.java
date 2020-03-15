@@ -11,14 +11,14 @@ import javax.ws.rs.core.Response;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@Path("/application/{application}/images/{tag}/deploy")
+@Path("/projects/{project}/images/{tag}/deploy")
 public class DeployResource {
 
     @Inject
     private DeployFlow deployFlow;
 
     @POST
-    public Response imageDeployed(@PathParam("application") String identifier
+    public Response imageDeployed(@PathParam("project") String identifier
             , @PathParam("tag") String tag
             , @QueryParam("stage") StageEnum stage
             , @QueryParam("host") String host

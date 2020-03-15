@@ -1,4 +1,4 @@
-package de.bas.deploymentmanager.logic.domain.application.entity;
+package de.bas.deploymentmanager.logic.domain.project.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,8 +17,8 @@ public class Image {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "APPLICATION_ID")
-    private Long applicationId;
+    @Column(name = "PROJECT_ID")
+    private Long projectId;
 
     @Column(name = "TAG")
     private String tag;

@@ -1,7 +1,7 @@
 package de.bas.deploymentmanager.data;
 
-import de.bas.deploymentmanager.logic.domain.application.control.ImageRepository;
-import de.bas.deploymentmanager.logic.domain.application.entity.Image;
+import de.bas.deploymentmanager.logic.domain.project.control.ImageRepository;
+import de.bas.deploymentmanager.logic.domain.project.entity.Image;
 
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -12,7 +12,7 @@ public class ImageRepositoryImpl extends AbstractRepository implements ImageRepo
 
     @Override
     public List<Image> getImagesForApplication(Long applicationId) {
-        TypedQuery<Image> selectAll = entityManager.createQuery("SELECT image FROM Image image WHERE image.applicationId = :applicationId", Image.class);
+        TypedQuery<Image> selectAll = entityManager.createQuery("SELECT image FROM Image image WHERE image.projectId = :applicationId", Image.class);
         selectAll.setParameter("applicationId", applicationId);
         return selectAll.getResultList();
     }
@@ -20,7 +20,7 @@ public class ImageRepositoryImpl extends AbstractRepository implements ImageRepo
     @Override
     public Optional<Image> getLastImageOfVersion(Long applicationId, Integer majorVersion, Integer minorVersion) {
         TypedQuery<Image> selectAll = entityManager.createQuery("SELECT image FROM Image image " +
-                "WHERE image.applicationId = :applicationId " +
+                "WHERE image.projectId = :applicationId " +
                 "AND image.majorVersion = :majorVersion " +
                 "AND image.minorVersion = :minorVersion " +
                 "ORDER BY image.buildNumber DESC", Image.class);
@@ -43,8 +43,8 @@ public class ImageRepositoryImpl extends AbstractRepository implements ImageRepo
 
     @Override
     public Image getImageByIdentifierTag(String identifier, String tag) {
-        TypedQuery<Image> selectAll = entityManager.createQuery("SELECT image FROM Image image, Application app " +
-                "WHERE app.id = image.applicationId " +
+        TypedQuery<Image> selectAll = entityManager.createQuery("SELECT image FROM Image image, Project app " +
+                "WHERE app.id = image.projectId " +
                 "AND app.identifier =:identifier " +
                 "AND image.tag =:tag", Image.class);
         selectAll.setParameter("identifier", identifier);
@@ -55,7 +55,7 @@ public class ImageRepositoryImpl extends AbstractRepository implements ImageRepo
     @Override
     public Image getImageByApplicationIdTag(Long applicationId, String tag) {
         TypedQuery<Image> selectAll = entityManager.createQuery("SELECT image FROM Image image " +
-                "WHERE image.applicationId =:applicationId " +
+                "WHERE image.projectId =:applicationId " +
                 "AND image.tag =:tag", Image.class);
         selectAll.setParameter("applicationId", applicationId);
         selectAll.setParameter("tag", tag);

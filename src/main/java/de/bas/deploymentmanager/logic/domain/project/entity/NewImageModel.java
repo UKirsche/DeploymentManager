@@ -1,11 +1,11 @@
-package de.bas.deploymentmanager.logic.domain.application.entity;
+package de.bas.deploymentmanager.logic.domain.project.entity;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class NewTagModel {
+public class NewImageModel {
     private String user;
     private String image;
     private String version;

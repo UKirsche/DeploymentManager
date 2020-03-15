@@ -17,5 +17,13 @@ public interface DeployFlow {
      */
     void imageDeployed(String identifier, StageEnum stage, String tag, String host, String port);
 
+    /**
+     * Startet einen JOB im Jenkins und deployed so das Image auf einem Host
+     *
+     * @param identifier ProjectIdentifier
+     * @param stage
+     * @param tag
+     * @param host
+     */
     void deployImgae(String identifier, StageEnum stage, String tag, String host);
 }
