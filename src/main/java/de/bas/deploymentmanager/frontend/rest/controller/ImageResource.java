@@ -12,19 +12,19 @@ import java.util.List;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@Path("/application/{application}/images")
+@Path("/projects/{project}/images")
 public class ImageResource {
 
     @Inject
     private ProjectService projectService;
 
     @GET
-    public List<Image> getAllImages(@PathParam("application") String application) {
+    public List<Image> getAllImages(@PathParam("project") String application) {
         return projectService.getImages(application);
     }
 
     @POST
-    public String generateNewImage(NewImageModel newImageModel, @PathParam("application") String identifier) {
+    public String generateNewImage(NewImageModel newImageModel, @PathParam("project") String identifier) {
         return projectService.generateNewImage(identifier, newImageModel);
     }
 

@@ -8,8 +8,10 @@ import de.bas.deploymentmanager.logic.domain.stage.boundary.StageService;
 import de.bas.deploymentmanager.logic.domain.stage.entity.Stage;
 import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+@Stateless
 public class DeployFlowImpl implements DeployFlow {
 
     private final ProjectService projectService;
@@ -33,7 +35,7 @@ public class DeployFlowImpl implements DeployFlow {
     }
 
     @Override
-    public void deployImgae(String identifier, StageEnum stage, String tag, String host) {
+    public void deployImage(String identifier, StageEnum stage, String tag) {
         Project project = projectService.getProject(identifier);
         Image imageToDeploy = projectService.getImage(project.getId(), tag);
         ciCdService.deployImage(project.getDeployJob(), imageToDeploy.getImageWithTag(), stage);

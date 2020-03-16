@@ -80,7 +80,7 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>6.3.0</version>
                 <configuration>
-                    <url>jdbc:postgresql://localhost:5432/postgres</url>
+                    <url>jdbc:postgresql://etw-docker-02.bvaetw.de:5433/postgres</url>
                     <user>docker</user>
                     <password>docker</password>
                 </configuration>

@@ -11,4 +11,5 @@ create table PROJECT
 INSERT INTO PROJECT (id, IDENTIFIER, NAME, DESCRIPTION, BUILD_JOB, DEPLOY_JOB)
 VALUES
 (DEFAULT, 'dmp', 'dmp-Fachanwendung', 'DMP', 'pipe_dmp', 'pipe_dmp_deploy'),
-(DEFAULT, 'zus', 'Zuständige Stelle', 'ZUS', 'pipe_zustaendigestelle', 'pipe_zustaendigestelle_deploy');
+(DEFAULT, 'zus', 'Zuständige Stelle', 'ZUS', 'pipe_zustaendigestelle', 'pipe_zustaendigestelle_deploy'),
+(DEFAULT, 'moadib', 'MoaDib', 'Moadib', 'build-moadib', 'deploy-moadib');

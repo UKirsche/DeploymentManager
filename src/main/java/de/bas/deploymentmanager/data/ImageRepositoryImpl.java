@@ -11,9 +11,9 @@ public class ImageRepositoryImpl extends AbstractRepository implements ImageRepo
 
 
     @Override
-    public List<Image> getImagesForApplication(Long applicationId) {
+    public List<Image> getImagesForProject(Long projectId) {
         TypedQuery<Image> selectAll = entityManager.createQuery("SELECT image FROM Image image WHERE image.projectId = :applicationId", Image.class);
-        selectAll.setParameter("applicationId", applicationId);
+        selectAll.setParameter("applicationId", projectId);
         return selectAll.getResultList();
     }
 
@@ -53,7 +53,7 @@ public class ImageRepositoryImpl extends AbstractRepository implements ImageRepo
     }
 
     @Override
-    public Image getImageByApplicationIdTag(Long applicationId, String tag) {
+    public Image getImageByProjectIdTag(Long applicationId, String tag) {
         TypedQuery<Image> selectAll = entityManager.createQuery("SELECT image FROM Image image " +
                 "WHERE image.projectId =:applicationId " +
                 "AND image.tag =:tag", Image.class);

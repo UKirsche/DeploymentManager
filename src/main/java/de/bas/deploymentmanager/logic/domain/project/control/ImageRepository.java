@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ImageRepository {
-    List<Image> getImagesForApplication(Long applicationId);
+    List<Image> getImagesForProject(Long projectId);
 
     Optional<Image> getLastImageOfVersion(Long applicationId, Integer majorVersion, Integer minorVersion);
 
@@ -14,5 +14,5 @@ public interface ImageRepository {
 
     Image getImageByIdentifierTag(String identifier, String tag);
 
-    Image getImageByApplicationIdTag(Long applicationId, String tag);
+    Image getImageByProjectIdTag(Long applicationId, String tag);
 }

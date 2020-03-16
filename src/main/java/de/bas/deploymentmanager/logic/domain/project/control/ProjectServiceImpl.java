@@ -34,7 +34,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Project getProject(String identifier) {
         Project project = projectRepository.getByIfentifier(identifier);
-        project.setImages(imageRepository.getImagesForApplication(project.getId()));
+        project.setImages(imageRepository.getImagesForProject(project.getId()));
         return project;
     }
 
@@ -120,12 +120,18 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<Image> getImages(String identifier) {
         Project project = projectRepository.getByIfentifier(identifier);
-        return imageRepository.getImagesForApplication(project.getId());
+        return imageRepository.getImagesForProject(project.getId());
+    }
+
+    @Override
+    public List<Image> getImages(Long projectId) {
+      return   imageRepository.getImagesForProject(projectId);
+
     }
 
     @Override
     public Image getImage(Long applicationId, String tag) {
-        return imageRepository.getImageByApplicationIdTag(applicationId, tag);
+        return imageRepository.getImageByProjectIdTag(applicationId, tag);
     }
 
     @Override

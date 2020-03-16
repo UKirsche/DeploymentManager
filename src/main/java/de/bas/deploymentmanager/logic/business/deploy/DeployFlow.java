@@ -2,6 +2,9 @@ package de.bas.deploymentmanager.logic.business.deploy;
 
 import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
 
+import javax.ejb.Stateless;
+
+
 public interface DeployFlow {
     /**
      * Image wurde erfolgreich auf dem Host deployed
@@ -23,7 +26,7 @@ public interface DeployFlow {
      * @param identifier ProjectIdentifier
      * @param stage
      * @param tag
-     * @param host
+
      */
-    void deployImgae(String identifier, StageEnum stage, String tag, String host);
+    void deployImage(String identifier, StageEnum stage, String tag);
 }

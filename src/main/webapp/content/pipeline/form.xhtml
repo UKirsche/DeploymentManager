@@ -19,20 +19,30 @@
         </f:metadata>
 
         <h:form id="form" prependId="false">
-            <p:dataGrid value="#{pipelineFormBean.pipelines}" var="pipeline">
-                <p:panelGrid columns="5">
-                    <h2>#{pipeline.name}</h2>
-                    <p:panel header="build">
-                        <p:commandButton value="build"/>
-                    </p:panel>
-                    <p:panel header="etw">
-                        <p:commandButton value="deploy"/>
+
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <div id="main-buttons" class="hidden-sm hidden-xs">
+                        <p:commandButton value="Build"
+                                         actionListener="#{pipelineFormBean.build()}"
+                                         update="@form"
+                                         icon="fa fa-check" styleClass="btn-primary"/>
+
+                    </div>
+                </div>
+            </div>
+
+            <p:dataGrid value="#{pipelineFormBean.images}" var="image" columns="1">
+                <p:panelGrid columns="4">
+                    <h2>#{image.imageWithTag}</h2>
+                    <p:panel header="etw" style="background-color: chartreuse">
+                        <p:commandButton value="deploy" actionListener="#{pipelineFormBean.deploy(image, 'ETW')}"/>
                     </p:panel>
                     <p:panel header="int">
-                        <p:commandButton value="deploy"/>
+                        <p:commandButton value="deploy" actionListener="#{pipelineFormBean.deploy(image, 'INT')}"/>
                     </p:panel>
                     <p:panel header="prd">
-                        <p:commandButton value="deploy"/>
+                        <p:commandButton value="deploy" actionListener="#{pipelineFormBean.deploy(image, 'PRD')}"/>
                     </p:panel>
                 </p:panelGrid>
 
