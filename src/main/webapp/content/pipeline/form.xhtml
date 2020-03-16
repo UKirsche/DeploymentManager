@@ -19,29 +19,24 @@
         </f:metadata>
 
         <h:form id="form" prependId="false">
-            <p:dashboard id="board" model="#{dashboardView.model}">
-                <p:ajax event="reorder" listener="#{dashboardView.handleReorder}"/>
+            <p:dataGrid value="#{pipelineFormBean.pipelines}" var="pipeline">
+                <p:panelGrid columns="5">
+                    <h2>#{pipeline.name}</h2>
+                    <p:panel header="build">
+                        <p:commandButton value="build"/>
+                    </p:panel>
+                    <p:panel header="etw">
+                        <p:commandButton value="deploy"/>
+                    </p:panel>
+                    <p:panel header="int">
+                        <p:commandButton value="deploy"/>
+                    </p:panel>
+                    <p:panel header="prd">
+                        <p:commandButton value="deploy"/>
+                    </p:panel>
+                </p:panelGrid>
 
-                <p:panel id="sports" header="Sports">
-                    <h:outputText value="Sports Content"/>
-                </p:panel>
-
-                <p:panel id="finance" header="Finance">
-                    <h:outputText value="Finance Content"/>
-                </p:panel>
-
-                <p:panel id="lifestyle" header="Lifestyle">
-                    <h:outputText value="Lifestyle Content"/>
-                </p:panel>
-
-                <p:panel id="weather" header="Weather">
-                    <h:outputText value="Weather Content"/>
-                </p:panel>
-
-                <p:panel id="politics" header="Politics">
-                    <h:outputText value="Politics Content"/>
-                </p:panel>
-            </p:dashboard>
+            </p:dataGrid>
 
 
         </h:form>
