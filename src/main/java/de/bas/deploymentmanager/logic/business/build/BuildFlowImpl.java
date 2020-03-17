@@ -23,6 +23,6 @@ public class BuildFlowImpl implements BuildFlow {
     @Override
     public void build(Long projectId) {
         Project project = projectService.getProject(projectId);
-        ciCdService.buildApplication(project.getBuildJob());
+        ciCdService.buildImage(project.getBuildJob());
     }
 }

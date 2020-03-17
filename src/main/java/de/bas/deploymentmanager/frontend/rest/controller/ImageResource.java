@@ -4,6 +4,8 @@ import de.bas.deploymentmanager.logic.domain.project.boundary.ProjectService;
 import de.bas.deploymentmanager.logic.domain.project.entity.Image;
 import de.bas.deploymentmanager.logic.domain.project.entity.NewImageModel;
 import de.bas.deploymentmanager.logic.domain.project.entity.Project;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -14,6 +16,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/projects/{project}/images")
 public class ImageResource {
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Inject
     private ProjectService projectService;

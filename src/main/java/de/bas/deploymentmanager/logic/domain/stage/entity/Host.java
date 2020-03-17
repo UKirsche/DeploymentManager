@@ -22,7 +22,7 @@ public class Host {
     private String name;
 
     @Column(name = "URL")
-    private URL url;
+    private String url;
 
     @OneToMany
     private List<App> applications;

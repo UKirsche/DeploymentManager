@@ -1,6 +1,9 @@
-/subsystem=datasources/data-source=deployment-manager: add(jndi-name=java:jboss/datasources/deployment-manager,enabled=true,use-java-context=true,use-ccm=true, connection-url="jdbc:postgresql://etw-docker-02.bvaetw.de:5433/postgres", driver-name=sqlserver)
-/subsystem=datasources/data-source=deployment-manager: write-attribute(name=user-name, value=${env.wildfly.database.user})
-/subsystem=datasources/data-source=deployment-manager: write-attribute(name=credential-reference, value={store="wildfly_store",alias="developer_pw"})
+module add --name=org.postgresql --resources=/tmp/postgresql.jar --dependencies=javax.api,javax.transaction.api
+/subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql,driver-module-name=org.postgresql,driver-class-name=org.postgresql.Driver)
+
+/subsystem=datasources/data-source=deployment-manager: add(jndi-name=java:jboss/datasources/deployment-manager,enabled=true,use-java-context=true,use-ccm=true, connection-url="jdbc:postgresql://etw-docker-02.bvaetw.de:5433/postgres", driver-name=postgresql)
+/subsystem=datasources/data-source=deployment-manager: write-attribute(name=user-name, value=docker)
+/subsystem=datasources/data-source=deployment-manager: write-attribute(name=password, value=docker)
 /subsystem=datasources/data-source=deployment-manager: write-attribute(name=check-valid-connection-sql, value="SELECT 1")
 /subsystem=datasources/data-source=deployment-manager: write-attribute(name=background-validation, value=true)
 /subsystem=datasources/data-source=deployment-manager: write-attribute(name=background-validation-millis, value=60000)

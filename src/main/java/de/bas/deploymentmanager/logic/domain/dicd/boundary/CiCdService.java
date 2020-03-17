@@ -6,5 +6,5 @@ public interface CiCdService {
 
     void deployImage(String jobName, String image, StageEnum stageEnum);
 
-    void buildApplication(String jobName);
+    void buildImage(String jobName);
 }
