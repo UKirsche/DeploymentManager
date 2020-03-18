@@ -24,5 +24,5 @@ public interface JenkinsClient {
 
     @POST
     @Path("/buildWithParameters")
-    Response deploy(@PathParam("jobName") String jobName, @QueryParam("TAG") String tag, @QueryParam("ETW_DEPLOY") boolean tewDeploy);
+    Response deploy(@PathParam("jobName") String jobName, @QueryParam("TAG") String tag, @QueryParam("ETW_DEPLOY") boolean etwDeploy);
 }

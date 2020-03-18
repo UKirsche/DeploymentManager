@@ -24,6 +24,7 @@ public class PipelineFormBean implements Serializable {
 
     @Getter
     private List<Image> images;
+    @Getter
     private Project project;
 
     @Inject

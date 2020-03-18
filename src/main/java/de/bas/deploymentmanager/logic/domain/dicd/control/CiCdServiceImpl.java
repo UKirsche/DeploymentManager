@@ -24,11 +24,11 @@ public class CiCdServiceImpl implements CiCdService {
     }
 
     @Override
-    public void deployImage(String jobName, String image, StageEnum stageEnum) {
+    public void deployImage(String jobName, String imageTag, StageEnum stageEnum) {
         JenkinsParameter parameter = new JenkinsParameter();
-        parameter.put("image", image);
+        parameter.put("image", imageTag);
         parameter.put("stage", stageEnum.name());
-        jenkinsClient.deploy(jobName, image, true);
+        jenkinsClient.deploy(jobName, imageTag, true);
 
     }
 

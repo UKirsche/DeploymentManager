@@ -4,7 +4,7 @@ import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
 
 public interface CiCdService {
 
-    void deployImage(String jobName, String image, StageEnum stageEnum);
+    void deployImage(String jobName, String imageTag, StageEnum stageEnum);
 
     void buildImage(String jobName);
 }

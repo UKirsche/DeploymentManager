@@ -38,6 +38,6 @@ public class DeployFlowImpl implements DeployFlow {
     public void deployImage(String identifier, StageEnum stage, String tag) {
         Project project = projectService.getProject(identifier);
         Image imageToDeploy = projectService.getImage(project.getId(), tag);
-        ciCdService.deployImage(project.getDeployJob(), imageToDeploy.getImageWithTag(), stage);
+        ciCdService.deployImage(project.getDeployJob(), imageToDeploy.getTag(), stage);
     }
 }
