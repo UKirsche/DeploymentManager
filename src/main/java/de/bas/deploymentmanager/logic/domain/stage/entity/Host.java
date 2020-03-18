@@ -24,6 +24,7 @@ public class Host {
     @Column(name = "URL")
     private String url;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "host_id")
     private List<App> applications;
 }

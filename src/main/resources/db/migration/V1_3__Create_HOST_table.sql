@@ -6,4 +6,4 @@ create table HOST
     URL      VARCHAR(30)
 );
 INSERT INTO HOST
-VALUES (default, 1, 'docker-01', 'http://etw-docker-01.bvaetw.de')
+VALUES (default, 1, 'etw-docker-01', 'http://etw-docker-01.bvaetw.de')

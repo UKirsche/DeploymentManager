@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Optional;
 
 @Stateless
@@ -20,15 +19,17 @@ public class StageServiceImpl implements StageService {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     private final StageRepository stageRepository;
+    private final AppRepository appRepository;
 
     @Inject
-    public StageServiceImpl(StageRepository stageRepository) {
+    public StageServiceImpl(StageRepository stageRepository, AppRepository appRepository) {
         this.stageRepository = stageRepository;
+        this.appRepository = appRepository;
     }
 
     @Override
-    public void imageDeployed(String identifier, Image image, String hostUrl, String port) {
-        Host host = stageRepository.getHost(hostUrl);
+    public void imageDeployed(String identifier, Image image, String hostName, String port) {
+        Host host = stageRepository.getHostByName(hostName);
         deleteOldVersion(host, identifier);
         addNewVersion(identifier, image, port, host);
 
@@ -40,7 +41,7 @@ public class StageServiceImpl implements StageService {
         }
         Optional<App> oldVersion = host.getApplications().stream().filter(app -> app.getProjectIdentifier().equals(identifier)).findFirst();
         oldVersion.ifPresent(app -> {
-            host.getApplications().remove(app);
+            appRepository.delete(app);
             log.info("Alte Version wurde vom Host {} entfernt", host.getUrl());
         });
     }
@@ -53,10 +54,8 @@ public class StageServiceImpl implements StageService {
         neuesDeployment.setImageId(image.getId());
         neuesDeployment.setName(identifier);
         neuesDeployment.setProjectIdentifier(identifier);
-        if (host.getApplications() == null) {
-            host.setApplications(new ArrayList<>());
-        }
-        host.getApplications().add(neuesDeployment);
+        neuesDeployment.setHostId(host.getId());
+        appRepository.save(neuesDeployment);
         log.info("Neue Version der Application {} wurde auf {} deployed", identifier, host.getUrl());
     }
 

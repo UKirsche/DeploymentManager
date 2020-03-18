@@ -16,6 +16,9 @@ public class App {
     @Column(name = "ID")
     private Long id;
 
+    @Column(name = "HOST_ID")
+    private Long hostId;
+
     @Column(name = "IMAGE_ID")
     private Long imageId;
 
@@ -24,8 +27,13 @@ public class App {
 
     @Column(name = "PORT")
     private String port;
+
+    @Column(name = "PROJECT_NAME")
     private String name;
+
+    @Column(name = "IMAGE")
     private String image;
-    private String version;
+
+    @Column(name = "CREATE_DATE")
     private LocalDateTime createTime;
 }

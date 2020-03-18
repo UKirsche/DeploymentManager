@@ -12,10 +12,10 @@ public interface StageService {
      *
      * @param identifier der Application die deployed wurde
      * @param image      das deployed wurde
-     * @param host       auf dem deployed wurde
+     * @param hostName       auf dem deployed wurde
      * @param port       auf dem Host
      */
-    void imageDeployed(String identifier, Image image, String host, String port);
+    void imageDeployed(String identifier, Image image, String hostName, String port);
 
 
     Stage getStage(StageEnum stage);

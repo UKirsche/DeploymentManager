@@ -8,4 +8,6 @@ public interface StageRepository {
     Stage getStage(StageEnum stage);
 
     Host getHost(String host);
+
+    Host getHostByName(String hostName);
 }

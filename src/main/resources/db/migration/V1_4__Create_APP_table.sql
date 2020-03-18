@@ -5,5 +5,7 @@ create table APP
     IMAGE_ID           INTEGER REFERENCES IMAGE (ID),
     PROJECT_IDENFIFIER VARCHAR(20),
     PORT               VARCHAR(6),
-    IMAGE              VARCHAR(100)
+    IMAGE              VARCHAR(100),
+    PROJECT_NAME       VARCHAR(20),
+    CREATE_DATE        DATE
 );
