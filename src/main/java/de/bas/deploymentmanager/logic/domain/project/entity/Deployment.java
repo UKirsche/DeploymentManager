@@ -18,6 +18,9 @@ public class Deployment {
     @Column(name = "ID")
     private Long id;
 
+    @Column(name = "IMAGE_ID")
+    private Long imageId;
+
     @Column(name = "STAGE")
     @Enumerated(EnumType.STRING)
     private StageEnum stage;

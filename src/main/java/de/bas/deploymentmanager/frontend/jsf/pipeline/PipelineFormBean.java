@@ -17,6 +17,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @ViewScoped
 @Named
@@ -47,11 +48,29 @@ public class PipelineFormBean implements Serializable {
     }
 
     public void deploy(Image image, StageEnum stage) {
-        deployFlow.deployImage(project.getIdentifier(), stage, image.getTag() );
+        deployFlow.deployImage(project.getIdentifier(), stage, image.getTag());
     }
 
     public void build() {
         buildFlow.build(project.getId());
+    }
+
+    public String getStyle(Image image, StageEnum stageEnum) {
+        if (image.getDeployments() != null) {
+            if (image.getDeployments().stream().anyMatch(deployment -> Objects.equals(deployment.getStage(), stageEnum))) {
+                return "background-color: green";
+            }
+        }
+        return "background-color: grey";
+    }
+
+    public String getIcon(Image image, StageEnum stageEnum) {
+        if (image.getDeployments() != null) {
+            if (image.getDeployments().stream().anyMatch(deployment -> Objects.equals(deployment.getStage(), stageEnum))) {
+                return "fa-check";
+            }
+        }
+        return "";
     }
 
 

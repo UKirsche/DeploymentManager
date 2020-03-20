@@ -1,0 +1,29 @@
+[[section-introduction-and-goals]]
+==	Einführung und Ziele
+
+
+
+=== Aufgabenstellung
+Ziel des Deployment-Managers ist es, unaghängig von der Jenkins-BuildNumber ein Tag für ein Dockerimage zu generieren.
+Über die Pipelines im Deployment-Manager ist es möglich einen Build für eine Anwendung zu starten, welcher ein neues Image in der Registry erzeugt.
+
+Auserdem ist es über die Pipelines möglich ein bestimmtes Image in die verschiedenen Stages zu deployen.
+In der Pipeline kann man auch erkennen, In welchen Stages ein Image schon deployed wurde.
+
+In dem Bereich Stage ist zu sehen, welche Version einer Anwenung gerade auf welchem Host deployed ist.
+
+
+=== Qualitätsziele
+
+
+
+=== Stakeholder
+
+
+
+[cols="1,1,2" options="header"]
+|===
+|Rolle |Kontakt |Erwartungshaltung
+| _Entwickler_ | _<Kontakt-1>_ | _Kann neue Versionen deployen_
+| _PO_ | _<Kontakt-2>_ | _Kann versionen deployen und sehen was aktuell deployed ist_
+|===

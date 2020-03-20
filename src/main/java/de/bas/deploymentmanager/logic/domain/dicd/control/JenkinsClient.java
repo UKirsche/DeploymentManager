@@ -1,6 +1,5 @@
 package de.bas.deploymentmanager.logic.domain.dicd.control;
 
-import de.bas.deploymentmanager.logic.domain.dicd.entity.JenkinsParameter;
 import org.eclipse.microprofile.rest.client.annotation.ClientHeaderParam;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
@@ -11,11 +10,9 @@ import javax.ws.rs.core.Response;
 @RegisterRestClient(baseUri = "http://jenkins.bvaetw.de:8080")
 //@RegisterRestClient(baseUri = "http://etw-docker-01.bvaetw.de:8880")
 @Path("/job/{jobName}")
-//@ClientHeaderParam(name = "Authorization", value = "Basic bWFuYWdlcjptYW5hZ2Vy") //HOME
-@ClientHeaderParam(name = "Authorization", value = "Basic bHViaXR6OjAwMjI0MTM1") //ETW
-//@ClientHeaderParam(name = "Authorization", value = "Basic bHViaXR6OlBhdWxhbmVyIzI=") // DOCKER
+@ClientHeaderParam(name = "Authorization", value = "Basic bHViaXR6OjE3YTJhYzhhZTQ3MTA1MTdiZmM1N2Q1YjM4MTIzNmI2")
+//ETW TOKEN
 @Produces(MediaType.APPLICATION_FORM_URLENCODED)
-//@Consumes(MediaType.APPLICATION_JSON)
 public interface JenkinsClient {
 
     @POST
@@ -24,5 +21,8 @@ public interface JenkinsClient {
 
     @POST
     @Path("/buildWithParameters")
-    Response deploy(@PathParam("jobName") String jobName, @QueryParam("TAG") String tag, @QueryParam("ETW_DEPLOY") boolean etwDeploy);
+    Response deploy(@PathParam("jobName") String jobName, @QueryParam("TAG") String tag
+            , @QueryParam("ETW_DEPLOY") boolean etwDeploy
+            , @QueryParam("INT_DEPLOY") boolean intDeploy
+            , @QueryParam("PRD_DEPLOY") boolean prdDeploy);
 }

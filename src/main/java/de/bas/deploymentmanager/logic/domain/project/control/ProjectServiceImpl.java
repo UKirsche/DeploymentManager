@@ -65,6 +65,7 @@ public class ProjectServiceImpl implements ProjectService {
         Deployment deployment = new Deployment();
         deployment.setCreateTime(LocalDateTime.now());
         deployment.setStage(satgeId);
+        deployment.setImageId(image.getId());
         deploymentRepository.save(deployment);
     }
 
