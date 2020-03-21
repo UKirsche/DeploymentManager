@@ -1,18 +1,20 @@
 package de.bas.deploymentmanager.logic.domain.dicd.control;
 
-import org.eclipse.microprofile.rest.client.annotation.ClientHeaderParam;
+import org.eclipse.microprofile.rest.client.annotation.RegisterClientHeaders;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@RegisterRestClient(baseUri = "http://jenkins.bvaetw.de:8080")
+@RegisterRestClient(baseUri = "http://localhost:8090")
+//@RegisterRestClient(baseUri = "http://jenkins.bvaetw.de:8080")
 //@RegisterRestClient(baseUri = "http://etw-docker-01.bvaetw.de:8880")
 @Path("/job/{jobName}")
-@ClientHeaderParam(name = "Authorization", value = "Basic bHViaXR6OjE3YTJhYzhhZTQ3MTA1MTdiZmM1N2Q1YjM4MTIzNmI2")
+//@ClientHeaderParam(name = "Authorization", value = "{de.bas.deploymentmanager.logic.domain.dicd.control.BasicAuthHeaderFactory.generateHeader}")
 //ETW TOKEN
 @Produces(MediaType.APPLICATION_FORM_URLENCODED)
+@RegisterClientHeaders(value = BasicAuthHeaderFactory.class)
 public interface JenkinsClient {
 
     @POST

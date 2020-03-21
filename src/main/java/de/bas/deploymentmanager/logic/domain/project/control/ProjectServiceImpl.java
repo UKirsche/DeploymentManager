@@ -7,6 +7,8 @@ import de.bas.deploymentmanager.logic.domain.project.entity.NewImageModel;
 import de.bas.deploymentmanager.logic.domain.project.entity.Project;
 import de.bas.deploymentmanager.logic.domain.stage.entity.Stage;
 import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -16,6 +18,7 @@ import java.util.Optional;
 
 @Stateless
 public class ProjectServiceImpl implements ProjectService {
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 
     @Inject
@@ -45,9 +48,14 @@ public class ProjectServiceImpl implements ProjectService {
         int majorVersion = getMajorVersion(newImageModel);
         int minorVersion = getMinorVersion(newImageModel);
 
+        log.debug("Übergebene Version ist: {}.{}", majorVersion, majorVersion);
+
         Optional<Image> optionalImage = imageRepository.getLastImageOfVersion(project.getId(), majorVersion, minorVersion);
 
         Integer buildNumber = optionalImage.map(image -> image.getBuildNumber() + 1).orElse(1);
+
+        log.info("Neue Buildnumber ist: {}.{}-{}", majorVersion, minorVersion, buildNumber);
+
         Image image = createNewImage(project.getId(), majorVersion, minorVersion, newImageModel, buildNumber);
         Image save = imageRepository.save(image);
 
@@ -74,7 +82,6 @@ public class ProjectServiceImpl implements ProjectService {
         image.setProjectId(applicationId);
         image.setMajorVersion(majorVersion);
         image.setMinorVersion(minorVersion);
-        image.setBuildNumber(0);
         image.setCreateDate(LocalDateTime.now());
         image.setUser(newImageModel.getUser());
         image.setImage(newImageModel.getImage());

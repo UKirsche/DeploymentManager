@@ -1,7 +1,6 @@
 package de.bas.deploymentmanager.logic.domain.dicd.control;
 
 import de.bas.deploymentmanager.logic.domain.dicd.boundary.CiCdService;
-import de.bas.deploymentmanager.logic.domain.dicd.entity.JenkinsParameter;
 import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.slf4j.Logger;
@@ -25,15 +24,17 @@ public class CiCdServiceImpl implements CiCdService {
 
     @Override
     public void deployImage(String jobName, String imageTag, StageEnum stageEnum) {
+        log.info("Deploy Image {} on Stage {}", imageTag, stageEnum);
+        Response response;
         switch (stageEnum) {
             case ETW:
-                jenkinsClient.deploy(jobName, imageTag, true, false, false);
+                response = jenkinsClient.deploy(jobName, imageTag, true, false, false);
                 break;
             case INT:
-                jenkinsClient.deploy(jobName, imageTag, false, true, false);
+                response = jenkinsClient.deploy(jobName, imageTag, false, true, false);
                 break;
             case PRD:
-                jenkinsClient.deploy(jobName, imageTag, false, false, true);
+                response = jenkinsClient.deploy(jobName, imageTag, false, false, true);
                 break;
         }
 
@@ -41,9 +42,7 @@ public class CiCdServiceImpl implements CiCdService {
 
     @Override
     public void buildImage(String jobName) {
-
-        JenkinsParameter parameter = new JenkinsParameter();
-        parameter.put("PUSH", "true");
         Response build = jenkinsClient.build(jobName, true);
+        log.info("");
     }
 }

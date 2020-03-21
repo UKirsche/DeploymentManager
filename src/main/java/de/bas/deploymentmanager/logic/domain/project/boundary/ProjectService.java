@@ -25,11 +25,11 @@ public interface ProjectService {
     Project getProject(String identifier);
 
     /**
-     * Erstellt ein neues Image und gibt dieses wieder zurück
+     * Erstellt ein neues Image und gibt das Tag wieder zurück
      *
      * @param identifier    für die Application
      * @param newImageModel Informationen des Image
-     * @return {image}:{tag}
+     * @return {tag}
      */
     String generateNewImage(String identifier, NewImageModel newImageModel);
 

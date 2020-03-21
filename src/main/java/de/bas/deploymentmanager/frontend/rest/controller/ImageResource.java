@@ -26,6 +26,13 @@ public class ImageResource {
         return projectService.getImages(application);
     }
 
+    /**
+     * Erzeugt ein neues Image und gibt das Tag wieder zurück.
+     *
+     * @param newImageModel Informationen zur Version
+     * @param identifier    ProjectIdentifier
+     * @return Tag des neuen Image
+     */
     @POST
     public String generateNewImage(NewImageModel newImageModel, @PathParam("project") String identifier) {
         return projectService.generateNewImage(identifier, newImageModel);

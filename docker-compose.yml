@@ -1,8 +1,5 @@
 version: '3'
 services:
-  deploymentManager:
-
-
   postgres:
     image: postgres
     ports:

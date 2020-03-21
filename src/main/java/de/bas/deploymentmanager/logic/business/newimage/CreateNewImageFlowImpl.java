@@ -23,6 +23,8 @@ public class CreateNewImageFlowImpl implements CreateNewImageFlow {
     @Override
     public String createNewImage(String projectIdentifier, NewImageModel newImageModel) {
         log.info("Es wird ein neues Image für das Project {} angelegt.", projectIdentifier);
-        return projectService.generateNewImage(projectIdentifier, newImageModel);
+        String imageTag = projectService.generateNewImage(projectIdentifier, newImageModel);
+        log.info("{} wurde erfolgreich für Projekt {} angelegt.", imageTag, projectIdentifier);
+        return imageTag;
     }
 }

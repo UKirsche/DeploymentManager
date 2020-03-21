@@ -5,7 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class JenkinsParameterEntry {
-    public String name;
-    public Object value;
+public class User {
+
+    private String name;
+    private String loginName;
+    private String apiToken;
 }
