@@ -38,9 +38,12 @@ public interface ProjectService {
     Project createNewProject(Project model);
 
     List<Image> getImages(String identifier);
+
     List<Image> getImages(Long projectId);
 
     Image getImage(Long applicationId, String tag);
 
     Project getProject(Long id);
+
+    Project save(Project project);
 }

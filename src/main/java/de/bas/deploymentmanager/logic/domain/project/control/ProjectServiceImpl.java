@@ -133,7 +133,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<Image> getImages(Long projectId) {
-      return   imageRepository.getImagesForProject(projectId);
+        return imageRepository.getImagesForProject(projectId);
 
     }
 
@@ -145,5 +145,12 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Project getProject(Long id) {
         return projectRepository.getById(id);
+    }
+
+    @Override
+    public Project save(Project project) {
+        Project save = projectRepository.save(project);
+        log.info("Projekt {} wurde mit ID {} gespeichert", save.getIdentifier(), save.getId());
+        return save;
     }
 }

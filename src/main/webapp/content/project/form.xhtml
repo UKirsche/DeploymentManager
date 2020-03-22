@@ -23,7 +23,11 @@
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <div id="main-buttons" class="hidden-sm hidden-xs">
-
+                        <p:commandButton value="Speichern"
+                                         actionListener="#{projectFormBean.save()}"
+                                         styleClass="btn-primary"
+                                         process="@form"
+                                         update="@form"/>
                     </div>
 
 
@@ -38,6 +42,12 @@
                                          styleClass="form-control" style="width: 100%"/>
                         </div>
                         <div class="ui-sm-12 ui-md-2 ui-lg-1">
+                            <p:outputLabel value="Projekt Identifier" for="identifier"/>
+                        </div>
+                        <div class="ui-sm-12 ui-md-4 ui-lg-5">
+                            <p:inputText id="identifier" value="#{projectFormBean.project.identifier}" required="true"/>
+                        </div>
+                        <div class="ui-sm-12 ui-md-2 ui-lg-1">
                             <p:outputLabel value="Build Job" for="inptModel"/>
                         </div>
                         <div class="ui-sm-12 ui-md-4 ui-lg-5">
@@ -49,6 +59,13 @@
                         <div class="ui-sm-12 ui-md-4 ui-lg-5">
                             <p:inputText id="inptName" value="#{projectFormBean.project.deployJob}"/>
                         </div>
+                        <div class="ui-sm-12 ui-md-2 ui-lg-1">
+                            <p:outputLabel value="Beschreibung" for="beschreibung"/>
+                        </div>
+                        <div class="ui-sm-12 ui-md-4 ui-lg-5">
+                            <p:inputText id="beschreibung" value="#{projectFormBean.project.description}"/>
+                        </div>
+
                     </div>
                 </div>
             </div>

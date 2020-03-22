@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Stateless
@@ -63,5 +64,10 @@ public class StageServiceImpl implements StageService {
     public Stage getStage(StageEnum stage) {
         return stageRepository.getStage(stage);
 
+    }
+
+    @Override
+    public List<App> getAppsForProject(String identifier) {
+        return appRepository.getByProjectIdentifier(identifier);
     }
 }

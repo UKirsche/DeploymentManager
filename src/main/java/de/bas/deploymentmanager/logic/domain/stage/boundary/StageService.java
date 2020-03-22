@@ -1,8 +1,11 @@
 package de.bas.deploymentmanager.logic.domain.stage.boundary;
 
 import de.bas.deploymentmanager.logic.domain.project.entity.Image;
+import de.bas.deploymentmanager.logic.domain.stage.entity.App;
 import de.bas.deploymentmanager.logic.domain.stage.entity.Stage;
 import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
+
+import java.util.List;
 
 public interface StageService {
 
@@ -12,11 +15,19 @@ public interface StageService {
      *
      * @param identifier der Application die deployed wurde
      * @param image      das deployed wurde
-     * @param hostName       auf dem deployed wurde
+     * @param hostName   auf dem deployed wurde
      * @param port       auf dem Host
      */
     void imageDeployed(String identifier, Image image, String hostName, String port);
 
 
     Stage getStage(StageEnum stage);
+
+    /**
+     * Holt alle aktuellen deployments eines Projektes.
+     *
+     * @param identifier ProjectIdentifier
+     * @return App (deployed on Host in Stage)
+     */
+    List<App> getAppsForProject(String identifier);
 }
