@@ -17,5 +17,35 @@
     </driver>
 </drivers>
 ~~~
-sxs
-----
+
+### Neues Tag abfragen
+~~~
+stage('Push image to registry') {
+    when {
+        expression { return params.PUSH }
+    }
+    environment {
+        DEPLOYMENT_MANAGER ="http://etw-docker-03.bvaetw.de:8088/deployment-manager/api"
+        DEPLOYMENT_MANAGER_URL = "${env.DEPLOYMENT_MANAGER}/projects/${env.DEPLOYMENT_MANAGER_PROJECT}/images"
+        DEPLOYMENT_MANAGER_PROJECT = "manager"
+        IMAGE = "http://etw-docker-03.bvaetw.de/manager/manager"
+                
+
+        TAG =  sh ( script: "curl --header \"Content-Type: application/json\" \\\n" +
+                "  --request POST \\\n" +
+                "  --data '{\n" +
+                "  \"user\": \"${env.USER}\",\n" +
+                "  \"image\": \"${env.IMAGE}\",\n" +
+                "  \"version\":  \"${env.VERSION}\"\n" +
+                "}' \\\n" +
+                "  ${env.DEPLOYMENT_MANAGER_URL}",
+                returnStdout: true )
+    }
+    steps {
+       // Baut das docker Image
+       echo "PUSH"
+       }
+    }
+}
+
+~~~
