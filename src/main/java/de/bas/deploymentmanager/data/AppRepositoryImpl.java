@@ -23,6 +23,7 @@ public class AppRepositoryImpl extends AbstractRepository implements AppReposito
     public List<App> getByProjectIdentifier(String identifier) {
         TypedQuery<App> apps = entityManager.createQuery("SELECT app FROM App app " +
                 "WHERE app.projectIdentifier = :identifier", App.class);
+        apps.setParameter("identifier", identifier);
         return apps.getResultList();
     }
 }

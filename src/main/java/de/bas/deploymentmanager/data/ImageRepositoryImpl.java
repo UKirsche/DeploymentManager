@@ -18,15 +18,17 @@ public class ImageRepositoryImpl extends AbstractRepository implements ImageRepo
     }
 
     @Override
-    public Optional<Image> getLastImageOfVersion(Long applicationId, Integer majorVersion, Integer minorVersion) {
+    public Optional<Image> getLastImageOfVersion(Long applicationId, Integer majorVersion, Integer minorVersion, int incrementalVersion) {
         TypedQuery<Image> selectAll = entityManager.createQuery("SELECT image FROM Image image " +
                 "WHERE image.projectId = :applicationId " +
                 "AND image.majorVersion = :majorVersion " +
                 "AND image.minorVersion = :minorVersion " +
+                "AND image.incrementalVersion = :incrementalVersion " +
                 "ORDER BY image.buildNumber DESC", Image.class);
         selectAll.setParameter("applicationId", applicationId);
         selectAll.setParameter("majorVersion", majorVersion);
         selectAll.setParameter("minorVersion", minorVersion);
+        selectAll.setParameter("incrementalVersion", incrementalVersion);
         List<Image> resultList = selectAll.getResultList();
         if (resultList.isEmpty()) {
             return Optional.empty();

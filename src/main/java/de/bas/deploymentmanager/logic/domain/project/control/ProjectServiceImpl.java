@@ -47,19 +47,40 @@ public class ProjectServiceImpl implements ProjectService {
 
         int majorVersion = getMajorVersion(newImageModel);
         int minorVersion = getMinorVersion(newImageModel);
+        int incrementalVersion = getIncrementalVersion(newImageModel);
 
         log.debug("Übergebene Version ist: {}.{}", majorVersion, majorVersion);
 
-        Optional<Image> optionalImage = imageRepository.getLastImageOfVersion(project.getId(), majorVersion, minorVersion);
+        Optional<Image> optionalImage = imageRepository.getLastImageOfVersion(project.getId(), majorVersion, minorVersion, incrementalVersion);
 
         Integer buildNumber = optionalImage.map(image -> image.getBuildNumber() + 1).orElse(1);
 
-        log.info("Neue Buildnumber ist: {}.{}-{}", majorVersion, minorVersion, buildNumber);
+        log.info("Neue Buildnumber ist: {}.{}.{}-{}", majorVersion, minorVersion, incrementalVersion, buildNumber);
 
-        Image image = createNewImage(project.getId(), majorVersion, minorVersion, newImageModel, buildNumber);
+        Image image = createNewImage(project.getId(), majorVersion, minorVersion, incrementalVersion, newImageModel, buildNumber);
         Image save = imageRepository.save(image);
 
         return save.getTag();
+    }
+
+    private int getIncrementalVersion(NewImageModel newImageModel) {
+        if (newImageModel.getVersion() == null) {
+            return 0;
+        }
+        String[] versionArray = newImageModel.getVersion().split("\\.");
+        if (versionArray.length <= 2) {
+            return 0;
+        } else {
+            try {
+                String number = versionArray[2];
+                number = number.replace("-SNAPSHOT", "");
+                return Integer.parseInt(number);
+            } catch (NumberFormatException e) {
+                log.warn("IncrementalVersion konnte nicht ermittelt werden");
+                return 0;
+            }
+        }
+
     }
 
     @Override
@@ -77,16 +98,17 @@ public class ProjectServiceImpl implements ProjectService {
         deploymentRepository.save(deployment);
     }
 
-    private Image createNewImage(Long applicationId, int majorVersion, int minorVersion, NewImageModel newImageModel, Integer buildNumber) {
+    private Image createNewImage(Long applicationId, int majorVersion, int minorVersion, int incrementalVersion, NewImageModel newImageModel, Integer buildNumber) {
         Image image = new Image();
         image.setProjectId(applicationId);
         image.setMajorVersion(majorVersion);
         image.setMinorVersion(minorVersion);
+        image.setIncrementalVersion(incrementalVersion);
         image.setCreateDate(LocalDateTime.now());
         image.setUser(newImageModel.getUser());
         image.setImage(newImageModel.getImage());
         image.setBuildNumber(buildNumber);
-        image.setTag(String.format("%s.%s-%s", majorVersion, minorVersion, buildNumber));
+        image.setTag(String.format("%s.%s.%s-%s", majorVersion, minorVersion, incrementalVersion, buildNumber));
         return image;
     }
 
@@ -99,9 +121,11 @@ public class ProjectServiceImpl implements ProjectService {
             return 0;
         } else {
             try {
-                return Integer.parseInt(versionArray[1]);
+                String number = versionArray[1];
+                number = number.replace("-SNAPSHOT", "");
+                return Integer.parseInt(number);
             } catch (NumberFormatException e) {
-                e.printStackTrace();
+                log.warn("MinorVersion konnte nicht ermittelt werden");
                 return 0;
             }
         }
@@ -113,9 +137,11 @@ public class ProjectServiceImpl implements ProjectService {
         }
         String[] versionArray = newImageModel.getVersion().split("\\.");
         try {
-            return Integer.parseInt(versionArray[0]);
+            String number = versionArray[0];
+            number = number.replace("-SNAPSHOT", "");
+            return Integer.parseInt(number);
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            log.warn("MajorVersion konnte nicht ermittelt werden");
             return 0;
         }
     }

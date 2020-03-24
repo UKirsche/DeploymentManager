@@ -29,13 +29,17 @@ stage('Push image to registry') {
         DEPLOYMENT_MANAGER_URL = "${env.DEPLOYMENT_MANAGER}/projects/${env.DEPLOYMENT_MANAGER_PROJECT}/images"
         DEPLOYMENT_MANAGER_PROJECT = "manager"
         IMAGE = "http://etw-docker-03.bvaetw.de/manager/manager"
-                
+        VERSION = sh( script: "mvn help:evaluate -Dexpression=project.version -q -DforceStdout",
+                    returnStdout: true)
+        COMMIT = sh( script: "git show -s --format=short",
+                    returnStdout: true)        
 
         TAG =  sh ( script: "curl --header \"Content-Type: application/json\" \\\n" +
                 "  --request POST \\\n" +
                 "  --data '{\n" +
                 "  \"user\": \"${env.USER}\",\n" +
-                "  \"image\": \"${env.IMAGE}\",\n" +
+                "  \"image\": \"${env.image}\",\n" +
+                "  \"commit\": \"${env.COMMIT}\",\n" +
                 "  \"version\":  \"${env.VERSION}\"\n" +
                 "}' \\\n" +
                 "  ${env.DEPLOYMENT_MANAGER_URL}",

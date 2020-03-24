@@ -8,5 +8,6 @@ import lombok.Setter;
 public class NewImageModel {
     private String user;
     private String image;
+    private String commit;
     private String version;
 }

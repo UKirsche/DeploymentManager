@@ -38,8 +38,17 @@ public class Image {
     @Column(name = "MINOR_VERSION")
     private Integer minorVersion;
 
+    @Column(name = "INCREMENTAL_VERSION")
+    private Integer incrementalVersion;
+
+
     @Column(name = "BUILD_NUMBER")
     private Integer buildNumber;
+
+
+
+    @Column(name = "COMMIT")
+    private String commit;
 
     public String getImageWithTag() {
         return String.format("%s:%s", image, tag);

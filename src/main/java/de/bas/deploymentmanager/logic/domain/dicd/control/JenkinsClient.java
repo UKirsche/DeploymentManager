@@ -7,8 +7,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@RegisterRestClient(baseUri = "http://localhost:8090")
-//@RegisterRestClient(baseUri = "http://jenkins.bvaetw.de:8080")
+//@RegisterRestClient(baseUri = "http://localhost:8090")
+@RegisterRestClient(baseUri = "http://jenkins.bvaetw.de:8080")
 //@RegisterRestClient(baseUri = "http://etw-docker-01.bvaetw.de:8880")
 @Path("/job/{jobName}")
 //@ClientHeaderParam(name = "Authorization", value = "{de.bas.deploymentmanager.logic.domain.dicd.control.BasicAuthHeaderFactory.generateHeader}")

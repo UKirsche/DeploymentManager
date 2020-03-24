@@ -13,7 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <jakarta.jakartaee-api.version>8.0.0</jakarta.jakartaee-api.version>
-        <microprofile.version>3.3</microprofile.version>
+        <microprofile.version>3.0</microprofile.version>
         <mockito-core.version>3.1.0</mockito-core.version>
         <junit-jupiter.version>5.5.0</junit-jupiter.version>
     </properties>
@@ -80,7 +80,7 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>6.3.0</version>
                 <configuration>
-                    <url>jdbc:postgresql://localhost:5433/postgres</url>
+                    <url>jdbc:postgresql://etw-docker-02.bvaetw.de:5433/postgres</url>
                     <user>docker</user>
                     <password>docker</password>
                 </configuration>

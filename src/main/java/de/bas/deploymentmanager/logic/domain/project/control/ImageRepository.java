@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface ImageRepository {
     List<Image> getImagesForProject(Long projectId);
 
-    Optional<Image> getLastImageOfVersion(Long applicationId, Integer majorVersion, Integer minorVersion);
+    Optional<Image> getLastImageOfVersion(Long applicationId, Integer majorVersion, Integer minorVersion, int incrementalVersion);
 
     Image save(Image image);
 
