@@ -34,16 +34,22 @@
 
             <p:dataGrid value="#{pipelineFormBean.images}" var="image" columns="1">
                 <p:panelGrid columns="4">
-                    <h2>#{image.imageWithTag}</h2>
+                    <p:panel>
+                        <h3>#{image.imageWithTag}</h3>
+                        <h3>#{image.commit}</h3>
+                    </p:panel>
                     <p:panel header="etw" style="#{pipelineFormBean.getStyle(image, 'ETW')}">
-                        <p:commandButton value="deploy" actionListener="#{pipelineFormBean.deploy(image, 'ETW')}" icon="#{pipelineFormBean.getIcon(image, 'ETW')}"/>
+                        <p:commandButton value="deploy" actionListener="#{pipelineFormBean.deploy(image, 'ETW')}"
+                                         icon="#{pipelineFormBean.getIcon(image, 'ETW')}"/>
 
                     </p:panel>
                     <p:panel header="int" style="#{pipelineFormBean.getStyle(image, 'INT')}">
-                        <p:commandButton value="deploy" actionListener="#{pipelineFormBean.deploy(image, 'INT')}" icon="#{pipelineFormBean.getIcon(image, 'INT')}"/>
+                        <p:commandButton value="deploy" actionListener="#{pipelineFormBean.deploy(image, 'INT')}"
+                                         icon="#{pipelineFormBean.getIcon(image, 'INT')}"/>
                     </p:panel>
                     <p:panel header="prd" style="#{pipelineFormBean.getStyle(image, 'PRD')}">
-                        <p:commandButton value="deploy" actionListener="#{pipelineFormBean.deploy(image, 'PRD')}" icon="#{pipelineFormBean.getIcon(image, 'PRD')}"/>
+                        <p:commandButton value="deploy" actionListener="#{pipelineFormBean.deploy(image, 'PRD')}"
+                                         icon="#{pipelineFormBean.getIcon(image, 'PRD')}"/>
                     </p:panel>
                 </p:panelGrid>
 
