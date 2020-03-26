@@ -3,6 +3,7 @@ package de.bas.deploymentmanager.data;
 import de.bas.deploymentmanager.logic.domain.project.control.ProjectRepository;
 import de.bas.deploymentmanager.logic.domain.project.entity.Project;
 
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class ProjectRepositoryImpl extends AbstractRepository implements Project
     }
 
     @Override
-    public Project getByIfentifier(String identifier) {
+    public Project getByIfentifier(String identifier) throws NoResultException {
         TypedQuery<Project> selectAll = entityManager.createQuery("SELECT a FROM Project a WHERE a.identifier =:identifier", Project.class);
         return selectAll.setParameter("identifier", identifier).getSingleResult();
     }

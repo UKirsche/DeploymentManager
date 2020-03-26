@@ -34,20 +34,21 @@
 
             <p:dataGrid value="#{pipelineFormBean.images}" var="image" columns="1">
                 <p:panelGrid columns="4">
-                    <p:panel>
-                        <h3>#{image.imageWithTag}</h3>
-                        <h3>#{image.commit}</h3>
+                    <p:panel styleClass="no-border">
+                        <h:outputLabel value="#{image.imageWithTag}"/>
+                        <br/>
+                        <h:outputLabel value="GIT-Commit: #{image.commit}"/>
                     </p:panel>
-                    <p:panel header="etw" style="#{pipelineFormBean.getStyle(image, 'ETW')}">
+                    <p:panel header="etw" style="#{pipelineFormBean.getStyle(image, 'ETW')}" styleClass="no-border">
                         <p:commandButton value="deploy" actionListener="#{pipelineFormBean.deploy(image, 'ETW')}"
                                          icon="#{pipelineFormBean.getIcon(image, 'ETW')}"/>
 
                     </p:panel>
-                    <p:panel header="int" style="#{pipelineFormBean.getStyle(image, 'INT')}">
+                    <p:panel header="int" style="#{pipelineFormBean.getStyle(image, 'INT')}" styleClass="no-border">
                         <p:commandButton value="deploy" actionListener="#{pipelineFormBean.deploy(image, 'INT')}"
                                          icon="#{pipelineFormBean.getIcon(image, 'INT')}"/>
                     </p:panel>
-                    <p:panel header="prd" style="#{pipelineFormBean.getStyle(image, 'PRD')}">
+                    <p:panel header="prd" style="#{pipelineFormBean.getStyle(image, 'PRD')}" styleClass="no-border">
                         <p:commandButton value="deploy" actionListener="#{pipelineFormBean.deploy(image, 'PRD')}"
                                          icon="#{pipelineFormBean.getIcon(image, 'PRD')}"/>
                     </p:panel>

@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -43,13 +44,19 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public String generateNewImage(String identifier, NewImageModel newImageModel) {
-        Project project = projectRepository.getByIfentifier(identifier);
+        Project project = null;
+        try {
+            project = projectRepository.getByIfentifier(identifier);
+        } catch (NoResultException e) {
+            log.info("Projekt mit den identifier {} wurde nicht gefunden", identifier);
+            project = generateNewProject(identifier);
+        }
 
         int majorVersion = getMajorVersion(newImageModel);
         int minorVersion = getMinorVersion(newImageModel);
         int incrementalVersion = getIncrementalVersion(newImageModel);
 
-        log.debug("Übergebene Version ist: {}.{}", majorVersion, majorVersion);
+        log.debug("Übergebene Version ist: {}.{}.{}", majorVersion, majorVersion, incrementalVersion);
 
         Optional<Image> optionalImage = imageRepository.getLastImageOfVersion(project.getId(), majorVersion, minorVersion, incrementalVersion);
 
@@ -61,6 +68,13 @@ public class ProjectServiceImpl implements ProjectService {
         Image save = imageRepository.save(image);
 
         return save.getTag();
+    }
+
+    private Project generateNewProject(String identifier) {
+        log.info("Neues Projekt wird generiert für Identifier {}", identifier);
+        Project project = new Project();
+        project.setIdentifier(identifier);
+        return projectRepository.save(project);
     }
 
     private int getIncrementalVersion(NewImageModel newImageModel) {
@@ -90,10 +104,16 @@ public class ProjectServiceImpl implements ProjectService {
         return image;
     }
 
-    private void addDeployment(Image image, StageEnum satgeId) {
+    private void addDeployment(Image image, StageEnum stage) {
+        if (image.getDeployments() != null) {
+            boolean deploymentExists = image.getDeployments().stream().anyMatch(deployment -> deployment.getStage().equals(stage));
+            if (deploymentExists) {
+                return;
+            }
+        }
         Deployment deployment = new Deployment();
         deployment.setCreateTime(LocalDateTime.now());
-        deployment.setStage(satgeId);
+        deployment.setStage(stage);
         deployment.setImageId(image.getId());
         deploymentRepository.save(deployment);
     }

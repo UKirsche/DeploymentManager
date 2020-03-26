@@ -67,7 +67,7 @@ public class PipelineFormBean implements Serializable {
     public String getIcon(Image image, StageEnum stageEnum) {
         if (image.getDeployments() != null) {
             if (image.getDeployments().stream().anyMatch(deployment -> Objects.equals(deployment.getStage(), stageEnum))) {
-                return "fa-check";
+                return "fa fa-check";
             }
         }
         return "";
