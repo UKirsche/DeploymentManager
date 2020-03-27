@@ -1,6 +1,9 @@
 version: '3'
 services:
-
+  manager:
+    build: .
+    ports:
+      - "8080:8080"
 
   postgres:
     image: postgres
@@ -9,8 +12,14 @@ services:
     environment:
       - POSTGRES_PASSWORD=docker
       - POSTGRES_USER=docker
+
   jenkins:
     image: jenkins/jenkins
     ports:
       - "8090:8080"
       - "50000:50000"
+
+  keycloak:
+    image: jboss/keycloak
+    ports:
+      - "8180:8080"
