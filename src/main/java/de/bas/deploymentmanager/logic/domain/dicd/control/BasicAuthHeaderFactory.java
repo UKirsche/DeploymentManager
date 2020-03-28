@@ -17,10 +17,7 @@ public class BasicAuthHeaderFactory implements ClientHeadersFactory {
 
     @Override
     public MultivaluedMap<String, String> update(MultivaluedMap<String, String> incomingHeaders, MultivaluedMap<String, String> clientOutgoingHeaders) {
-//        User user = userRepository.getUserByLoginName(); //INJECT in ClientHeadersFactory funktioniert erst mit MP3.3
-        User user = new User();
-        user.setLoginName("lubitz");
-        user.setApiToken("1136f03463541e6b18d260b955f8ec8933");
+        User user = userRepository.getUserByLoginName();
         clientOutgoingHeaders.add(AUTHORIZATION, getAuthorizationValue(user));
         return clientOutgoingHeaders;
     }
