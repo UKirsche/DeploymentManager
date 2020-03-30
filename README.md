@@ -53,3 +53,11 @@ stage('Push image to registry') {
 }
 
 ~~~
+
+### Flyway config 
+Datei im Root des Projekts flyway.properties
+~~~
+flyway.user=docker
+flyway.password=docker
+flyway.url=jdbc:postgresql://localhost:5433/postgres
+~~~
