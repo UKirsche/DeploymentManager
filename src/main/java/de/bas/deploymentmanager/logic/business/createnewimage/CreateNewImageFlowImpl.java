@@ -1,4 +1,4 @@
-package de.bas.deploymentmanager.logic.business.newimage;
+package de.bas.deploymentmanager.logic.business.createnewimage;
 
 import de.bas.deploymentmanager.logic.domain.project.boundary.ProjectService;
 import de.bas.deploymentmanager.logic.domain.project.entity.NewImageModel;

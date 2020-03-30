@@ -14,7 +14,7 @@ public interface CiCdService {
     void deployImage(String jobName, String imageTag, StageEnum stageEnum);
 
     /**
-     * Fürht den übergebenen Job aus.
+     * Führt den übergebenen Job aus.
      * Parameter PUSH = true
      *
      * @param jobName buildJob

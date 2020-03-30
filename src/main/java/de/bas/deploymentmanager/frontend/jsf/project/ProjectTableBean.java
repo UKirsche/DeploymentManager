@@ -1,6 +1,6 @@
 package de.bas.deploymentmanager.frontend.jsf.project;
 
-import de.bas.deploymentmanager.logic.business.newimage.CreateNewImageFlow;
+import de.bas.deploymentmanager.logic.business.createnewimage.CreateNewImageFlow;
 import de.bas.deploymentmanager.logic.domain.dicd.boundary.CiCdService;
 import de.bas.deploymentmanager.logic.domain.project.boundary.ProjectService;
 import de.bas.deploymentmanager.logic.domain.project.entity.NewImageModel;

@@ -47,7 +47,7 @@ public class Image {
 
 
 
-    @Column(name = "COMMIT")
+    @Column(name = "COMMIT_HASH")
     private String commit;
 
     public String getImageWithTag() {

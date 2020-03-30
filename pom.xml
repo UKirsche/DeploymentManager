@@ -80,11 +80,17 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>6.3.0</version>
                 <configuration>
-                    <url>jdbc:postgresql://etw-docker-02.bvaetw.de:5433/postgres</url>
-                    <user>docker</user>
-                    <password>docker</password>
+                    <configFiles>
+                        <configFile>flyway.properties</configFile>
+                    </configFiles>
+                    <locations>filesystem:src/main/resources/db/migration/sqlserver</locations>
                 </configuration>
                 <dependencies>
+                    <dependency>
+                        <groupId>com.microsoft.sqlserver</groupId>
+                        <artifactId>mssql-jdbc</artifactId>
+                        <version>7.4.1.jre11</version>
+                    </dependency>
                     <dependency>
                         <groupId>org.postgresql</groupId>
                         <artifactId>postgresql</artifactId>

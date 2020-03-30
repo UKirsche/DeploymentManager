@@ -3,12 +3,13 @@
 
 
 
-=== _<Bezeichnung Laufzeitszenario 1>_
+=== _<Neues Image erzeugen>_
 
-*  <hier Laufzeitdiagramm oder Ablaufbeschreibung einfügen>
+= image:../images/Image_erzeugen.jpg[arc42]
+
 *  <hier Besonderheiten bei dem Zusammenspiel der Bausteine in diesem Szenario erläutern>
 
-=== _<Bezeichnung Laufzeitszenario 2>_
+=== _<Image deployen>_
 
 ...
 

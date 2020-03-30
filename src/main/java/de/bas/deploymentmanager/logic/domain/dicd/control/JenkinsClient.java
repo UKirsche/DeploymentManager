@@ -7,19 +7,15 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-//@RegisterRestClient(baseUri = "http://localhost:8090")
-@RegisterRestClient(baseUri = "http://jenkins.bvaetw.de:8080")
-//@RegisterRestClient(baseUri = "http://etw-docker-01.bvaetw.de:8880")
+@RegisterRestClient()
 @Path("/job/{jobName}")
-//@ClientHeaderParam(name = "Authorization", value = "{de.bas.deploymentmanager.logic.domain.dicd.control.BasicAuthHeaderFactory.generateHeader}")
-//ETW TOKEN
 @Produces(MediaType.APPLICATION_FORM_URLENCODED)
 @RegisterClientHeaders(value = BasicAuthHeaderFactory.class)
 public interface JenkinsClient {
 
     @POST
     @Path("/buildWithParameters")
-    Response build(@PathParam("jobName") String jobName, @QueryParam("PUSH") boolean push);
+    Response build(@PathParam("jobName") String jobName, @QueryParam("ETW_DEPLOY") boolean push);
 
     @POST
     @Path("/buildWithParameters")
