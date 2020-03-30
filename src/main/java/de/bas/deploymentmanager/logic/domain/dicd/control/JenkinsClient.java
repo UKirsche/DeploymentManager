@@ -13,10 +13,26 @@ import javax.ws.rs.core.Response;
 @RegisterClientHeaders(value = BasicAuthHeaderFactory.class)
 public interface JenkinsClient {
 
+    /**
+     * Definiert Aufruf an RestEndpoint auf dem Jenkins.
+     * Build erfolgt mit Deploy auf ETW falls gewünscht
+     * @param jobName
+     * @param push
+     * @return
+     */
     @POST
     @Path("/buildWithParameters")
     Response build(@PathParam("jobName") String jobName, @QueryParam("ETW_DEPLOY") boolean push);
 
+    /**
+     * Definiert Aufruf an Restendpoint auf dem Jenkins. Deploy kann durch ganze Kette erfolgen (CD)
+     * @param jobName
+     * @param tag
+     * @param etwDeploy
+     * @param intDeploy
+     * @param prdDeploy
+     * @return
+     */
     @POST
     @Path("/buildWithParameters")
     Response deploy(@PathParam("jobName") String jobName, @QueryParam("TAG") String tag
