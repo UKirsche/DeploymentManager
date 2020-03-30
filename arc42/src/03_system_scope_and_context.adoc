@@ -7,7 +7,7 @@
 
 
 
-**<Diagramm und/oder Tabelle>**
+= image:../images/Fachlicher_Kontext.jpg[arc42]
 
 **<optional: Erläuterung der externen fachlichen Schnittstellen>**
 
@@ -15,7 +15,8 @@
 
 
 
-**<Diagramm oder Tabelle>**
+= image:../images/Technischer_Kontext.jpg[arc42]
+
 
 **<optional: Erläuterung der externen technischen Schnittstellen>**
 
