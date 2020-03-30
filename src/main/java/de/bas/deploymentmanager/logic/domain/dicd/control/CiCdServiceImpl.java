@@ -25,7 +25,7 @@ public class CiCdServiceImpl implements CiCdService {
     @Override
     public void deployImage(String jobName, String imageTag, StageEnum stageEnum) {
         log.info("Deploy Image {} on Stage {}", imageTag, stageEnum);
-        Response response;
+        Response response = null;
         switch (stageEnum) {
             case ETW:
                 response = jenkinsClient.deploy(jobName, imageTag, true, false, false);
@@ -37,6 +37,8 @@ public class CiCdServiceImpl implements CiCdService {
                 response = jenkinsClient.deploy(jobName, imageTag, false, false, true);
                 break;
         }
+        int statusCode = response.getStatus();
+        log.info("Jobname {} wurde mit Tag {} in Stage {} ausgeführt. Statuscode: {}", jobName, imageTag, stageEnum, statusCode);
 
     }
 
