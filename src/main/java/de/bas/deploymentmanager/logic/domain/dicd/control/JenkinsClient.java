@@ -25,12 +25,13 @@ public interface JenkinsClient {
     Response build(@PathParam("jobName") String jobName, @QueryParam("ETW_DEPLOY") boolean push);
 
     /**
-     * Definiert Aufruf an Restendpoint auf dem Jenkins. Deploy kann durch ganze Kette erfolgen (CD)
+     * Definiert Aufruf an Restendpoint auf dem Jenkins. Deploy kann durch ganze Kette erfolgen (CD).
+     * Das Durch-Deployen auf die Prod wird mit den Parametern vorgenommen
      * @param jobName
      * @param tag
-     * @param etwDeploy
-     * @param intDeploy
-     * @param prdDeploy
+     * @param etwDeploy ja/nein
+     * @param intDeploy ja/nein
+     * @param prdDeploy ja/nein
      * @return
      */
     @POST
