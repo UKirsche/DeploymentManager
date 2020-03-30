@@ -53,8 +53,9 @@ _<Blackbox-Template>_
 
 
 
-==== Whitebox _<Baustein 1>_
+==== Whitebox _<Baustein logic>_
 
+= image:../images/Level_2_logic.jpg[arc42]
 
 
 _<Whitebox-Template>_

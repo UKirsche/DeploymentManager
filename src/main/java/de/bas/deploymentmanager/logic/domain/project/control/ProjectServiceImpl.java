@@ -128,6 +128,7 @@ public class ProjectServiceImpl implements ProjectService {
         image.setUser(newImageModel.getUser());
         image.setImage(newImageModel.getImage());
         image.setBuildNumber(buildNumber);
+        image.setCommit(newImageModel.getCommit());
         image.setTag(String.format("%s.%s.%s-%s", majorVersion, minorVersion, incrementalVersion, buildNumber));
         return image;
     }

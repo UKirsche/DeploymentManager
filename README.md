@@ -3,7 +3,7 @@
 ##Datasource
 ~~~
 <datasource jndi-name="java:jboss/datasources/deployment-manager" pool-name="deployment-manager" enabled="true" use-java-context="true" statistics-enabled="${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}">
-    <connection-url>jdbc:postgresql://localhost:5432/postgres</connection-url>
+    <connection-url>jdbc:postgresql://localhost:5433/postgres</connection-url>
     <driver>postgresql</driver>
     <security>
         <user-name>docker</user-name>
