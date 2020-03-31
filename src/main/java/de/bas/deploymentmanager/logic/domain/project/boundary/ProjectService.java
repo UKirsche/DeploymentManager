@@ -33,6 +33,14 @@ public interface ProjectService {
      */
     String generateNewImage(String identifier, NewImageModel newImageModel);
 
+    /**
+     * Erstellt für ein Image ein Deployment
+     *
+     * @param identifier .
+     * @param tag        Tag
+     * @param stage      Stage
+     * @return Image inkl. Deployment
+     */
     Image markImageAsDeployed(String identifier, String tag, Stage stage);
 
     Project createNewProject(Project model);

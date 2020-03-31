@@ -106,8 +106,10 @@ public class ProjectServiceImpl implements ProjectService {
 
     private void addDeployment(Image image, StageEnum stage) {
         if (image.getDeployments() != null) {
-            boolean deploymentExists = image.getDeployments().stream().anyMatch(deployment -> deployment.getStage().equals(stage));
-            if (deploymentExists) {
+            Optional<Deployment> deploymentExists = image.getDeployments().stream().filter(deployment -> deployment.getStage().equals(stage)).findAny();
+            if (deploymentExists.isPresent()) {
+                deploymentExists.get().setCreateTime(LocalDateTime.now());
+                deploymentRepository.save(deploymentExists.get());
                 return;
             }
         }
