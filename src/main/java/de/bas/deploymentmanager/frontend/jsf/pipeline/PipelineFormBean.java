@@ -58,10 +58,10 @@ public class PipelineFormBean implements Serializable {
     public String getStyle(Image image, StageEnum stageEnum) {
         if (image.getDeployments() != null) {
             if (image.getDeployments().stream().anyMatch(deployment -> Objects.equals(deployment.getStage(), stageEnum))) {
-                return "background-color: green";
+                return "bg-green";
             }
         }
-        return "background-color: grey";
+        return "";
     }
 
     public String getIcon(Image image, StageEnum stageEnum) {

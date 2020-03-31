@@ -1,5 +1,6 @@
 package de.bas.deploymentmanager.logic.domain.project.entity;
 
+import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -46,7 +47,6 @@ public class Image {
     private Integer buildNumber;
 
 
-
     @Column(name = "COMMIT_HASH")
     private String commit;
 
@@ -57,4 +57,11 @@ public class Image {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "image_id")
     private List<Deployment> deployments;
+
+    public Deployment getDeployment(StageEnum stage) {
+        if (deployments != null) {
+            return deployments.stream().filter(d -> d.getStage().equals(stage)).findFirst().orElse(null);
+        }
+        return null;
+    }
 }

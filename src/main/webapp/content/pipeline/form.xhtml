@@ -31,32 +31,39 @@
                     </div>
                 </div>
             </div>
-
-            <p:dataGrid value="#{pipelineFormBean.images}" var="image" columns="1">
-                <p:panelGrid columns="4">
-                    <p:panel styleClass="no-border">
-                        <h:outputLabel value="#{image.imageWithTag}"/>
-                        <br/>
-                        <h:outputLabel value="GIT-Commit: #{image.commit}"/>
-                    </p:panel>
-                    <p:panel header="etw" style="#{pipelineFormBean.getStyle(image, 'ETW')}" styleClass="no-border">
-                        <p:commandButton value="deploy" actionListener="#{pipelineFormBean.deploy(image, 'ETW')}"
-                                         icon="#{pipelineFormBean.getIcon(image, 'ETW')}"/>
-
-                    </p:panel>
-                    <p:panel header="int" style="#{pipelineFormBean.getStyle(image, 'INT')}" styleClass="no-border">
-                        <p:commandButton value="deploy" actionListener="#{pipelineFormBean.deploy(image, 'INT')}"
-                                         icon="#{pipelineFormBean.getIcon(image, 'INT')}"/>
-                    </p:panel>
-                    <p:panel header="prd" style="#{pipelineFormBean.getStyle(image, 'PRD')}" styleClass="no-border">
-                        <p:commandButton value="deploy" actionListener="#{pipelineFormBean.deploy(image, 'PRD')}"
-                                         icon="#{pipelineFormBean.getIcon(image, 'PRD')}"/>
-                    </p:panel>
-                </p:panelGrid>
-
-            </p:dataGrid>
-
-
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <p:dataTable value="#{pipelineFormBean.images}" var="image">
+                        <p:column headerText="Image">
+                            <h:outputLabel value="#{image.tag}" title="#{image.imageWithTag}"/>
+                        </p:column>
+                        <p:column headerText="Git-Commit">
+                            <h:outputLabel value="#{image.commit}"/>
+                        </p:column>
+                        <p:column headerText="etw" styleClass="text-center" width="150">
+                            <p:commandButton value="deploy"
+                                             styleClass="#{pipelineFormBean.getStyle(image, 'ETW')}"
+                                             actionListener="#{pipelineFormBean.deploy(image, 'ETW')}"
+                                             title="#{image.getDeployment('ETW').createTime}"
+                                             icon="#{pipelineFormBean.getIcon(image, 'ETW')}"/>
+                        </p:column>
+                        <p:column headerText="int" styleClass="text-center" width="150">
+                            <p:commandButton value="deploy"
+                                             styleClass="#{pipelineFormBean.getStyle(image, 'INT')}"
+                                             actionListener="#{pipelineFormBean.deploy(image, 'INT')}"
+                                             title="#{image.getDeployment('INT').createTime}"
+                                             icon="#{pipelineFormBean.getIcon(image, 'INT')}"/>
+                        </p:column>
+                        <p:column headerText="prd" styleClass="text-center" width="150">
+                            <p:commandButton value="deploy"
+                                             styleClass="#{pipelineFormBean.getStyle(image, 'PRD')}"
+                                             actionListener="#{pipelineFormBean.deploy(image, 'PRD')}"
+                                             title="#{image.getDeployment('PRD').createTime}"
+                                             icon="#{pipelineFormBean.getIcon(image, 'PRD')}"/>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </div>
         </h:form>
 
 
