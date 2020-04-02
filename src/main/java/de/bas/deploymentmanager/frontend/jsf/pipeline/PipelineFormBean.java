@@ -4,6 +4,7 @@ import de.bas.deploymentmanager.logic.business.build.BuildFlow;
 import de.bas.deploymentmanager.logic.business.deploy.DeployFlow;
 import de.bas.deploymentmanager.logic.business.loadproject.LoadProjectFlow;
 import de.bas.deploymentmanager.logic.business.loadproject.ProjectFormModel;
+import de.bas.deploymentmanager.logic.business.loadproject.ProjectStageModel;
 import de.bas.deploymentmanager.logic.domain.project.entity.Image;
 import de.bas.deploymentmanager.logic.domain.project.entity.Project;
 import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
@@ -27,6 +28,8 @@ public class PipelineFormBean implements Serializable {
     private List<Image> images;
     @Getter
     private Project project;
+    @Getter
+    private List<ProjectStageModel> appsDeployed;
 
     @Inject
     private LoadProjectFlow loadProjectFlow;
@@ -45,6 +48,7 @@ public class PipelineFormBean implements Serializable {
         ProjectFormModel model = loadProjectFlow.load(Long.valueOf(id));
         images = model.getProject().getImages();
         project = model.getProject();
+        appsDeployed = model.getDeployedOn();
     }
 
     public void deploy(Image image, StageEnum stage) {

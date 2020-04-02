@@ -68,6 +68,11 @@ public class StageServiceImpl implements StageService {
 
     @Override
     public List<App> getAppsForProject(String identifier) {
-        return appRepository.getByProjectIdentifier(identifier);
+        List<App> byProjectIdentifier = appRepository.getByProjectIdentifier(identifier);
+        byProjectIdentifier.forEach(app -> {
+            Stage stage = stageRepository.getStageByHostId(app.getHostId());
+            app.setStage(stage.getName());
+        });
+        return byProjectIdentifier;
     }
 }

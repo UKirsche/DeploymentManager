@@ -36,4 +36,8 @@ public class App {
 
     @Column(name = "CREATE_DATE")
     private LocalDateTime createTime;
+
+    @Transient
+    private StageEnum stage;
+
 }
