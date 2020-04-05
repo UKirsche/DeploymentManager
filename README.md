@@ -18,6 +18,15 @@
 </drivers>
 ~~~
 
+### Neues Tag erfragen ohne zu Speichern
+Damit man beim starten der Pipeline eine Buildnummer bekommt, kann über nachfolgenden Rest-Endpoint die nächste Buildnummer (TAG) abgefragt werden
+~~~
+GET /deployment-manager/api/projects/{ident}/images?version={aktuelleVersion}
+
+Response = 1.0.0-1
+~~~
+
+
 ### Neues Tag abfragen
 ~~~
 stage('Push image to registry') {

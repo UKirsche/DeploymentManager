@@ -38,6 +38,19 @@ public class ImageResource {
         return projectService.generateNewImage(identifier, newImageModel);
     }
 
+    /**
+     * Erzeugt ein neues Image und gibt das Tag wieder zurück.
+     * Es wird kein neues Image angelegt.
+     *
+     * @param version    Aktuellle Version
+     * @param identifier ProjectIdentifier
+     * @return Tag des neuen Image
+     */
+    @GET
+    public String getNextTag(@PathParam("project") String identifier, @QueryParam("version") String version) {
+        return projectService.gererateNextTag(identifier, version);
+    }
+
     @GET
     @Path("/{tag}")
     public Project getImage(@PathParam("tag") String tag) {
