@@ -1,26 +1,30 @@
 [[section-building-block-view]]
 == Bausteinsicht
 
-
-
 === Whitebox Gesamtsystem
-
-
 
 = image:../images/Level_1.jpg[arc42]
 
-
 Begründung:: _<Erläuternder Text>_
 
-Enthaltene Bausteine:: _<Beschreibung der enthaltenen Bausteine (Blackboxen)>_
+Enthaltene Bausteine::
+
+|===
+|Baustein |Beschreibung
+
+|frontend
+|Enthält alle Componenten über die der Deployment Manager bedient weren kann
+
+|logic
+|Enthält die Businesslogik der Anwendung
+
+|data
+|Enthält den Zugriff auf die Daten. Hier sind die Implementierungen der Repositories
+|===
 
 Wichtige Schnittstellen:: _<Beschreibung wichtiger Schnittstellen>_
 
-
-
 ==== <Name Blackbox 1>
-
-
 
 _<Zweck/Verantwortung>_
 
