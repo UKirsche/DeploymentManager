@@ -101,7 +101,7 @@ Aus den obigen Beispiel wird klar und ist einfach lesbar, dass ein Build im Jenk
 
 Das wird direkt durch das UI klar, wobei das Projekt _Deployment Manager_ heißt:
 
-= image:../images/build_pipeline.png[UI]
+= image:../images/build_pipeline.png[UI, width=50%]
 
 
 === _<Konzept 2>_
