@@ -8,9 +8,20 @@ Die Anwendung ist anhand des DDD-Ansatzes aufgebaut. Die wesentliche Struktur da
 Anwendung <<05_building_block_view.adoc#Bausteinsicht>>. Die übergeordnete Geschäftslogik der Anwendung findet sich im
 Package _business_.
 
+= image:../images/ddd_ports_adapters.png[DDD und Ports Adapters]
+
+
 ==== Geschäftslogik
 Die Geschäftsprozesse werden dabei als Interfaces mit Ending _Flow_ im Interfacenamen sowie in der
 Klassenimplementierung gekennzeichnet.
+
+*Bemerkung*
+
+Im Gegensatz zu anderen DDD-Verfahren wird die Geschäftslogik nicht im _Aggregate Root_ bzw. in _Value Objects_ untergebracht.
+Der Flow ist so implentiert, dass er entsprechend des Prinzips der _Single Responsibility_ nur die Services verwendet, die für
+den entsprechenden _Ablauf (Flow)_ relevant sind.
+
+Flows werden in _ViewScoped_ Beans eingebunden, die ein Interface (Port, s. Grafik oben) zur Kernlogik darstellen.
 
 ====
 *Beispiel*
@@ -30,7 +41,7 @@ public interface BuildFlow {
 //Implementierung
 public class BuildFlowImpl implements BuildFlow {
 
-    private final CiCdService ciCdService;
+    private final CiCdService ciCdService;∂
     private final ProjectService projectService;
 
 
