@@ -4,8 +4,50 @@
 
 === _Domain Driven Design_
 
-Die Anwendung ist anhand des DDD-Ansatzes aufgebaut. Die entsprechende Struktur findet sich im _Logic_-Package der
-Anwendung <<05_building_block_view.adoc#Bausteinsicht>>.
+Die Anwendung ist anhand des DDD-Ansatzes aufgebaut. Die wesentliche Struktur dafür findet sich im _Logic_-Package der
+Anwendung <<05_building_block_view.adoc#Bausteinsicht>>. Die übergeordnete Geschäftslogik der Anwendung findet sich im
+Package _business_.
+
+==== Geschäftslogik
+Die Geschäftsprozesse werden dabei als Interfaces mit Ending _Flow_ im Interfacenamen sowie in der
+Klassenimplementierung gekennzeichnet.
+
+====
+*Beispiel*
+
+[source, java]
+----
+
+//Interface
+public interface BuildFlow {
+    /**
+     * Führt den Buildjob eines Projects aus
+     * @param ProjectId
+     */
+    void build(Long ProjectId);
+}
+
+//Implementierung
+public class BuildFlowImpl implements BuildFlow {
+
+    private final CiCdService ciCdService;
+    private final ProjectService projectService;
+
+
+    @Inject
+    public BuildFlowImpl(CiCdService ciCdService, ProjectService projectService) {
+        this.ciCdService = ciCdService;
+        this.projectService = projectService;
+    }
+
+    @Override
+    public void build(Long projectId) {
+        Project project = projectService.getProject(projectId);
+        ciCdService.buildImage(project.getBuildJob());
+    }
+}
+----
+====
 
 === _<Konzept 2>_
 
