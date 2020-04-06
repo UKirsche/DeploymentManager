@@ -10,4 +10,6 @@ public interface StageRepository {
     Host getHost(String host);
 
     Host getHostByName(String hostName);
+
+    Stage getStageByHostId(Long hostId);
 }

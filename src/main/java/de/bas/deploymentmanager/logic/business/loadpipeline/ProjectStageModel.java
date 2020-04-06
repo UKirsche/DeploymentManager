@@ -1,4 +1,4 @@
-package de.bas.deploymentmanager.logic.business.loadproject;
+package de.bas.deploymentmanager.logic.business.loadpipeline;
 
 import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
 import lombok.Builder;

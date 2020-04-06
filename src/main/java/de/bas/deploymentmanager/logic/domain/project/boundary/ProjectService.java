@@ -33,6 +33,23 @@ public interface ProjectService {
      */
     String generateNewImage(String identifier, NewImageModel newImageModel);
 
+    /**
+     * Erzeugt eine neue Buildnummer und gibt das TAG zurück
+     *
+     * @param projectIdintifier Projekt
+     * @param version           Aktuelle Version
+     * @return Tag für das Image
+     */
+    String gererateNextTag(String projectIdintifier, String version);
+
+    /**
+     * Erstellt für ein Image ein Deployment
+     *
+     * @param identifier .
+     * @param tag        Tag
+     * @param stage      Stage
+     * @return Image inkl. Deployment
+     */
     Image markImageAsDeployed(String identifier, String tag, Stage stage);
 
     Project createNewProject(Project model);

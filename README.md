@@ -3,7 +3,7 @@
 ##Datasource
 ~~~
 <datasource jndi-name="java:jboss/datasources/deployment-manager" pool-name="deployment-manager" enabled="true" use-java-context="true" statistics-enabled="${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}">
-    <connection-url>jdbc:postgresql://localhost:5432/postgres</connection-url>
+    <connection-url>jdbc:postgresql://localhost:5433/postgres</connection-url>
     <driver>postgresql</driver>
     <security>
         <user-name>docker</user-name>
@@ -17,6 +17,15 @@
     </driver>
 </drivers>
 ~~~
+
+### Neues Tag erfragen ohne zu Speichern
+Damit man beim starten der Pipeline eine Buildnummer bekommt, kann über nachfolgenden Rest-Endpoint die nächste Buildnummer (TAG) abgefragt werden
+~~~
+GET /deployment-manager/api/projects/{ident}/images?version={aktuelleVersion}
+
+Response = 1.0.0-1
+~~~
+
 
 ### Neues Tag abfragen
 ~~~

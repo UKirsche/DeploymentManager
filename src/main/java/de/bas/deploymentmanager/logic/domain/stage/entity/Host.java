@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.net.URL;
 import java.util.List;
 
 @Getter
@@ -17,6 +16,9 @@ public class Host {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
+
+    @Column(name = "STAGE_ID")
+    private Long stageId;
 
     @Column(name = "NAME")
     private String name;

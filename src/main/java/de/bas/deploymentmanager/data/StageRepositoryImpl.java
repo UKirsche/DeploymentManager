@@ -28,4 +28,15 @@ public class StageRepositoryImpl extends AbstractRepository implements StageRepo
         selectAll.setParameter("hostName", hostName);
         return selectAll.getSingleResult();
     }
+
+    @Override
+    public Stage getStageByHostId(Long hostId) {
+        TypedQuery<Stage> selectAll = entityManager.createQuery("SELECT stage FROM Stage stage, Host host WHERE " +
+                "stage.id = host.stageId " +
+                "AND host.id = :hostId", Stage.class);
+        selectAll.setParameter("hostId", hostId);
+        return selectAll.getSingleResult();
+
+
+    }
 }

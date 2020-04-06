@@ -2,8 +2,9 @@ package de.bas.deploymentmanager.frontend.jsf.pipeline;
 
 import de.bas.deploymentmanager.logic.business.build.BuildFlow;
 import de.bas.deploymentmanager.logic.business.deploy.DeployFlow;
-import de.bas.deploymentmanager.logic.business.loadproject.LoadProjectFlow;
-import de.bas.deploymentmanager.logic.business.loadproject.ProjectFormModel;
+import de.bas.deploymentmanager.logic.business.loadpipeline.LoadPipelineFlow;
+import de.bas.deploymentmanager.logic.business.loadpipeline.PipelineFormModel;
+import de.bas.deploymentmanager.logic.business.loadpipeline.ProjectStageModel;
 import de.bas.deploymentmanager.logic.domain.project.entity.Image;
 import de.bas.deploymentmanager.logic.domain.project.entity.Project;
 import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
@@ -27,9 +28,11 @@ public class PipelineFormBean implements Serializable {
     private List<Image> images;
     @Getter
     private Project project;
+    @Getter
+    private List<ProjectStageModel> appsDeployed;
 
     @Inject
-    private LoadProjectFlow loadProjectFlow;
+    private LoadPipelineFlow loadProjectFlow;
 
     @Inject
     private DeployFlow deployFlow;
@@ -42,9 +45,10 @@ public class PipelineFormBean implements Serializable {
         Map<String, String> params = FacesContext.getCurrentInstance().
                 getExternalContext().getRequestParameterMap();
         String id = params.get("id");
-        ProjectFormModel model = loadProjectFlow.load(Long.valueOf(id));
+        PipelineFormModel model = loadProjectFlow.load(Long.valueOf(id));
         images = model.getProject().getImages();
         project = model.getProject();
+        appsDeployed = model.getDeployedOn();
     }
 
     public void deploy(Image image, StageEnum stage) {
@@ -58,10 +62,10 @@ public class PipelineFormBean implements Serializable {
     public String getStyle(Image image, StageEnum stageEnum) {
         if (image.getDeployments() != null) {
             if (image.getDeployments().stream().anyMatch(deployment -> Objects.equals(deployment.getStage(), stageEnum))) {
-                return "background-color: green";
+                return "bg-green";
             }
         }
-        return "background-color: grey";
+        return "";
     }
 
     public String getIcon(Image image, StageEnum stageEnum) {

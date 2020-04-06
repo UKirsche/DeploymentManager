@@ -1,10 +1,7 @@
 package de.bas.deploymentmanager.logic.domain.project.control;
 
 import de.bas.deploymentmanager.logic.domain.project.boundary.ProjectService;
-import de.bas.deploymentmanager.logic.domain.project.entity.Deployment;
-import de.bas.deploymentmanager.logic.domain.project.entity.Image;
-import de.bas.deploymentmanager.logic.domain.project.entity.NewImageModel;
-import de.bas.deploymentmanager.logic.domain.project.entity.Project;
+import de.bas.deploymentmanager.logic.domain.project.entity.*;
 import de.bas.deploymentmanager.logic.domain.stage.entity.Stage;
 import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
 import org.slf4j.Logger;
@@ -52,22 +49,55 @@ public class ProjectServiceImpl implements ProjectService {
             project = generateNewProject(identifier);
         }
 
-        int majorVersion = getMajorVersion(newImageModel);
-        int minorVersion = getMinorVersion(newImageModel);
-        int incrementalVersion = getIncrementalVersion(newImageModel);
+        Tag newTag = generateNewTag(newImageModel.getVersion(), project);
+
+        log.info("Neue Buildnumber ist: {}.{}.{}-{}"
+                , newTag.getMajorVersion()
+                , newTag.getMinorVersion()
+                , newTag.getIncrementalVersion()
+                , newTag.getBuildNumber());
+
+        Image image = createNewImage(project.getId()
+                , newTag.getMajorVersion()
+                , newTag.getMinorVersion()
+                , newTag.getIncrementalVersion()
+                , newImageModel
+                , newTag.getBuildNumber());
+
+        Image save = imageRepository.save(image);
+        return save.getTag();
+    }
+
+    @Override
+    public String gererateNextTag(String projectIdintifier, String version) {
+        Project project = null;
+        try {
+            project = projectRepository.getByIfentifier(projectIdintifier);
+        } catch (NoResultException e) {
+            log.info("Projekt mit den identifier {} wurde nicht gefunden", projectIdintifier);
+            project = generateNewProject(projectIdintifier);
+        }
+        return generateNewTag(version, project).toString();
+    }
+
+    /**
+     * Gibt die nächste Buildnummer zurück
+     *
+     * @param version
+     * @param project
+     * @return
+     */
+    private Tag generateNewTag(String version, Project project) {
+        int majorVersion = getMajorVersion(version);
+        int minorVersion = getMinorVersion(version);
+        int incrementalVersion = getIncrementalVersion(version);
 
         log.debug("Übergebene Version ist: {}.{}.{}", majorVersion, majorVersion, incrementalVersion);
 
         Optional<Image> optionalImage = imageRepository.getLastImageOfVersion(project.getId(), majorVersion, minorVersion, incrementalVersion);
 
-        Integer buildNumber = optionalImage.map(image -> image.getBuildNumber() + 1).orElse(1);
-
-        log.info("Neue Buildnumber ist: {}.{}.{}-{}", majorVersion, minorVersion, incrementalVersion, buildNumber);
-
-        Image image = createNewImage(project.getId(), majorVersion, minorVersion, incrementalVersion, newImageModel, buildNumber);
-        Image save = imageRepository.save(image);
-
-        return save.getTag();
+        int buildNumber = optionalImage.map(image -> image.getBuildNumber() + 1).orElse(1);
+        return new Tag(majorVersion, minorVersion, incrementalVersion, buildNumber);
     }
 
     private Project generateNewProject(String identifier) {
@@ -77,11 +107,11 @@ public class ProjectServiceImpl implements ProjectService {
         return projectRepository.save(project);
     }
 
-    private int getIncrementalVersion(NewImageModel newImageModel) {
-        if (newImageModel.getVersion() == null) {
+    private int getIncrementalVersion(String version) {
+        if (version == null) {
             return 0;
         }
-        String[] versionArray = newImageModel.getVersion().split("\\.");
+        String[] versionArray = version.split("\\.");
         if (versionArray.length <= 2) {
             return 0;
         } else {
@@ -106,8 +136,10 @@ public class ProjectServiceImpl implements ProjectService {
 
     private void addDeployment(Image image, StageEnum stage) {
         if (image.getDeployments() != null) {
-            boolean deploymentExists = image.getDeployments().stream().anyMatch(deployment -> deployment.getStage().equals(stage));
-            if (deploymentExists) {
+            Optional<Deployment> deploymentExists = image.getDeployments().stream().filter(deployment -> deployment.getStage().equals(stage)).findAny();
+            if (deploymentExists.isPresent()) {
+                deploymentExists.get().setCreateTime(LocalDateTime.now());
+                deploymentRepository.save(deploymentExists.get());
                 return;
             }
         }
@@ -128,15 +160,16 @@ public class ProjectServiceImpl implements ProjectService {
         image.setUser(newImageModel.getUser());
         image.setImage(newImageModel.getImage());
         image.setBuildNumber(buildNumber);
+        image.setCommit(newImageModel.getCommit());
         image.setTag(String.format("%s.%s.%s-%s", majorVersion, minorVersion, incrementalVersion, buildNumber));
         return image;
     }
 
-    private int getMinorVersion(NewImageModel newImageModel) {
-        if (newImageModel.getVersion() == null) {
+    private int getMinorVersion(String version) {
+        if (version == null) {
             return 0;
         }
-        String[] versionArray = newImageModel.getVersion().split("\\.");
+        String[] versionArray = version.split("\\.");
         if (versionArray.length == 1) {
             return 0;
         } else {
@@ -151,11 +184,11 @@ public class ProjectServiceImpl implements ProjectService {
         }
     }
 
-    private int getMajorVersion(NewImageModel newImageModel) {
-        if (newImageModel.getVersion() == null) {
+    private int getMajorVersion(String version) {
+        if (version == null) {
             return 0;
         }
-        String[] versionArray = newImageModel.getVersion().split("\\.");
+        String[] versionArray = version.split("\\.");
         try {
             String number = versionArray[0];
             number = number.replace("-SNAPSHOT", "");
