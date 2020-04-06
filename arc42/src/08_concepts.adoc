@@ -2,10 +2,10 @@
 == Querschnittliche Konzepte
 
 
+=== _Domain Driven Design_
 
-=== _<Konzept 1>_
-
-_<Erklärung>_
+Die Anwendung ist anhand des DDD-Ansatzes aufgebaut. Die entsprechende Struktur findet sich im _Logic_-Package der
+Anwendung <<05_building_block_view.adoc#Bausteinsicht>>.
 
 === _<Konzept 2>_
 
