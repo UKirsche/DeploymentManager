@@ -22,6 +22,12 @@ public class CiCdServiceImpl implements CiCdService {
         this.jenkinsClient = jenkinsClient;
     }
 
+    /**
+     * Deployed ein Image über den Jenkins
+     * @param jobName   JobName
+     * @param imageTag  Image des Deployed wird {imgae}:{tag}
+     * @param stageEnum Stage ETW INT PRD
+     */
     @Override
     public void deployImage(String jobName, String imageTag, StageEnum stageEnum) {
         log.info("Deploy Image {} on Stage {}", imageTag, stageEnum);
@@ -42,6 +48,10 @@ public class CiCdServiceImpl implements CiCdService {
 
     }
 
+    /**
+     * Startet einen Build auf dem Jenkins über den Restendpoint im Client
+     * @param jobName buildJob
+     */
     @Override
     public void buildImage(String jobName) {
         Response build = jenkinsClient.build(jobName, true);

@@ -40,6 +40,13 @@ public class ProjectTableBean implements Serializable {
         this.list = projectService.getAllProjects();
     }
 
+    /**
+     * Dummy-Methode, welche testweise ein "Image" erzeugt, das eigentlich aus einem Jenkins-Job kommt
+     * und über den RestEndpoint {@link de.bas.deploymentmanager.frontend.rest.controller.ImageResource}
+     * <i>generateNewImage()</i>
+     * aufgerufen wird.
+     * @param buildJob
+     */
     public void build(String buildJob) {
         NewImageModel model = new NewImageModel();
         model.setImage("etw-docker-03.bvaetw.de/zus/zus");
