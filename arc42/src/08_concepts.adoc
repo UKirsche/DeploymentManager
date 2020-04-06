@@ -24,7 +24,7 @@ den entsprechenden _Ablauf (Flow)_ relevant sind.
 Flows werden in _ViewScoped_ Beans eingebunden, die ein Interface (Port, s. Grafik oben) zur Kernlogik darstellen.
 
 ====
-*Beispiel*
+*Beispiel 1*
 
 [source, java]
 ----
@@ -59,6 +59,50 @@ public class BuildFlowImpl implements BuildFlow {
 }
 ----
 ====
+
+====
+*Beispiel 2*
+
+Verwendung in _ViewScopedBean_
+[source, java]
+----
+
+@ViewScoped
+@Named
+public class PipelineFormBean implements Serializable {
+
+    @Getter
+    private List<Image> images;
+    @Getter
+    private Project project;
+    @Getter
+    private List<ProjectStageModel> appsDeployed;
+
+    @Inject
+    private LoadPipelineFlow loadProjectFlow;
+
+    @Inject
+    private DeployFlow deployFlow;
+
+    @Inject
+    private BuildFlow buildFlow;
+    ...
+
+    public void build() {
+        buildFlow.build(project.getId());
+    }
+}
+
+----
+====
+
+Aus den obigen Beispiel wird klar und ist einfach lesbar, dass ein Build im Jenkins über die View für die Pipeline gestartet werden kann. Der _BuildFlow_ macht durch den
+übergebenen Paraemter einer ProjektId deutlich, dass der Build für ein gesamtes Projekt angestoßen wird.
+
+Das wird direkt durch das UI klar, wobei das Projekt _Deployment Manager_ heißt:
+
+= image:../images/build_pipeline.png[UI]
+
 
 === _<Konzept 2>_
 
