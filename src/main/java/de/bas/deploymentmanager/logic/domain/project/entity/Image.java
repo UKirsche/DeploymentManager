@@ -1,6 +1,7 @@
 package de.bas.deploymentmanager.logic.domain.project.entity;
 
 import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +23,7 @@ public class Image {
     private Long projectId;
 
     @Column(name = "TAG")
+    @Setter(AccessLevel.NONE)
     private String tag;
 
     @Column(name = "CREATE_USER")
@@ -34,16 +36,19 @@ public class Image {
     private String image;
 
     @Column(name = "MAJOR_VERSION")
+    @Setter(AccessLevel.NONE)
     private Integer majorVersion;
 
     @Column(name = "MINOR_VERSION")
+    @Setter(AccessLevel.NONE)
     private Integer minorVersion;
 
     @Column(name = "INCREMENTAL_VERSION")
+    @Setter(AccessLevel.NONE)
     private Integer incrementalVersion;
 
-
     @Column(name = "BUILD_NUMBER")
+    @Setter(AccessLevel.NONE)
     private Integer buildNumber;
 
 
@@ -63,5 +68,14 @@ public class Image {
             return deployments.stream().filter(d -> d.getStage().equals(stage)).findFirst().orElse(null);
         }
         return null;
+    }
+
+    public String setTag(Tag tagVo) {
+        majorVersion = tagVo.getMajorVersion();
+        minorVersion = tagVo.getMinorVersion();
+        incrementalVersion = tagVo.getIncrementalVersion();
+        buildNumber = tagVo.getBuildNumber();
+        tag = tagVo.toString();
+        return tag;
     }
 }

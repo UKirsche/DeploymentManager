@@ -1,5 +1,6 @@
 package de.bas.deploymentmanager.logic.domain.project.entity;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,4 +36,16 @@ public class Project {
     @Transient
     private List<Image> images;
 
+    @Column(name = "IMAGE_SYNC")
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private String imageSyncValue;
+
+    public ImageSync getImageSync() {
+        return new ImageSync(imageSyncValue);
+    }
+
+    public void setImageSync(ImageSync imageSync) {
+        imageSyncValue = imageSync.getPersistedValue();
+    }
 }
