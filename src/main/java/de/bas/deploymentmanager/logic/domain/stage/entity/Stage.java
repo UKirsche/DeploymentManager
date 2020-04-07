@@ -20,7 +20,7 @@ public class Stage {
     @Enumerated(value = EnumType.STRING)
     private StageEnum name;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="stage_id")
     private List<Host> hosts;
 
