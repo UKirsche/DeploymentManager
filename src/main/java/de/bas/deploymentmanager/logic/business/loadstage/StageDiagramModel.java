@@ -13,5 +13,5 @@ import java.util.List;
 public class StageDiagramModel {
 
     Project project;
-    List<AppStageModel> appStageModels;
+    List<StageModel> stageModels;
 }

@@ -2,27 +2,27 @@ package de.bas.deploymentmanager.logic.business.loadstage;
 
 import de.bas.deploymentmanager.logic.domain.project.boundary.ProjectService;
 import de.bas.deploymentmanager.logic.domain.project.entity.Project;
-import de.bas.deploymentmanager.logic.domain.stage.boundary.HostService;
 import de.bas.deploymentmanager.logic.domain.stage.boundary.StageService;
 import de.bas.deploymentmanager.logic.domain.stage.entity.App;
+import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
+import org.apache.commons.lang.ArrayUtils;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Stateless
 public class LoadStageFlowImpl implements LoadStageFlow {
 
     private final ProjectService projectService;
     private final StageService stageService;
-    private final HostService hostService;
+    private List<StageModel> stageModels;
 
     @Inject
-    public LoadStageFlowImpl(ProjectService projectService, StageService stageService, HostService hostService) {
+    public LoadStageFlowImpl(ProjectService projectService, StageService stageService) {
         this.projectService = projectService;
         this.stageService = stageService;
-        this.hostService = hostService;
     }
 
 
@@ -30,27 +30,35 @@ public class LoadStageFlowImpl implements LoadStageFlow {
     public StageDiagramModel load(Long id) {
         Project project = projectService.getProject(id);
         String projectIdentifier = project.getIdentifier();
-        List<App> deployedApps = stageService.getAppsForProject(projectIdentifier);
-        List<AppStageModel> appStageModels = getAppStageModels(deployedApps);
-        fillAppStageModelsWithHost(appStageModels);
-
-        return StageDiagramModel.builder().project(project).appStageModels(appStageModels).build();
-
+        projectIdentifier="test";
+        stageModels = new ArrayList<>();
+        fillStageModels();
+        //filterStageModels(projectIdentifier);
+        return StageDiagramModel.builder().project(project).stageModels(stageModels).build();
     }
 
-    private List<AppStageModel> getAppStageModels(List<App> deployedApps) {
-        List<AppStageModel> deployedAppStageModels = deployedApps.stream()
-                    .map(app -> AppStageModel.builder()
-                            .app(app)
-                            .stage(stageService.getStage(app.getStage()))
-                            .build())
-                    .collect(Collectors.toList());
-
-        return  deployedAppStageModels;
-
+    /**
+     * Füllt das StageModel mit allen relevanten Infos zu einer Stage
+     */
+    private void fillStageModels() {
+        stageModels.add(StageModel.builder().stage(stageService.getStage(StageEnum.ETW)).build());
+        stageModels.add(StageModel.builder().stage(stageService.getStage(StageEnum.INT)).build());
+        stageModels.add(StageModel.builder().stage(stageService.getStage(StageEnum.PRD)).build());
     }
 
-    private void fillAppStageModelsWithHost(List<AppStageModel> appStageModels){
-        appStageModels.forEach(appStageModel -> appStageModel.setHost(hostService.getHost(appStageModel.getApp().getHostId())));
+    private void filterStageModels(String projectIdentifier) {
+        stageModels
+                .forEach(stageModel -> stageModel.getStage().getHosts()
+                        .forEach(host -> {
+                                    App[] arrayApps = host.getApplications().stream().toArray(App[]::new);
+                                    for (App app : arrayApps) {
+                                        if (!app.getProjectIdentifier().equals(projectIdentifier)) {
+                                            ArrayUtils.removeElement(arrayApps, app);
+                                        }
+                                    }
+                                }
+
+                        ));
     }
+
 }
