@@ -10,7 +10,7 @@ Ziel des Deployment-Managers ist es, unaghängig von der Jenkins-BuildNumber ein
 Auserdem ist es über die Pipelines möglich ein bestimmtes Image in die verschiedenen Stages zu deployen.
 In der Pipeline kann man auch erkennen, In welchen Stages ein Image schon deployed wurde.
 
-In dem Bereich Stage ist zu sehen, welche Version einer Anwenung gerade auf welchem Host deployed ist.
+In dem Bereich Stage ist zu sehen, welche Version einer Anwendung gerade auf welchem Host deployed ist.
 
 
 === Qualitätsziele
