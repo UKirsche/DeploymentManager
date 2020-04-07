@@ -1,5 +1,6 @@
 package de.bas.deploymentmanager.frontend.jsf.project;
 
+import de.bas.deploymentmanager.logic.business.createnewimage.CreateNewImageFlow;
 import de.bas.deploymentmanager.logic.business.loadproject.LoadProjectFlow;
 import de.bas.deploymentmanager.logic.business.loadproject.ProjectFormModel;
 import de.bas.deploymentmanager.logic.domain.project.entity.Project;

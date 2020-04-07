@@ -21,16 +21,18 @@ public class StageServiceImpl implements StageService {
 
     private final StageRepository stageRepository;
     private final AppRepository appRepository;
+    private final HostRepository hostRepository;
 
     @Inject
-    public StageServiceImpl(StageRepository stageRepository, AppRepository appRepository) {
+    public StageServiceImpl(StageRepository stageRepository, AppRepository appRepository, HostRepository hostRepository) {
         this.stageRepository = stageRepository;
         this.appRepository = appRepository;
+        this.hostRepository = hostRepository;
     }
 
     @Override
     public void imageDeployed(String identifier, Image image, String hostName, String port) {
-        Host host = stageRepository.getHostByName(hostName);
+        Host host = hostRepository.getHostByName(hostName);
         deleteOldVersion(host, identifier);
         addNewVersion(identifier, image, port, host);
 
