@@ -34,7 +34,7 @@ public class StageTableBean implements Serializable {
 
 
     public String edit(Project project) {
-        return "diagram.xhtml?faces-redirect=true&identifier=" + project.getIdentifier();
+        return "diagram.xhtml?faces-redirect=true&id=" + project.getId();
     }
 
 
