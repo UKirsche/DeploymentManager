@@ -40,7 +40,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public String generateNewImage(String identifier, NewImageModel newImageModel) {
+    public Tag generateNewImage(String identifier, NewImageModel newImageModel) {
         Project project = null;
         try {
             project = projectRepository.getByIfentifier(identifier);
@@ -61,7 +61,7 @@ public class ProjectServiceImpl implements ProjectService {
                 , newTag
                 , newImageModel);
         Image save = imageRepository.save(image);
-        return save.getTag();
+        return newTag;
     }
 
     @Override
@@ -146,9 +146,9 @@ public class ProjectServiceImpl implements ProjectService {
         deploymentRepository.save(deployment);
     }
 
-    private Image createNewImage(Long applicationId, Tag tag, NewImageModel newImageModel) {
+    private Image createNewImage(Long projectId, Tag tag, NewImageModel newImageModel) {
         Image image = new Image();
-        image.setProjectId(applicationId);
+        image.setProjectId(projectId);
         image.setTag(tag);
         image.setCreateDate(LocalDateTime.now());
         image.setUser(newImageModel.getUser());
@@ -227,6 +227,22 @@ public class ProjectServiceImpl implements ProjectService {
         }
         log.info("Projekt {} wurde mit ID {} gespeichert", save.getIdentifier(), save.getId());
         return save;
+    }
+
+    @Override
+    public void syncImages(String projectIdentifier, NewImageModel newImageModel, Tag tagToSync) {
+        Project project = projectRepository.getByIfentifier(projectIdentifier);
+        if (project.getImageSync().isAktiv()) {
+            project.getImageSync().getProjekctIdentifiers().stream()
+                    .filter(ident -> !ident.equals(projectIdentifier))
+                    .forEach(s -> {
+                        Project syncProject = projectRepository.getByIfentifier(s);
+                        Image newImage = createNewImage(syncProject.getId(), tagToSync, newImageModel);
+                        log.info("Speicher neues Imgage durch Sync {}", newImage.getImageWithTag());
+                        imageRepository.save(newImage);
+                    });
+
+        }
     }
 
     private void saveImageSync(ImageSync imageSync) {

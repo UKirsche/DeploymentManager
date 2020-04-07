@@ -3,6 +3,7 @@ package de.bas.deploymentmanager.logic.domain.project.boundary;
 import de.bas.deploymentmanager.logic.domain.project.entity.Image;
 import de.bas.deploymentmanager.logic.domain.project.entity.NewImageModel;
 import de.bas.deploymentmanager.logic.domain.project.entity.Project;
+import de.bas.deploymentmanager.logic.domain.project.entity.Tag;
 import de.bas.deploymentmanager.logic.domain.stage.entity.Stage;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public interface ProjectService {
      * @param newImageModel Informationen des Image
      * @return {tag}
      */
-    String generateNewImage(String identifier, NewImageModel newImageModel);
+    Tag generateNewImage(String identifier, NewImageModel newImageModel);
 
     /**
      * Erzeugt eine neue Buildnummer und gibt das TAG zurück
@@ -63,4 +64,14 @@ public interface ProjectService {
     Project getProject(Long id);
 
     Project save(Project project);
+
+    /**
+     * Prüft ob für das übergebene Projekt ein ImageSync aktiv ist.
+     * Wenn ja dann werden für alle weiteren Projekte ebenfalls Images angelegt.
+     *
+     * @param projectIdentifier Initiles Projekt
+     * @param newImageModel     Model für das neue Image
+     * @param tagToSync         Tag der erstellt wurde und der gesynced wird
+     */
+    void syncImages(String projectIdentifier, NewImageModel newImageModel, Tag tagToSync);
 }

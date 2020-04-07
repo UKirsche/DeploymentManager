@@ -9,6 +9,8 @@ import de.bas.deploymentmanager.logic.domain.project.entity.Image;
 import de.bas.deploymentmanager.logic.domain.project.entity.Project;
 import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
@@ -23,6 +25,9 @@ import java.util.Objects;
 @ViewScoped
 @Named
 public class PipelineFormBean implements Serializable {
+
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
 
     @Getter
     private List<Image> images;
@@ -52,6 +57,7 @@ public class PipelineFormBean implements Serializable {
     }
 
     public void deploy(Image image, StageEnum stage) {
+        log.info("Deploy Projekt {} auf Stage {}", project.getName(), stage);
         deployFlow.deployImage(project.getIdentifier(), stage, image.getTag());
     }
 
