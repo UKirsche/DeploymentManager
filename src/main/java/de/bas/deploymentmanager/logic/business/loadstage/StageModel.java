@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @Builder
 /**
- * Das Stagemodel lädt alle relevanten Informationen
+ * Das Stagemodel lädt alle relevanten Informationen zur Darstellung der Stages
  */
 public class StageModel {
     private Stage stage;
