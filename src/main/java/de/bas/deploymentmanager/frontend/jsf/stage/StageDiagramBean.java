@@ -9,12 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.Map;
 
 @ViewScoped
 @Named
@@ -35,10 +33,7 @@ public class StageDiagramBean implements Serializable {
      */
     @PostConstruct
     public void init() {
-        Map<String, String> params = FacesContext.getCurrentInstance().
-                getExternalContext().getRequestParameterMap();
-        String projectId = params.get("id");
-        model = loadStageFlow.load(Long.valueOf(projectId));
+        model = loadStageFlow.load();
     }
 
 }
