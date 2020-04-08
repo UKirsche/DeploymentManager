@@ -1,7 +1,6 @@
 package de.bas.deploymentmanager.logic.business.loadstage;
 
 import de.bas.deploymentmanager.logic.domain.project.boundary.ProjectService;
-import de.bas.deploymentmanager.logic.domain.project.entity.Project;
 import de.bas.deploymentmanager.logic.domain.stage.boundary.StageService;
 import de.bas.deploymentmanager.logic.domain.stage.entity.Stage;
 import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
@@ -10,6 +9,9 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.util.HashMap;
 
+/**
+ * Befüllt die StageModels zur Darstellung der Stages-Gesamtübersicht
+ */
 @Stateless
 public class LoadStageFlowImpl implements LoadStageFlow {
 
@@ -25,11 +27,10 @@ public class LoadStageFlowImpl implements LoadStageFlow {
 
 
     @Override
-    public StageDiagramModel load(Long id) {
-        Project project = projectService.getProject(id);
+    public StageDiagramModel load() {
         stageModels = new HashMap<>();
         fillStageModel();
-        return StageDiagramModel.builder().project(project).stageModels(stageModels).build();
+        return StageDiagramModel.builder().stageModels(stageModels).build();
     }
 
 
