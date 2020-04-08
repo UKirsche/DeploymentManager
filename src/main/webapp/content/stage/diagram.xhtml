@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
                 template="#{layoutMB.template}">
 
     <ui:define name="menu">
@@ -16,11 +19,34 @@
 
         </f:metadata>
 
-        <h:form id="form" prependId="false">
+        <h:form id="form">
 
+            <p:organigram id="organigram"
+                          widgetVar="organigram"
+                          value="#{stageDiagramBean.rootNode}"
+                          var="node">
+                <p:organigramNode>
+                    <h:outputText value="#{node.data}" />
+                </p:organigramNode>
+
+                <p:organigramNode type="root"
+                                  style="border-radius: 10px;">
+                    <h:outputText value="#{node.data}" />
+                </p:organigramNode>
+
+                <p:organigramNode type="stage">
+                    <h:outputText value="#{node.data}" />
+                </p:organigramNode>
+
+                <p:organigramNode type="host">
+                    <h:outputText value="#{node.data}" />
+                </p:organigramNode>
+
+                <p:organigramNode type="app">
+                    <h:outputText value="#{node.data}" />
+                </p:organigramNode>
+            </p:organigram>
         </h:form>
-
-
     </ui:define>
 
 </ui:composition>

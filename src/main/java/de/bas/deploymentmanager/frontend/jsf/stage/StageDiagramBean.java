@@ -3,8 +3,12 @@ package de.bas.deploymentmanager.frontend.jsf.stage;
 import de.bas.deploymentmanager.logic.business.loadpipeline.LoadPipelineFlow;
 import de.bas.deploymentmanager.logic.business.loadstage.LoadStageFlow;
 import de.bas.deploymentmanager.logic.business.loadstage.StageDiagramModel;
-import de.bas.deploymentmanager.logic.domain.project.entity.Project;
+import de.bas.deploymentmanager.logic.domain.stage.entity.App;
+import de.bas.deploymentmanager.logic.domain.stage.entity.Host;
+import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
 import lombok.Getter;
+import org.primefaces.model.DefaultOrganigramNode;
+import org.primefaces.model.OrganigramNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +17,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.List;
 
 @ViewScoped
 @Named
@@ -20,7 +25,8 @@ public class StageDiagramBean implements Serializable {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Getter
-    private Project project;
+    private DefaultOrganigramNode rootNode;
+
 
     @Inject
     private LoadStageFlow loadStageFlow;
@@ -33,7 +39,58 @@ public class StageDiagramBean implements Serializable {
      */
     @PostConstruct
     public void init() {
+        log.info("Lade StageModels");
         model = loadStageFlow.load();
+
+        rootNode = new DefaultOrganigramNode("root", "Stages", null);
+        rootNode.setDroppable(false);
+        rootNode.setCollapsible(false);
+        addETW();
+
+    }
+
+
+    /**
+     * Fügt ETW-Hosts mit Apps hinzu
+     * @return
+     */
+    private OrganigramNode addETW(){
+        OrganigramNode stageNodeETW = new DefaultOrganigramNode("stage", StageEnum.ETW.name(), rootNode);
+        List<Host> hostsETW = model.getStageModels().get(StageEnum.ETW.name()).getHosts();
+        addHosts(stageNodeETW, hostsETW);
+        return  stageNodeETW;
+    }
+
+    /**
+     * Fügt INT-Hosts mit Apps hinzu
+     * @return
+     */
+//    private OrganigramNode addINT(){
+//
+//    }
+
+    /**
+     * Fügt PRD-Hosts mit Apps hinzu
+     */
+//    private OrganigramNode addPRD(){
+//
+//    }
+
+    private void addHosts(OrganigramNode parent, List<Host> hosts){
+        if(hosts!=null){
+            for(Host host: hosts){
+                OrganigramNode hostETW = new DefaultOrganigramNode("host", host.getName(), parent);
+                addApps(hostETW, host.getApplications());
+            }
+        }
+    }
+
+    private void addApps(OrganigramNode parent, List<App> apps){
+        if(apps!=null){
+            for(App app: apps){
+                OrganigramNode appETW = new DefaultOrganigramNode("app", app.getImage(), parent);
+            }
+        }
     }
 
 }
