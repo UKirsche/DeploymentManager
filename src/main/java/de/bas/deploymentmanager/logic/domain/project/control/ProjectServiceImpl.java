@@ -245,6 +245,11 @@ public class ProjectServiceImpl implements ProjectService {
         }
     }
 
+    @Override
+    public void deleteImage(Long id) {
+        imageRepository.delete(id);
+    }
+
     private void saveImageSync(ImageSync imageSync) {
         imageSync.getProjekctIdentifiers().forEach(identifier -> {
             Project project = projectRepository.getByIfentifier(identifier);

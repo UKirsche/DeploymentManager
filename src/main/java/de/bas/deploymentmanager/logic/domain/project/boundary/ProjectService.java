@@ -74,4 +74,11 @@ public interface ProjectService {
      * @param tagToSync         Tag der erstellt wurde und der gesynced wird
      */
     void syncImages(String projectIdentifier, NewImageModel newImageModel, Tag tagToSync);
+
+    /**
+     * Löscht ein Image aus der Datenbank
+     *
+     * @param id
+     */
+    void deleteImage(Long id);
 }

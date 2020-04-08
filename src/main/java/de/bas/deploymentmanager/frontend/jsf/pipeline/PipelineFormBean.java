@@ -5,6 +5,7 @@ import de.bas.deploymentmanager.logic.business.deploy.DeployFlow;
 import de.bas.deploymentmanager.logic.business.loadpipeline.LoadPipelineFlow;
 import de.bas.deploymentmanager.logic.business.loadpipeline.PipelineFormModel;
 import de.bas.deploymentmanager.logic.business.loadpipeline.ProjectStageModel;
+import de.bas.deploymentmanager.logic.domain.project.boundary.ProjectService;
 import de.bas.deploymentmanager.logic.domain.project.entity.Image;
 import de.bas.deploymentmanager.logic.domain.project.entity.Project;
 import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
@@ -28,7 +29,6 @@ public class PipelineFormBean implements Serializable {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-
     @Getter
     private List<Image> images;
     @Getter
@@ -44,6 +44,9 @@ public class PipelineFormBean implements Serializable {
 
     @Inject
     private BuildFlow buildFlow;
+
+    @Inject
+    private ProjectService projectService;
 
     @PostConstruct
     public void init() {
@@ -83,5 +86,9 @@ public class PipelineFormBean implements Serializable {
         return "";
     }
 
+    public void deleteImage(Image image) {
+        log.info("Lösche Image {}", image.getImageWithTag());
+        projectService.deleteImage(image.getId());
+    }
 
 }

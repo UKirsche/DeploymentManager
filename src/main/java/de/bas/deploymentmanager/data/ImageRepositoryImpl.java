@@ -67,4 +67,9 @@ public class ImageRepositoryImpl extends AbstractRepository implements ImageRepo
 
     }
 
+    @Override
+    public void delete(Long id) {
+        entityManager.remove(entityManager.find(Image.class, id));
+    }
+
 }

@@ -42,7 +42,7 @@
             <br/>
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <p:dataTable value="#{pipelineFormBean.images}" var="image">
+                    <p:dataTable id="pipelineTable" value="#{pipelineFormBean.images}" var="image">
                         <p:column headerText="Image">
                             <h:outputLabel value="#{image.tag}" title="#{image.imageWithTag}"/>
                         </p:column>
@@ -69,6 +69,15 @@
                                              actionListener="#{pipelineFormBean.deploy(image, 'PRD')}"
                                              title="#{image.getDeployment('PRD').createTime}"
                                              icon="#{pipelineFormBean.getIcon(image, 'PRD')}"/>
+                        </p:column>
+                        <p:column styleClass="text-center" width="50">
+                            <p:commandButton actionListener="#{pipelineFormBean.deleteImage(image)}"
+                                             title="Image löschen"
+                                             update="pipelineTable"
+                                             icon="fa fa-trash">
+                                <p:confirm header="Confirmation" message="Are you sure?"
+                                           icon="pi pi-exclamation-triangle"/>
+                            </p:commandButton>
                         </p:column>
                     </p:dataTable>
                 </div>
