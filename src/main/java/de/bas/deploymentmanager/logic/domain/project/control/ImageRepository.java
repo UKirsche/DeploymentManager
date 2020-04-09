@@ -1,6 +1,7 @@
 package de.bas.deploymentmanager.logic.domain.project.control;
 
 import de.bas.deploymentmanager.logic.domain.project.entity.Image;
+import de.bas.deploymentmanager.logic.domain.project.entity.exception.ImageDeleteException;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,5 +17,5 @@ public interface ImageRepository {
 
     Image getImageByProjectIdTag(Long applicationId, String tag);
 
-    void delete(Long id);
+    void delete(Long id) throws ImageDeleteException;
 }

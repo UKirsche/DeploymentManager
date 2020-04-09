@@ -4,6 +4,7 @@ import de.bas.deploymentmanager.logic.domain.project.entity.Image;
 import de.bas.deploymentmanager.logic.domain.project.entity.NewImageModel;
 import de.bas.deploymentmanager.logic.domain.project.entity.Project;
 import de.bas.deploymentmanager.logic.domain.project.entity.Tag;
+import de.bas.deploymentmanager.logic.domain.project.entity.exception.ImageDeleteException;
 import de.bas.deploymentmanager.logic.domain.stage.entity.Stage;
 
 import java.util.List;
@@ -77,8 +78,10 @@ public interface ProjectService {
 
     /**
      * Löscht ein Image aus der Datenbank
+     * Ein Image kann nur gelöscht werden, wenn es nicht die höchste Buildnummer einer Version ist.
+     * Und wenn das Image nicht auf einer Stage deployed ist.
      *
-     * @param id
+     * @param imageId Id
      */
-    void deleteImage(Long id);
+    void deleteImage(Long imageId) throws ImageDeleteException;
 }

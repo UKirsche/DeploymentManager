@@ -2,6 +2,7 @@ package de.bas.deploymentmanager.logic.domain.project.control;
 
 import de.bas.deploymentmanager.logic.domain.project.boundary.ProjectService;
 import de.bas.deploymentmanager.logic.domain.project.entity.*;
+import de.bas.deploymentmanager.logic.domain.project.entity.exception.ImageDeleteException;
 import de.bas.deploymentmanager.logic.domain.stage.entity.Stage;
 import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
 import org.slf4j.Logger;
@@ -246,8 +247,10 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void deleteImage(Long id) {
-        imageRepository.delete(id);
+    public void deleteImage(Long imageId) throws ImageDeleteException {
+        log.info("Lösche Image mit ID: {}", imageId);
+
+        imageRepository.delete(imageId);
     }
 
     private void saveImageSync(ImageSync imageSync) {
