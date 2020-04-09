@@ -27,10 +27,8 @@ public class StageDiagramBean implements Serializable {
     @Getter
     private DefaultOrganigramNode rootNode;
 
-
     @Inject
     private LoadStageFlow loadStageFlow;
-
     private StageDiagramModel model;
 
 
@@ -45,36 +43,43 @@ public class StageDiagramBean implements Serializable {
         rootNode = new DefaultOrganigramNode("root", "Stages", null);
         rootNode.setDroppable(false);
         rootNode.setCollapsible(false);
+
         addETW();
+        addINT();
+        addPRD();
 
     }
-
 
     /**
      * Fügt ETW-Hosts mit Apps hinzu
      * @return
      */
     private OrganigramNode addETW(){
-        OrganigramNode stageNodeETW = new DefaultOrganigramNode("stage", StageEnum.ETW.name(), rootNode);
-        List<Host> hostsETW = model.getStageModels().get(StageEnum.ETW.name()).getHosts();
-        addHosts(stageNodeETW, hostsETW);
-        return  stageNodeETW;
+        return addStage(StageEnum.ETW);
     }
 
     /**
      * Fügt INT-Hosts mit Apps hinzu
      * @return
      */
-//    private OrganigramNode addINT(){
-//
-//    }
+    private OrganigramNode addINT(){
+        return addStage(StageEnum.INT);
+    }
 
     /**
      * Fügt PRD-Hosts mit Apps hinzu
      */
-//    private OrganigramNode addPRD(){
-//
-//    }
+    private OrganigramNode addPRD(){
+        return addStage(StageEnum.PRD);
+
+    }
+
+    private OrganigramNode addStage(StageEnum etw) {
+        OrganigramNode stageNodeETW = new DefaultOrganigramNode("stage", etw.name(), rootNode);
+        List<Host> hostsETW = model.getStageModels().get(etw.name()).getHosts();
+        addHosts(stageNodeETW, hostsETW);
+        return stageNodeETW;
+    }
 
     private void addHosts(OrganigramNode parent, List<Host> hosts){
         if(hosts!=null){
@@ -88,7 +93,7 @@ public class StageDiagramBean implements Serializable {
     private void addApps(OrganigramNode parent, List<App> apps){
         if(apps!=null){
             for(App app: apps){
-                OrganigramNode appETW = new DefaultOrganigramNode("app", app.getImage(), parent);
+                new DefaultOrganigramNode("app", app.getImage(), parent);
             }
         }
     }
