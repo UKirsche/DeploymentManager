@@ -8,12 +8,14 @@ import de.bas.deploymentmanager.logic.business.loadpipeline.ProjectStageModel;
 import de.bas.deploymentmanager.logic.domain.project.boundary.ProjectService;
 import de.bas.deploymentmanager.logic.domain.project.entity.Image;
 import de.bas.deploymentmanager.logic.domain.project.entity.Project;
+import de.bas.deploymentmanager.logic.domain.project.entity.exception.ImageDeleteException;
 import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -88,7 +90,12 @@ public class PipelineFormBean implements Serializable {
 
     public void deleteImage(Image image) {
         log.info("Lösche Image {}", image.getImageWithTag());
-        projectService.deleteImage(image.getId());
+        try {
+            projectService.deleteImage(image.getId());
+        } catch (ImageDeleteException e) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Löschen fehlgeschlagen", "Das Image konnte nicht gelöscht werden: " + e.getMessage()));
+        }
     }
 
 }

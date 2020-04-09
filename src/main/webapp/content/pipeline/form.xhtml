@@ -19,6 +19,7 @@
         </f:metadata>
 
         <h:form id="form" prependId="false">
+            <p:growl id="growl" showDetail="true" sticky="true" keepAlive=""/>
 
             <div class="box box-primary">
                 <div class="box-header with-border">
@@ -35,8 +36,8 @@
                 <f:facet name="header">
                     Aktuell deployte Images
                 </f:facet>
-                <p:panel header="#{app.stage}" style="text-align:center">
-                    <h:outputText value="#{app.image}"/>
+                <p:panel style="text-align:center">
+                    <h:outputText value="#{app.stage} #{app.image}"/>
                 </p:panel>
             </p:dataGrid>
             <br/>
@@ -75,16 +76,21 @@
                                              title="Image löschen"
                                              update="pipelineTable"
                                              icon="fa fa-trash">
-                                <p:confirm header="Confirmation" message="Are you sure?"
+                                <p:confirm header="Image löschen" message="Wollen Sie das Image wirklich löschen?"
                                            icon="pi pi-exclamation-triangle"/>
                             </p:commandButton>
                         </p:column>
                     </p:dataTable>
                 </div>
             </div>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Ja" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                <p:commandButton value="Nein" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times"/>
+            </p:confirmDialog>
         </h:form>
 
 
     </ui:define>
+
 
 </ui:composition>

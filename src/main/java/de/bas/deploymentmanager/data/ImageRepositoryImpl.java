@@ -2,7 +2,9 @@ package de.bas.deploymentmanager.data;
 
 import de.bas.deploymentmanager.logic.domain.project.control.ImageRepository;
 import de.bas.deploymentmanager.logic.domain.project.entity.Image;
+import de.bas.deploymentmanager.logic.domain.project.entity.exception.ImageDeleteException;
 
+import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
@@ -68,8 +70,13 @@ public class ImageRepositoryImpl extends AbstractRepository implements ImageRepo
     }
 
     @Override
-    public void delete(Long id) {
-        entityManager.remove(entityManager.find(Image.class, id));
+    public void delete(Long id) throws ImageDeleteException {
+        try {
+            entityManager.remove(entityManager.find(Image.class, id));
+            entityManager.flush();
+        } catch (PersistenceException e) {
+            throw new ImageDeleteException(e.getMessage());
+        }
     }
 
 }
