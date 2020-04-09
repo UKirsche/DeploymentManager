@@ -48,4 +48,8 @@ public class Project {
     public void setImageSync(ImageSync imageSync) {
         imageSyncValue = imageSync.getPersistedValue();
     }
+
+    public boolean isPersisted() {
+        return id != null;
+    }
 }
