@@ -1,9 +1,6 @@
 package de.bas.deploymentmanager.frontend.jsf.project;
 
-import de.bas.deploymentmanager.logic.business.createnewimage.CreateNewImageFlow;
-import de.bas.deploymentmanager.logic.domain.dicd.boundary.CiCdService;
 import de.bas.deploymentmanager.logic.domain.project.boundary.ProjectService;
-import de.bas.deploymentmanager.logic.domain.project.entity.NewImageModel;
 import de.bas.deploymentmanager.logic.domain.project.entity.Project;
 import lombok.Getter;
 import org.slf4j.Logger;
@@ -25,12 +22,6 @@ public class ProjectTableBean implements Serializable {
     @Inject
     private ProjectService projectService;
 
-    @Inject
-    private CiCdService ciCdService;
-
-    @Inject
-    private CreateNewImageFlow createNewImageFlow;
-
     @Getter
     private List<Project> list;
 
@@ -40,21 +31,6 @@ public class ProjectTableBean implements Serializable {
         this.list = projectService.getAllProjects();
     }
 
-    /**
-     * Dummy-Methode, welche testweise ein "Image" erzeugt, das eigentlich aus einem Jenkins-Job kommt
-     * und über den RestEndpoint {@link de.bas.deploymentmanager.frontend.rest.controller.ImageResource}
-     * <i>generateNewImage()</i>
-     * aufgerufen wird.
-     * @param buildJob
-     */
-    public void build(String buildJob) {
-        NewImageModel model = new NewImageModel();
-        model.setImage("etw-docker-03.bvaetw.de/zus/zus");
-        model.setVersion("1.0");
-        model.setUser("Tester");
-        String newImage = createNewImageFlow.createNewImage("zus", model);
-        log.info(newImage);
-    }
 
     public String edit(Project project) {
         return "form.xhtml?faces-redirect=true&id=" + project.getId();

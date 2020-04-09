@@ -69,7 +69,11 @@
                     </div>
                 </div>
             </div>
-
+            <p:panel toggleable="true" collapsed="true" header="Erweiterte Einstellungen">
+                <p:selectManyMenu value="#{projectFormBean.model.selectetSync.projekctIdentifiers}">
+                    <f:selectItems value="#{projectFormBean.model.projects}"/>
+                </p:selectManyMenu>
+            </p:panel>
             <p:dataTable value="#{projectFormBean.project.images}"
                          sortMode="single"
                          var="image">

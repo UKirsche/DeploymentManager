@@ -1,5 +1,6 @@
 package de.bas.deploymentmanager.frontend.rest.controller;
 
+import de.bas.deploymentmanager.logic.business.createnewimage.CreateNewImageFlow;
 import de.bas.deploymentmanager.logic.domain.project.boundary.ProjectService;
 import de.bas.deploymentmanager.logic.domain.project.entity.NewImageModel;
 import de.bas.deploymentmanager.logic.domain.project.entity.Project;
@@ -19,6 +20,9 @@ public class ImageResource {
     @Inject
     private ProjectService projectService;
 
+    @Inject
+    private CreateNewImageFlow createNewImageFlow;
+
 
     /**
      * Erzeugt ein neues Image und gibt das Tag wieder zurück.
@@ -29,7 +33,7 @@ public class ImageResource {
      */
     @POST
     public String generateNewImage(NewImageModel newImageModel, @PathParam("project") String identifier) {
-        return projectService.generateNewImage(identifier, newImageModel);
+        return createNewImageFlow.createNewImage(identifier, newImageModel);
     }
 
     /**

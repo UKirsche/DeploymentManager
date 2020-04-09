@@ -15,4 +15,6 @@ public interface ImageRepository {
     Image getImageByIdentifierTag(String identifier, String tag);
 
     Image getImageByProjectIdTag(Long applicationId, String tag);
+
+    void delete(Long id);
 }

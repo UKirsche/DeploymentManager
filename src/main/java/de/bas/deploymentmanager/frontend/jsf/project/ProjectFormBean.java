@@ -1,8 +1,8 @@
 package de.bas.deploymentmanager.frontend.jsf.project;
 
-import de.bas.deploymentmanager.logic.business.createnewimage.CreateNewImageFlow;
 import de.bas.deploymentmanager.logic.business.loadproject.LoadProjectFlow;
 import de.bas.deploymentmanager.logic.business.loadproject.ProjectFormModel;
+import de.bas.deploymentmanager.logic.domain.project.entity.ImageSync;
 import de.bas.deploymentmanager.logic.domain.project.entity.Project;
 import lombok.Getter;
 import org.slf4j.Logger;
@@ -22,19 +22,18 @@ public class ProjectFormBean implements Serializable {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     private final LoadProjectFlow loadProjectFlow;
-    private final CreateNewImageFlow createNewImageFlow;
 
     @Getter
     private ProjectFormModel model;
+
 
     public Project getProject() {
         return this.model.getProject();
     }
 
     @Inject
-    public ProjectFormBean(LoadProjectFlow loadProjectFlow, CreateNewImageFlow createNewImageFlow) {
+    public ProjectFormBean(LoadProjectFlow loadProjectFlow) {
         this.loadProjectFlow = loadProjectFlow;
-        this.createNewImageFlow = createNewImageFlow;
     }
 
 
@@ -46,7 +45,7 @@ public class ProjectFormBean implements Serializable {
         if (id != null) {
             this.model = loadProjectFlow.load(Long.valueOf(id));
         } else {
-            this.model = ProjectFormModel.builder().project(new Project()).build();
+            this.model = ProjectFormModel.builder().project(new Project()).selectetSync(new ImageSync(null)).build();
         }
     }
 

@@ -40,7 +40,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public String generateNewImage(String identifier, NewImageModel newImageModel) {
+    public Tag generateNewImage(String identifier, NewImageModel newImageModel) {
         Project project = null;
         try {
             project = projectRepository.getByIfentifier(identifier);
@@ -58,14 +58,10 @@ public class ProjectServiceImpl implements ProjectService {
                 , newTag.getBuildNumber());
 
         Image image = createNewImage(project.getId()
-                , newTag.getMajorVersion()
-                , newTag.getMinorVersion()
-                , newTag.getIncrementalVersion()
-                , newImageModel
-                , newTag.getBuildNumber());
-
+                , newTag
+                , newImageModel);
         Image save = imageRepository.save(image);
-        return save.getTag();
+        return newTag;
     }
 
     @Override
@@ -150,18 +146,14 @@ public class ProjectServiceImpl implements ProjectService {
         deploymentRepository.save(deployment);
     }
 
-    private Image createNewImage(Long applicationId, int majorVersion, int minorVersion, int incrementalVersion, NewImageModel newImageModel, Integer buildNumber) {
+    private Image createNewImage(Long projectId, Tag tag, NewImageModel newImageModel) {
         Image image = new Image();
-        image.setProjectId(applicationId);
-        image.setMajorVersion(majorVersion);
-        image.setMinorVersion(minorVersion);
-        image.setIncrementalVersion(incrementalVersion);
+        image.setProjectId(projectId);
+        image.setTag(tag);
         image.setCreateDate(LocalDateTime.now());
         image.setUser(newImageModel.getUser());
         image.setImage(newImageModel.getImage());
-        image.setBuildNumber(buildNumber);
         image.setCommit(newImageModel.getCommit());
-        image.setTag(String.format("%s.%s.%s-%s", majorVersion, minorVersion, incrementalVersion, buildNumber));
         return image;
     }
 
@@ -229,7 +221,40 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Project save(Project project) {
         Project save = projectRepository.save(project);
+        if (save.getImageSync().isAktiv()) {
+            log.info("ImageSync ist aktiviert für {}", save.getImageSync().getPersistedValue());
+            saveImageSync(save.getImageSync());
+        }
         log.info("Projekt {} wurde mit ID {} gespeichert", save.getIdentifier(), save.getId());
         return save;
+    }
+
+    @Override
+    public void syncImages(String projectIdentifier, NewImageModel newImageModel, Tag tagToSync) {
+        Project project = projectRepository.getByIfentifier(projectIdentifier);
+        if (project.getImageSync().isAktiv()) {
+            project.getImageSync().getProjekctIdentifiers().stream()
+                    .filter(ident -> !ident.equals(projectIdentifier))
+                    .forEach(s -> {
+                        Project syncProject = projectRepository.getByIfentifier(s);
+                        Image newImage = createNewImage(syncProject.getId(), tagToSync, newImageModel);
+                        log.info("Speicher neues Imgage durch Sync {}", newImage.getImageWithTag());
+                        imageRepository.save(newImage);
+                    });
+
+        }
+    }
+
+    @Override
+    public void deleteImage(Long id) {
+        imageRepository.delete(id);
+    }
+
+    private void saveImageSync(ImageSync imageSync) {
+        imageSync.getProjekctIdentifiers().forEach(identifier -> {
+            Project project = projectRepository.getByIfentifier(identifier);
+            project.setImageSync(imageSync);
+            projectRepository.save(project);
+        });
     }
 }
