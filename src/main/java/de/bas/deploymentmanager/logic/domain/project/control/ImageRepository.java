@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface ImageRepository {
     List<Image> getImagesForProject(Long projectId);
 
-    Optional<Image> getLastImageOfVersion(Long applicationId, Integer majorVersion, Integer minorVersion, int incrementalVersion);
+    Optional<Image> getLastImageOfVersion(Long applicationId, Integer majorVersion, Integer minorVersion, Integer incrementalVersion);
 
     Image save(Image image);
 
@@ -18,4 +18,6 @@ public interface ImageRepository {
     Image getImageByProjectIdTag(Long applicationId, String tag);
 
     void delete(Long id) throws ImageDeleteException;
+
+    Image getById(Long imageId);
 }

@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -77,5 +78,28 @@ public class Image {
         buildNumber = tagVo.getBuildNumber();
         tag = tagVo.toString();
         return tag;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Image image1 = (Image) o;
+        return Objects.equals(id, image1.id) &&
+                Objects.equals(projectId, image1.projectId) &&
+                Objects.equals(tag, image1.tag) &&
+                Objects.equals(user, image1.user) &&
+                Objects.equals(createDate, image1.createDate) &&
+                Objects.equals(image, image1.image) &&
+                Objects.equals(majorVersion, image1.majorVersion) &&
+                Objects.equals(minorVersion, image1.minorVersion) &&
+                Objects.equals(incrementalVersion, image1.incrementalVersion) &&
+                Objects.equals(buildNumber, image1.buildNumber) &&
+                Objects.equals(commit, image1.commit);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, projectId, tag, user, createDate, image, majorVersion, minorVersion, incrementalVersion, buildNumber, commit);
     }
 }

@@ -81,9 +81,7 @@
                     <h:outputText value="#{image.imageWithTag}"/>
                 </p:column>
                 <p:column headerText="Deployments">
-                    <p:dataList rendered="#{not empty image.deployments}" value="#{image.deployments}" var="deployment">
-                        #{deployment.stage}
-                    </p:dataList>
+                    <h:outputText value="#{projectFormBean.getDeployments(image)}"/>
                 </p:column>
             </p:dataTable>
 

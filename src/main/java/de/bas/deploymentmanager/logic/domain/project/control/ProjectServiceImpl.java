@@ -20,13 +20,16 @@ public class ProjectServiceImpl implements ProjectService {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 
-    @Inject
-    private ProjectRepository projectRepository;
-    @Inject
-    private ImageRepository imageRepository;
+    private final ProjectRepository projectRepository;
+    private final ImageRepository imageRepository;
+    private final DeploymentRepository deploymentRepository;
 
     @Inject
-    private DeploymentRepository deploymentRepository;
+    public ProjectServiceImpl(ProjectRepository projectRepository, ImageRepository imageRepository, DeploymentRepository deploymentRepository) {
+        this.projectRepository = projectRepository;
+        this.imageRepository = imageRepository;
+        this.deploymentRepository = deploymentRepository;
+    }
 
     @Override
     public List<Project> getAllProjects() {
@@ -249,8 +252,28 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void deleteImage(Long imageId) throws ImageDeleteException {
         log.info("Lösche Image mit ID: {}", imageId);
-
+        isImageLastBuildnumber(imageId);
         imageRepository.delete(imageId);
+    }
+
+    /**
+     * Prüft ob das Image der letzte Build einer Version ist.
+     * Wenn ja dann kann das Image nicht gelöscht werden
+     *
+     * @param imageId
+     * @throws ImageDeleteException
+     */
+    private void isImageLastBuildnumber(Long imageId) throws ImageDeleteException {
+        Image image = imageRepository.getById(imageId);
+        Optional<Image> lastImageOfVersion = imageRepository.getLastImageOfVersion(image.getProjectId()
+                , image.getMajorVersion()
+                , image.getMinorVersion()
+                , image.getIncrementalVersion());
+        if (lastImageOfVersion.isPresent()) {
+            if (image.equals(lastImageOfVersion.get())) {
+                throw new ImageDeleteException("Image ist der aktuelle Build");
+            }
+        }
     }
 
     private void saveImageSync(ImageSync imageSync) {

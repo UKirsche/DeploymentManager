@@ -21,7 +21,7 @@ public class ImageRepositoryImpl extends AbstractRepository implements ImageRepo
     }
 
     @Override
-    public Optional<Image> getLastImageOfVersion(Long applicationId, Integer majorVersion, Integer minorVersion, int incrementalVersion) {
+    public Optional<Image> getLastImageOfVersion(Long applicationId, Integer majorVersion, Integer minorVersion, Integer incrementalVersion) {
         TypedQuery<Image> selectAll = entityManager.createQuery("SELECT image FROM Image image " +
                 "WHERE image.projectId = :applicationId " +
                 "AND image.majorVersion = :majorVersion " +
@@ -79,4 +79,8 @@ public class ImageRepositoryImpl extends AbstractRepository implements ImageRepo
         }
     }
 
+    @Override
+    public Image getById(Long imageId) {
+        return entityManager.find(Image.class, imageId);
+    }
 }
