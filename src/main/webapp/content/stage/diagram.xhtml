@@ -43,15 +43,15 @@
                 </p:organigramNode>
 
                 <p:organigramNode type="stage">
-                    <h:outputText value="#{node.data}" />
+                    <h:outputText value="#{node.data}" escape="false"/>
                 </p:organigramNode>
 
                 <p:organigramNode type="host">
-                    <h:outputText value="#{node.data}" />
+                    <h:outputText value="#{node.data}" escape="false"/>
                 </p:organigramNode>
 
                 <p:organigramNode type="app">
-                    <h:outputText value="#{node.data}" />
+                    <h:outputText value="#{node.data}" escape="false"/>
                 </p:organigramNode>
             </p:organigram>
         </h:form>
