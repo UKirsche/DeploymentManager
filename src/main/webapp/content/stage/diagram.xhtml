@@ -5,13 +5,21 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 template="#{layoutMB.template}">
+    <ui:define name="metadata">
+        <ui:param name="title" value="Dashboard"/> <!-- Automatic create breadCrumb and page title when param 'title' is provided. -->
 
-    <ui:define name="menu">
-        <ui:include src="/content/menu.xhtml"/>
+        <style type="text/css">
+            .ui-datatable .ui-datatable-header {
+                text-align: right !important;
+            }
+        </style>
     </ui:define>
 
-    <ui:define name="title">
-        Diagram #{stageDiagramBean}
+    <ui:define name="description">
+        Übersicht über Stages und Apps
+    </ui:define>™
+    <ui:define name="menu">
+        <ui:include src="/content/menu.xhtml"/>
     </ui:define>
 
     <ui:define name="body">
@@ -35,16 +43,15 @@
                 </p:organigramNode>
 
                 <p:organigramNode type="stage">
-                    <h:outputText value="#{node.data}"/><br/>
-                    <h:outputText value="Laufende Container: 30"/>
+                    <h:outputText value="#{node.data}" escape="false"/>
                 </p:organigramNode>
 
                 <p:organigramNode type="host">
-                    <h:outputText value="#{node.data}"/>
+                    <h:outputText value="#{node.data}" escape="false"/>
                 </p:organigramNode>
 
                 <p:organigramNode type="app">
-                    <h:outputText value="#{node.data}"/>
+                    <h:outputText value="#{node.data}" escape="false"/>
                 </p:organigramNode>
             </p:organigram>
         </h:form>
