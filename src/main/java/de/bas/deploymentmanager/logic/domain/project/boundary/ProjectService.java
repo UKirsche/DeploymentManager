@@ -52,7 +52,7 @@ public interface ProjectService {
      * @param stage      Stage
      * @return Image inkl. Deployment
      */
-    Image markImageAsDeployed(String identifier, String tag, Stage stage);
+    Image markImageAsDeployed(String identifier, Tag tag, Stage stage);
 
     Project createNewProject(Project model);
 
@@ -60,7 +60,7 @@ public interface ProjectService {
 
     List<Image> getImages(Long projectId);
 
-    Image getImage(Long applicationId, String tag);
+    Image getImage(Long applicationId, Tag tag);
 
     Project getProject(Long id);
 

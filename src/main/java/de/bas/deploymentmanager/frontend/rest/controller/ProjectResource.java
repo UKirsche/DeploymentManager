@@ -4,6 +4,7 @@ import de.bas.deploymentmanager.logic.domain.dicd.boundary.CiCdService;
 import de.bas.deploymentmanager.logic.domain.project.boundary.ProjectService;
 import de.bas.deploymentmanager.logic.domain.project.entity.Project;
 import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
+import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +39,7 @@ public class ProjectResource {
 
     @GET
     @Path("/{application}")
+    @Operation(summary = "test")
     public Project getApplication(@PathParam("application") String application) {
         log.debug("Lade Application {}", application);
         return projectService.getProject(application);

@@ -2,6 +2,8 @@ package de.bas.deploymentmanager.data;
 
 import de.bas.deploymentmanager.logic.domain.project.control.ImageRepository;
 import de.bas.deploymentmanager.logic.domain.project.entity.Image;
+import de.bas.deploymentmanager.logic.domain.project.entity.Tag;
+import de.bas.deploymentmanager.logic.domain.project.entity.Version;
 import de.bas.deploymentmanager.logic.domain.project.entity.exception.ImageDeleteException;
 
 import javax.persistence.PersistenceException;
@@ -15,23 +17,23 @@ public class ImageRepositoryImpl extends AbstractRepository implements ImageRepo
     @Override
     public List<Image> getImagesForProject(Long projectId) {
         TypedQuery<Image> selectAll = entityManager.createQuery("SELECT image FROM Image image WHERE image.projectId = :applicationId " +
-                "ORDER BY image.majorVersion, image.minorVersion, image.incrementalVersion, image.buildNumber desc ", Image.class);
+                "ORDER BY image.tag.version.majorVersion, image.tag.version.minorVersion, image.tag.version.incrementalVersion, image.tag.buildNumber desc ", Image.class);
         selectAll.setParameter("applicationId", projectId);
         return selectAll.getResultList();
     }
 
     @Override
-    public Optional<Image> getLastImageOfVersion(Long applicationId, Integer majorVersion, Integer minorVersion, Integer incrementalVersion) {
+    public Optional<Image> getLastImageOfVersion(Long applicationId, Version version) {
         TypedQuery<Image> selectAll = entityManager.createQuery("SELECT image FROM Image image " +
                 "WHERE image.projectId = :applicationId " +
-                "AND image.majorVersion = :majorVersion " +
-                "AND image.minorVersion = :minorVersion " +
-                "AND image.incrementalVersion = :incrementalVersion " +
-                "ORDER BY image.buildNumber DESC", Image.class);
+                "AND image.tag.version.majorVersion = :majorVersion " +
+                "AND image.tag.version.minorVersion = :minorVersion " +
+                "AND image.tag.version.incrementalVersion = :incrementalVersion " +
+                "ORDER BY image.tag.buildNumber DESC", Image.class);
         selectAll.setParameter("applicationId", applicationId);
-        selectAll.setParameter("majorVersion", majorVersion);
-        selectAll.setParameter("minorVersion", minorVersion);
-        selectAll.setParameter("incrementalVersion", incrementalVersion);
+        selectAll.setParameter("majorVersion", version.getMajorVersion());
+        selectAll.setParameter("minorVersion", version.getMinorVersion());
+        selectAll.setParameter("incrementalVersion", version.getIncrementalVersion());
         List<Image> resultList = selectAll.getResultList();
         if (resultList.isEmpty()) {
             return Optional.empty();
@@ -47,7 +49,7 @@ public class ImageRepositoryImpl extends AbstractRepository implements ImageRepo
     }
 
     @Override
-    public Image getImageByIdentifierTag(String identifier, String tag) {
+    public Image getImageByIdentifierTag(String identifier, Tag tag) {
         TypedQuery<Image> selectAll = entityManager.createQuery("SELECT image FROM Image image, Project app " +
                 "WHERE app.id = image.projectId " +
                 "AND app.identifier =:identifier " +
@@ -58,7 +60,7 @@ public class ImageRepositoryImpl extends AbstractRepository implements ImageRepo
     }
 
     @Override
-    public Image getImageByProjectIdTag(Long applicationId, String tag) {
+    public Image getImageByProjectIdTag(Long applicationId, Tag tag) {
         TypedQuery<Image> selectAll = entityManager.createQuery("SELECT image FROM Image image " +
                 "WHERE image.projectId =:applicationId " +
                 "AND image.tag =:tag", Image.class);

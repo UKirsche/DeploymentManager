@@ -6,6 +6,7 @@ import de.bas.deploymentmanager.logic.domain.project.control.ProjectRepository;
 import de.bas.deploymentmanager.logic.domain.project.control.ProjectServiceImpl;
 import de.bas.deploymentmanager.logic.domain.project.entity.Image;
 import de.bas.deploymentmanager.logic.domain.project.entity.Tag;
+import de.bas.deploymentmanager.logic.domain.project.entity.Version;
 import de.bas.deploymentmanager.logic.domain.project.entity.exception.ImageDeleteException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,7 +42,7 @@ class ProjectServiceDeleteImageTest {
     void loeschenNeusteVersionnichtMoeglich() {
         //GIVEN
         when(imageRepository.getById(eq(1L))).thenReturn(getProject());
-        when(imageRepository.getLastImageOfVersion(anyLong(), anyInt(), anyInt(), anyInt())).thenReturn(Optional.of(getProject()));
+        when(imageRepository.getLastImageOfVersion(anyLong(), any())).thenReturn(Optional.of(getProject()));
 
         //WHEN
         Assertions.assertThrows(ImageDeleteException.class, () -> projectService.deleteImage(1L));
@@ -51,7 +52,7 @@ class ProjectServiceDeleteImageTest {
     void loeschenMoeglich() throws ImageDeleteException {
         //GIVEN
         when(imageRepository.getById(eq(1L))).thenReturn(getProject());
-        when(imageRepository.getLastImageOfVersion(anyLong(), anyInt(), anyInt(), anyInt())).thenReturn(Optional.of(getAnotherProject()));
+        when(imageRepository.getLastImageOfVersion(anyLong(), any())).thenReturn(Optional.of(getAnotherProject()));
 
         //WHEN
         projectService.deleteImage(1L);
@@ -63,7 +64,7 @@ class ProjectServiceDeleteImageTest {
     private Image getAnotherProject() {
         Image image = new Image();
         image.setProjectId(1L);
-        image.setTag(new Tag(1, 1, 1, 2));
+        image.setTag(new Tag(new Version("1.1.1"), 2));
         return image;
     }
 
@@ -71,7 +72,7 @@ class ProjectServiceDeleteImageTest {
         Image image = new Image();
         image.setId(1L);
         image.setProjectId(1L);
-        image.setTag(new Tag(1, 1, 1, 1));
+        image.setTag(new Tag(new Version("1.1.1"), 1));
         return image;
     }
 }

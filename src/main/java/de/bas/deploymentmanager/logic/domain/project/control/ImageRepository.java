@@ -1,6 +1,8 @@
 package de.bas.deploymentmanager.logic.domain.project.control;
 
 import de.bas.deploymentmanager.logic.domain.project.entity.Image;
+import de.bas.deploymentmanager.logic.domain.project.entity.Tag;
+import de.bas.deploymentmanager.logic.domain.project.entity.Version;
 import de.bas.deploymentmanager.logic.domain.project.entity.exception.ImageDeleteException;
 
 import java.util.List;
@@ -9,13 +11,13 @@ import java.util.Optional;
 public interface ImageRepository {
     List<Image> getImagesForProject(Long projectId);
 
-    Optional<Image> getLastImageOfVersion(Long applicationId, Integer majorVersion, Integer minorVersion, Integer incrementalVersion);
+    Optional<Image> getLastImageOfVersion(Long applicationId, Version version);
 
     Image save(Image image);
 
-    Image getImageByIdentifierTag(String identifier, String tag);
+    Image getImageByIdentifierTag(String identifier, Tag tag);
 
-    Image getImageByProjectIdTag(Long applicationId, String tag);
+    Image getImageByProjectIdTag(Long applicationId, Tag tag);
 
     void delete(Long id) throws ImageDeleteException;
 

@@ -9,7 +9,7 @@ class TagTest {
     @Test
     void testFuerTag_ToString() {
         //GIVEN
-        Tag tag = new Tag(1, 2, 3, 4);
+        Tag tag = new Tag(new Version("1.2.3"), 4);
 
         //WHEN
         String s = tag.toString();

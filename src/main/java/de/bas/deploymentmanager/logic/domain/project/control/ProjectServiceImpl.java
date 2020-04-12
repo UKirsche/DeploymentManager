@@ -55,10 +55,8 @@ public class ProjectServiceImpl implements ProjectService {
 
         Tag newTag = generateNewTag(newImageModel.getVersion(), project);
 
-        log.info("Neue Buildnumber ist: {}.{}.{}-{}"
-                , newTag.getMajorVersion()
-                , newTag.getMinorVersion()
-                , newTag.getIncrementalVersion()
+        log.info("Neue Buildnumber ist: {}-{}"
+                , newTag.getVersion()
                 , newTag.getBuildNumber());
 
         Image image = createNewImage(project.getId()
@@ -83,21 +81,19 @@ public class ProjectServiceImpl implements ProjectService {
     /**
      * Gibt die nächste Buildnummer zurück
      *
-     * @param version
-     * @param project
+     * @param versionString .
+     * @param project       .
      * @return
      */
-    private Tag generateNewTag(String version, Project project) {
-        int majorVersion = getMajorVersion(version);
-        int minorVersion = getMinorVersion(version);
-        int incrementalVersion = getIncrementalVersion(version);
+    private Tag generateNewTag(String versionString, Project project) {
+        Version version = new Version(versionString);
 
-        log.debug("Übergebene Version ist: {}.{}.{}", majorVersion, majorVersion, incrementalVersion);
+        log.debug("Übergebene Version ist: {}", version);
 
-        Optional<Image> optionalImage = imageRepository.getLastImageOfVersion(project.getId(), majorVersion, minorVersion, incrementalVersion);
+        Optional<Image> optionalImage = imageRepository.getLastImageOfVersion(project.getId(), version);
 
-        int buildNumber = optionalImage.map(image -> image.getBuildNumber() + 1).orElse(1);
-        return new Tag(majorVersion, minorVersion, incrementalVersion, buildNumber);
+        int buildNumber = optionalImage.map(image -> image.getTag().getBuildNumber() + 1).orElse(1);
+        return new Tag(version, buildNumber);
     }
 
     private Project generateNewProject(String identifier) {
@@ -107,28 +103,8 @@ public class ProjectServiceImpl implements ProjectService {
         return projectRepository.save(project);
     }
 
-    private int getIncrementalVersion(String version) {
-        if (version == null) {
-            return 0;
-        }
-        String[] versionArray = version.split("\\.");
-        if (versionArray.length <= 2) {
-            return 0;
-        } else {
-            try {
-                String number = versionArray[2];
-                number = number.replace("-SNAPSHOT", "");
-                return Integer.parseInt(number);
-            } catch (NumberFormatException e) {
-                log.warn("IncrementalVersion konnte nicht ermittelt werden");
-                return 0;
-            }
-        }
-
-    }
-
     @Override
-    public Image markImageAsDeployed(String identifier, String tag, Stage stage) {
+    public Image markImageAsDeployed(String identifier, Tag tag, Stage stage) {
         Image image = imageRepository.getImageByIdentifierTag(identifier, tag);
         addDeployment(image, stage.getName());
         return image;
@@ -161,39 +137,7 @@ public class ProjectServiceImpl implements ProjectService {
         return image;
     }
 
-    private int getMinorVersion(String version) {
-        if (version == null) {
-            return 0;
-        }
-        String[] versionArray = version.split("\\.");
-        if (versionArray.length == 1) {
-            return 0;
-        } else {
-            try {
-                String number = versionArray[1];
-                number = number.replace("-SNAPSHOT", "");
-                return Integer.parseInt(number);
-            } catch (NumberFormatException e) {
-                log.warn("MinorVersion konnte nicht ermittelt werden");
-                return 0;
-            }
-        }
-    }
 
-    private int getMajorVersion(String version) {
-        if (version == null) {
-            return 0;
-        }
-        String[] versionArray = version.split("\\.");
-        try {
-            String number = versionArray[0];
-            number = number.replace("-SNAPSHOT", "");
-            return Integer.parseInt(number);
-        } catch (NumberFormatException e) {
-            log.warn("MajorVersion konnte nicht ermittelt werden");
-            return 0;
-        }
-    }
 
     @Override
     public Project createNewProject(Project model) {
@@ -213,7 +157,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Image getImage(Long applicationId, String tag) {
+    public Image getImage(Long applicationId, Tag tag) {
         return imageRepository.getImageByProjectIdTag(applicationId, tag);
     }
 
@@ -266,9 +210,7 @@ public class ProjectServiceImpl implements ProjectService {
     private void isImageLastBuildnumber(Long imageId) throws ImageDeleteException {
         Image image = imageRepository.getById(imageId);
         Optional<Image> lastImageOfVersion = imageRepository.getLastImageOfVersion(image.getProjectId()
-                , image.getMajorVersion()
-                , image.getMinorVersion()
-                , image.getIncrementalVersion());
+                , image.getVersion());
         if (lastImageOfVersion.isPresent()) {
             if (image.equals(lastImageOfVersion.get())) {
                 throw new ImageDeleteException("Image ist der aktuelle Build");

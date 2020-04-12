@@ -1,8 +1,7 @@
 package de.bas.deploymentmanager.logic.business.deploy;
 
+import de.bas.deploymentmanager.logic.domain.project.entity.Tag;
 import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
-
-import javax.ejb.Stateless;
 
 
 public interface DeployFlow {
@@ -26,7 +25,6 @@ public interface DeployFlow {
      * @param identifier ProjectIdentifier
      * @param stage
      * @param tag
-
      */
-    void deployImage(String identifier, StageEnum stage, String tag);
+    void deployImage(String identifier, StageEnum stage, Tag tag);
 }
