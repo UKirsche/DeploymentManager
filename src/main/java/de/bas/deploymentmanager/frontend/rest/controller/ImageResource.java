@@ -3,7 +3,7 @@ package de.bas.deploymentmanager.frontend.rest.controller;
 import de.bas.deploymentmanager.logic.business.createnewimage.CreateNewImageFlow;
 import de.bas.deploymentmanager.logic.domain.project.boundary.ProjectService;
 import de.bas.deploymentmanager.logic.domain.project.entity.NewImageModel;
-import de.bas.deploymentmanager.logic.domain.project.entity.Project;
+import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +32,7 @@ public class ImageResource {
      * @return Tag des neuen Image
      */
     @POST
+    @Operation(summary = "Erzeugt ein neues Image und gibt das Tag wieder zurueck")
     public String generateNewImage(NewImageModel newImageModel, @PathParam("project") String identifier) {
         return createNewImageFlow.createNewImage(identifier, newImageModel);
     }
@@ -45,14 +46,9 @@ public class ImageResource {
      * @return Tag des neuen Image
      */
     @GET
+    @Operation(summary = "Gibt das naechste Tag einer Version zurueck")
     public String getNextTag(@PathParam("project") String identifier, @QueryParam("version") String version) {
         log.info("Generate Next Tag für Project {} und Version {}", identifier, version);
         return projectService.gererateNextTag(identifier, version);
-    }
-
-    @GET
-    @Path("/{tag}")
-    public Project getImage(@PathParam("tag") String tag) {
-        return null;
     }
 }
