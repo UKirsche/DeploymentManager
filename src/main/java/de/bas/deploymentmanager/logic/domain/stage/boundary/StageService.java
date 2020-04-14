@@ -6,6 +6,7 @@ import de.bas.deploymentmanager.logic.domain.stage.entity.Stage;
 import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface StageService {
 
@@ -30,4 +31,13 @@ public interface StageService {
      * @return App (deployed on Host in Stage)
      */
     List<App> getAppsForProject(String identifier);
+
+    /**
+     * Prüft ob ein Image in einer Stage deployed ist.
+     * Ist das der Fall, wird die jeweilige App zurückgegeben.
+     *
+     * @param imageId DB-Id
+     * @return Liste an Apps
+     */
+    Optional<List<App>> isImageDeployed(Long imageId);
 }
