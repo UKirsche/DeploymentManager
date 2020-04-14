@@ -23,6 +23,12 @@ public class StageNodeFiller implements Serializable {
     private static final String LINE_BREAK = "<br>";
     private static final String PORT = "Port: ";
     private static final String ANZAHL_APPS = "#Apps: ";
+    private static final String SMALL_BEGIN = "<small>";
+    private static final String SMALL_END = "</small>";
+    private static final String BADGE_BEGIN = "<span class=\"badge\">";
+    private static final String BADGE_END = "</span>";
+
+
     private int anzahlAppsOnStage;
     private DateTimeFormatter shortDateTime;
 
@@ -82,7 +88,7 @@ public class StageNodeFiller implements Serializable {
     private void addApps(OrganigramNode parent, List<App> apps){
         if(apps!=null){
             for(App app: apps){
-                String appInfo = shortenAppImageName(app.getImage()) + LINE_BREAK + formatCreatedTime(app.getCreateTime()) + LINE_BREAK + PORT + app.getPort();
+                String appInfo = BADGE_BEGIN + shortenAppImageName(app.getImage()) + BADGE_END + LINE_BREAK + SMALL_BEGIN + formatCreatedTime(app.getCreateTime())+ SMALL_END + LINE_BREAK + PORT + app.getPort();
                 new DefaultOrganigramNode(NODE_TYPE_APP, appInfo, parent);
             }
         }
