@@ -7,8 +7,11 @@ import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
 import org.primefaces.model.DefaultOrganigramNode;
 import org.primefaces.model.OrganigramNode;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.LocalBean;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @LocalBean
@@ -18,11 +21,25 @@ public class StageNodeFiller implements Serializable {
     private static final String NODE_TYPE_HOST="host";
     private static final String NODE_TYPE_APP="app";
     private static final String LINE_BREAK = "<br>";
-    private static final String PORT = "Port: ";
     private static final String ANZAHL_APPS = "#Apps: ";
+    private final String appTemplate=
+            "       <!-- Tag -->" +
+            "       <span class=\"badge\">%s</span><br>" +
+            "        <!-- Datum  -->" +
+            "        <small>%s</small><br>" +
+            "        <!-- Port  -->" +
+            "       Port: %s";
+           ;
+
     private int anzahlAppsOnStage;
+    private DateTimeFormatter shortDateTime;
 
     public StageNodeFiller(){
+    }
+
+    @PostConstruct
+    public void init(){
+        shortDateTime = DateTimeFormatter.ofPattern("dd.MM.yyyy");
     }
 
     /**
@@ -73,7 +90,7 @@ public class StageNodeFiller implements Serializable {
     private void addApps(OrganigramNode parent, List<App> apps){
         if(apps!=null){
             for(App app: apps){
-                String appInfo = shortenAppImageName(app.getImage()) + LINE_BREAK + app.getCreateTime() + LINE_BREAK + PORT + app.getPort();
+                String appInfo = String.format(appTemplate, shortenAppImageName(app.getImage()), formatCreatedTime(app.getCreateTime()), app.getPort());
                 new DefaultOrganigramNode(NODE_TYPE_APP, appInfo, parent);
             }
         }
@@ -106,4 +123,16 @@ public class StageNodeFiller implements Serializable {
 
         return returnImage;
     }
+
+
+    /**
+     * Kürzt die Datumsanzeige
+     * @param createdTime
+     * @return
+     */
+    private String formatCreatedTime(LocalDateTime createdTime){
+        return createdTime.format(shortDateTime);
+    }
+
+
 }
