@@ -1,5 +1,12 @@
 # DeploymentManager
 
+##OpenAPI
+Der DeploymentManager bietet eine OpenAPI-UI an. diese ist erreichbar unter
+~~~
+http://localhost:8080/deployment-manager/api/openapi-ui
+~~~
+Damit OpenAPI im Wildfly aktiviert wird, muss das module im Wildfly aktiviert werden. 
+Siehe **.build/openapi.cli**
 ##Datasource
 ~~~
 <datasource jndi-name="java:jboss/datasources/deployment-manager" pool-name="deployment-manager" enabled="true" use-java-context="true" statistics-enabled="${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}">

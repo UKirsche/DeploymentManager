@@ -1,3 +1,4 @@
 embed-server --server-config=standalone.xml --std-out=echo
 run-batch --file=/tmp/datasource.cli
+run-batch --file=/tmp/openapi.cli
 stop-embedded-server
