@@ -77,4 +77,9 @@ public class StageServiceImpl implements StageService {
         });
         return appList;
     }
+
+    @Override
+    public Optional<List<App>> isImageDeployed(Long imageId) {
+        return Optional.empty();
+    }
 }

@@ -3,6 +3,7 @@ package de.bas.deploymentmanager.frontend.rest.controller;
 
 import de.bas.deploymentmanager.logic.business.deploy.DeployFlow;
 import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
+import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +22,7 @@ public class DeployResource {
     private DeployFlow deployFlow;
 
     @POST
+    @Operation(summary = "Markiert ein Image als deployed")
     public Response imageDeployed(@PathParam("project") String identifier
             , @PathParam("tag") String tag
             , @QueryParam("stage") StageEnum stage

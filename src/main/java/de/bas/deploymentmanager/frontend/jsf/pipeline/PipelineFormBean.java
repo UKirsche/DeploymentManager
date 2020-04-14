@@ -1,11 +1,11 @@
 package de.bas.deploymentmanager.frontend.jsf.pipeline;
 
 import de.bas.deploymentmanager.logic.business.build.BuildFlow;
+import de.bas.deploymentmanager.logic.business.deleteimage.DeleteImageFlow;
 import de.bas.deploymentmanager.logic.business.deploy.DeployFlow;
 import de.bas.deploymentmanager.logic.business.loadpipeline.LoadPipelineFlow;
 import de.bas.deploymentmanager.logic.business.loadpipeline.PipelineFormModel;
 import de.bas.deploymentmanager.logic.business.loadpipeline.ProjectStageModel;
-import de.bas.deploymentmanager.logic.domain.project.boundary.ProjectService;
 import de.bas.deploymentmanager.logic.domain.project.entity.Image;
 import de.bas.deploymentmanager.logic.domain.project.entity.Project;
 import de.bas.deploymentmanager.logic.domain.project.entity.exception.ImageDeleteException;
@@ -48,7 +48,7 @@ public class PipelineFormBean implements Serializable {
     private BuildFlow buildFlow;
 
     @Inject
-    private ProjectService projectService;
+    private DeleteImageFlow deleteImageFlow;
 
     @PostConstruct
     public void init() {
@@ -91,7 +91,7 @@ public class PipelineFormBean implements Serializable {
     public void deleteImage(Image image) {
         log.info("Lösche Image {}", image.getImageWithTag());
         try {
-            projectService.deleteImage(image.getId());
+            deleteImageFlow.deleteImage(image.getId());
         } catch (ImageDeleteException e) {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Löschen fehlgeschlagen", "Das Image konnte nicht gelöscht werden: " + e.getMessage()));

@@ -4,6 +4,8 @@ import de.bas.deploymentmanager.logic.domain.dicd.boundary.CiCdService;
 import de.bas.deploymentmanager.logic.domain.project.boundary.ProjectService;
 import de.bas.deploymentmanager.logic.domain.project.entity.Image;
 import de.bas.deploymentmanager.logic.domain.project.entity.Project;
+import de.bas.deploymentmanager.logic.domain.project.entity.Tag;
+import de.bas.deploymentmanager.logic.domain.project.entity.exception.TagNotValidException;
 import de.bas.deploymentmanager.logic.domain.stage.boundary.StageService;
 import de.bas.deploymentmanager.logic.domain.stage.entity.Stage;
 import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
@@ -31,17 +33,21 @@ public class DeployFlowImpl implements DeployFlow {
 
     @Override
     public void imageDeployed(String identifier, StageEnum stageName, String tag, String host, String port) {
-        Stage stage = stageService.getStage(stageName);
-        Image image = projectService.markImageAsDeployed(identifier, tag, stage);
-        stageService.imageDeployed(identifier, image, host, port);
-
+        try {
+            Tag tagToDeploy = new Tag(tag);
+            Stage stage = stageService.getStage(stageName);
+            Image image = projectService.markImageAsDeployed(identifier, tagToDeploy, stage);
+            stageService.imageDeployed(identifier, image, host, port);
+        } catch (TagNotValidException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void deployImage(String identifier, StageEnum stage, String tag) {
+    public void deployImage(String identifier, StageEnum stage, Tag tag) {
         log.info("Projekt {} wird auf Stage {} mit Tag {} deployed", identifier, stage, tag);
         Project project = projectService.getProject(identifier);
         Image imageToDeploy = projectService.getImage(project.getId(), tag);
-        ciCdService.deployImage(project.getDeployJob(), imageToDeploy.getTag(), stage);
+        ciCdService.deployImage(project.getDeployJob(), imageToDeploy.getTag().toString(), stage);
     }
 }

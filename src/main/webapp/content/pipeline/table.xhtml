@@ -30,7 +30,7 @@
 
                     <!--@elvariable id="projekt" type="de.bas.deploymentmanager.logic.domain.project.entity.Project"-->
                     <p:dataTable widgetVar="carsTable" var="projekt" value="#{pipelineTableBean.list}"
-                                 rowKey="#{app.id}" paginator="true"
+                                 rowKey="#{projekt.id}" paginator="true"
                                  paginatorPosition="bottom"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {JumpToPageDropdown}"
                                  currentPageReportTemplate="[ {startRecord} to {endRecord} of {totalRecords} ]"
@@ -45,7 +45,7 @@
                             <h:outputText value="#{projekt.description}"/>
                         </p:column>
                         <p:column>
-                            <p:commandButton value="View" action="#{pipelineTableBean.edit(projekt)}"
+                            <p:commandButton value="Ansicht" action="#{pipelineTableBean.edit(projekt)}"
                                              styleClass="btn-info"
                                              icon="fa fa-search"/>
                         </p:column>
