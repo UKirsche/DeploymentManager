@@ -73,9 +73,37 @@ public class StageNodeFiller implements Serializable {
     private void addApps(OrganigramNode parent, List<App> apps){
         if(apps!=null){
             for(App app: apps){
-                String appInfo = app.getImage() + LINE_BREAK + app.getCreateTime() + LINE_BREAK + PORT + app.getPort();
+                String appInfo = shortenAppImageName(app.getImage()) + LINE_BREAK + app.getCreateTime() + LINE_BREAK + PORT + app.getPort();
                 new DefaultOrganigramNode(NODE_TYPE_APP, appInfo, parent);
             }
         }
+    }
+
+    /**
+     * Der Fully Qualified Name einer App, der unter Image in der {@link App}-Entity gespeichert ist, hat folgendes Aussehen:
+     * <ul>
+     *     <li>etw-docker-03.bvaetw.de/zustaendigestelle/zustaendigestelle:1.7.5-36</li>
+     *     <li>etw-docker-03.bvaetw.de/dmsservice/dmsservice:1.1.0-3</li>
+     * </ul>
+     *
+     * Von diesem Namen wird nur der letzte Teil zurück gegeben.<br>
+     * Beispiel:<br>
+     * <b>dmsservice:1.1.0-3</b>
+     *
+     * @param appImage FullyQualified ImageName
+     * @return shortened ImageName
+     */
+    private String shortenAppImageName(String appImage){
+        String returnImage="";
+        String[] addressSplitted = appImage.split("/");
+        if(addressSplitted.length>0){
+            returnImage = addressSplitted[addressSplitted.length-1]; //Letztes Element
+            String[] tagSplitted =  returnImage.split(":");
+            if(tagSplitted.length>0){
+                returnImage= tagSplitted[0] + LINE_BREAK + tagSplitted[1];
+            }
+        }
+
+        return returnImage;
     }
 }
