@@ -5,13 +5,14 @@ import de.bas.deploymentmanager.logic.domain.project.entity.exception.ImageDelet
 import de.bas.deploymentmanager.logic.domain.stage.boundary.StageService;
 
 import javax.inject.Inject;
+import java.io.Serializable;
 
 /**
  * Löscht ein vorhandenes Image.
  * Ein Image kann nur gelöscht werden, wenn es nicht aktuell deployed ist
  * Wenn es nicht der neuste build in einer Version ist
  */
-public class DeleteImageFlow {
+public class DeleteImageFlow implements Serializable {
 
     private final ProjectService projectService;
     private final StageService stageService;
