@@ -23,7 +23,7 @@ public class StageNodeFiller implements Serializable {
     private static final String NODE_TYPE_APP="app";
     private static final String LINE_BREAK = "<br>";
     private static final String ANZAHL_APPS = "#Apps: ";
-    public static final int NAME_MAX_LENGTH = 15;
+    public static final int NAME_MAX_LENGTH = 18;
     public static final String NAME_APPENDIX = "...";
     private final String appTemplate=
             "<!-- Tag -->" +
