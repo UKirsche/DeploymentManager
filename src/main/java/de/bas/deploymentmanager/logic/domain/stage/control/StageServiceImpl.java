@@ -1,6 +1,7 @@
 package de.bas.deploymentmanager.logic.domain.stage.control;
 
 import de.bas.deploymentmanager.logic.domain.project.entity.Image;
+import de.bas.deploymentmanager.logic.domain.project.entity.Project;
 import de.bas.deploymentmanager.logic.domain.stage.boundary.StageService;
 import de.bas.deploymentmanager.logic.domain.stage.entity.App;
 import de.bas.deploymentmanager.logic.domain.stage.entity.Host;
@@ -76,6 +77,11 @@ public class StageServiceImpl implements StageService {
             app.setStage(stage.getName());
         });
         return appList;
+    }
+
+    @Override
+    public Project getProjectForApp(App app) {
+        return null;
     }
 
     @Override

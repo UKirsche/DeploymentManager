@@ -2,6 +2,7 @@ package de.bas.deploymentmanager.data;
 
 import de.bas.deploymentmanager.logic.domain.project.control.ProjectRepository;
 import de.bas.deploymentmanager.logic.domain.project.entity.Project;
+import de.bas.deploymentmanager.logic.domain.stage.entity.App;
 
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
@@ -19,6 +20,11 @@ public class ProjectRepositoryImpl extends AbstractRepository implements Project
     public Project getByIfentifier(String identifier) throws NoResultException {
         TypedQuery<Project> selectAll = entityManager.createQuery("SELECT a FROM Project a WHERE a.identifier =:identifier", Project.class);
         return selectAll.setParameter("identifier", identifier).getSingleResult();
+    }
+
+    @Override
+    public Project getByApp(App app) {
+        return null;
     }
 
     @Override

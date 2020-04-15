@@ -1,6 +1,7 @@
 package de.bas.deploymentmanager.logic.domain.stage.boundary;
 
 import de.bas.deploymentmanager.logic.domain.project.entity.Image;
+import de.bas.deploymentmanager.logic.domain.project.entity.Project;
 import de.bas.deploymentmanager.logic.domain.stage.entity.App;
 import de.bas.deploymentmanager.logic.domain.stage.entity.Stage;
 import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
@@ -31,6 +32,12 @@ public interface StageService {
      * @return App (deployed on Host in Stage)
      */
     List<App> getAppsForProject(String identifier);
+
+    /**
+     * Holt für eine App das zugehörige Projekt
+     * @return
+     */
+    Project getProjectForApp(App app);
 
     /**
      * Prüft ob ein Image in einer Stage deployed ist.
