@@ -1,9 +1,8 @@
 package de.bas.deploymentmanager.frontend.jsf.stage;
 
-import de.bas.deploymentmanager.logic.business.loadstage.AppModel;
-import de.bas.deploymentmanager.logic.business.loadstage.HostModel;
 import de.bas.deploymentmanager.logic.business.loadstage.StageDiagramModel;
 import de.bas.deploymentmanager.logic.domain.stage.entity.App;
+import de.bas.deploymentmanager.logic.domain.stage.entity.Host;
 import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
 import org.primefaces.model.DefaultOrganigramNode;
 import org.primefaces.model.OrganigramNode;
@@ -27,16 +26,16 @@ public class StageNodeFiller implements Serializable {
     public static final String NAME_APPENDIX = "...";
     private final String appTemplate=
             "<!-- Tag -->" +
-            "<span class=\"badge\">%s</span><br>" +
-            "<!-- Datum  -->" +
-            "<small>%s</small><br>" +
-            "<!-- Port  -->" +
-            "Port: %s <br>" +
-            "<span class=\"label label-default\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"%s\">%s</span>";
+                    "<span class=\"badge\">%s</span><br>" +
+                    "<!-- Datum  -->" +
+                    "<small>%s</small><br>" +
+                    "<!-- Port  -->" +
+                    "Port: %s <br>" +
+                    "<span class=\"label label-default\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"%s\">%s</span>";
     private final String stageTemplate =
             "<!-- Stage/Host -->" +
-            "<b>%s</b><br>" +
-            "<span class=\"label label-default\">"+ANZAHL_APPS+"%s</span>";
+                    "<b>%s</b><br>" +
+                    "<span class=\"label label-default\">"+ANZAHL_APPS+"%s</span>";
 
     private int anzahlAppsOnStage;
     private DateTimeFormatter shortDateTime;
@@ -57,7 +56,7 @@ public class StageNodeFiller implements Serializable {
      * @return
      */
     public OrganigramNode addStage(StageEnum stageEnum, DefaultOrganigramNode startNode, StageDiagramModel model) {
-        List<HostModel> hostsPerStage = model.getStageModels().get(stageEnum.name()).getHostModels();
+        List<Host> hostsPerStage = model.getStageModels().get(stageEnum.name()).getHosts();
         OrganigramNode stageNode = new DefaultOrganigramNode(NODE_TYPE_STAGE, stageEnum.name(), startNode);
         addHosts(stageNode, hostsPerStage);
         String stageInfo=String.format(stageTemplate,stageEnum.name(),anzahlAppsOnStage);
@@ -69,18 +68,18 @@ public class StageNodeFiller implements Serializable {
     /**
      * Füllt die Host-Infos in die nächste Knotenebende
      * @param parent Stage ETW, INT,PRD
-     * @param hostModels
+     * @param hosts
      */
-    private void addHosts(OrganigramNode parent, List<HostModel> hostModels){
+    private void addHosts(OrganigramNode parent, List<Host> hosts){
         anzahlAppsOnStage = 0;
-        if(hostModels !=null){
-            for(HostModel hostModel: hostModels){
-                int numberAppsPerHost = getNumberInList(hostModel.getHost().getApplications());
+        if(hosts !=null){
+            for(Host host: hosts){
+                int numberAppsPerHost = getNumberInList(host.getApplications());
                 anzahlAppsOnStage+=numberAppsPerHost;
-                String hostInfo=String.format(stageTemplate,hostModel.getHost().getName(),numberAppsPerHost);
+                String hostInfo=String.format(stageTemplate,host.getName(),numberAppsPerHost);
                 OrganigramNode hostNode = new DefaultOrganigramNode(NODE_TYPE_HOST, hostInfo, parent);
                 hostNode.setExpanded(false);
-                addApps(hostNode, hostModel.getAppModels());
+                addApps(hostNode, host.getApplications());
             }
         }
     }
@@ -92,16 +91,16 @@ public class StageNodeFiller implements Serializable {
     /**
      * Füllt die Appinfos in die Knoten
      * @param parent Host
-     * @param appModels
+     * @param apps
      */
-    private void addApps(OrganigramNode parent, List<AppModel> appModels){
-        if(appModels !=null){
-            for(AppModel appModel: appModels){
-                String appInfo = String.format(appTemplate, getTagFromImage(appModel.getApp().getImage()),
-                        formatCreatedTime(appModel.getApp().getCreateTime()),
-                        appModel.getApp().getPort(),
-                        appModel.getApp().getName(),
-                        formatMaxLength(appModel.getApp().getName()));
+    private void addApps(OrganigramNode parent, List<App> apps){
+        if(apps !=null){
+            for(App app: apps){
+                String appInfo = String.format(appTemplate, getTagFromImage(app.getImage()),
+                        formatCreatedTime(app.getCreateTime()),
+                        app.getPort(),
+                        app.getName(),
+                        formatMaxLength(app.getName()));
                 new DefaultOrganigramNode(NODE_TYPE_APP, appInfo, parent);
             }
         }
