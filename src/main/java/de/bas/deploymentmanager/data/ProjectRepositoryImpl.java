@@ -1,7 +1,6 @@
 package de.bas.deploymentmanager.data;
 
 import de.bas.deploymentmanager.logic.domain.project.control.ProjectRepository;
-import de.bas.deploymentmanager.logic.domain.project.entity.Image;
 import de.bas.deploymentmanager.logic.domain.project.entity.Project;
 
 import javax.persistence.NoResultException;
@@ -20,11 +19,6 @@ public class ProjectRepositoryImpl extends AbstractRepository implements Project
     public Project getByIfentifier(String identifier) throws NoResultException {
         TypedQuery<Project> selectAll = entityManager.createQuery("SELECT a FROM Project a WHERE a.identifier =:identifier", Project.class);
         return selectAll.setParameter("identifier", identifier).getSingleResult();
-    }
-
-    @Override
-    public Project getByImage(Image image) {
-        return getById(image.getProjectId());
     }
 
 

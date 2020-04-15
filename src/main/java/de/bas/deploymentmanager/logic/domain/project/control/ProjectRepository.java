@@ -1,6 +1,5 @@
 package de.bas.deploymentmanager.logic.domain.project.control;
 
-import de.bas.deploymentmanager.logic.domain.project.entity.Image;
 import de.bas.deploymentmanager.logic.domain.project.entity.Project;
 
 import javax.persistence.NoResultException;
@@ -16,8 +15,6 @@ public interface ProjectRepository {
      * @throws NoResultException Wenn kein Projekt gefunden wird
      */
     Project getByIfentifier(String identifier) throws NoResultException;
-
-    Project getByImage(Image image);
 
     Project save(Project project);
 

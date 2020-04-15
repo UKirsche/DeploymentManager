@@ -1,5 +1,7 @@
 package de.bas.deploymentmanager.logic.business.loadstage;
 
+import de.bas.deploymentmanager.logic.domain.stage.boundary.StageService;
+import de.bas.deploymentmanager.logic.domain.stage.entity.Stage;
 import de.bas.deploymentmanager.logic.domain.stage.entity.StageEnum;
 
 import javax.ejb.Stateless;
@@ -12,29 +14,26 @@ import java.util.HashMap;
 @Stateless
 public class LoadStageFlowImpl implements LoadStageFlow {
 
-    private final StageModelFiller stageModelFiller;
-    private HashMap<String, StageModel> stageDiagramModel;
+    private final StageService stageService;
+    private HashMap<String, Stage> stageModels;
 
     @Inject
-    public LoadStageFlowImpl(StageModelFiller stageModelFiller) {
-        this.stageModelFiller=stageModelFiller;
+    public LoadStageFlowImpl(StageService stageService) {
+        this.stageService = stageService;
     }
 
 
     @Override
     public StageDiagramModel load() {
-        stageDiagramModel = new HashMap<>();
-        fillStageDiagramModel();
-        return StageDiagramModel.builder().stageModels(stageDiagramModel).build();
-    }
-
-    private void fillStageDiagramModel() {
-        stageDiagramModel.put(StageEnum.ETW.name(), stageModelFiller.fillStageModel(StageEnum.ETW));
-        stageDiagramModel.put(StageEnum.INT.name(), stageModelFiller.fillStageModel(StageEnum.INT));
-        stageDiagramModel.put(StageEnum.PRD.name(), stageModelFiller.fillStageModel(StageEnum.PRD));
+        stageModels = new HashMap<>();
+        fillStageModel();
+        return StageDiagramModel.builder().stageModels(stageModels).build();
     }
 
 
-
-
+    private void fillStageModel() {
+        stageModels.put(StageEnum.ETW.name(), stageService.getStage(StageEnum.ETW));
+        stageModels.put(StageEnum.INT.name(), stageService.getStage(StageEnum.INT));
+        stageModels.put(StageEnum.PRD.name(), stageService.getStage(StageEnum.PRD));
+    }
 }
