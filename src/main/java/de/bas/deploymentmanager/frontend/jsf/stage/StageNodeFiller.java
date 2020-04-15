@@ -23,13 +23,18 @@ public class StageNodeFiller implements Serializable {
     private static final String LINE_BREAK = "<br>";
     private static final String ANZAHL_APPS = "#Apps: ";
     private final String appTemplate=
-            "       <!-- Tag -->" +
-            "       <span class=\"badge\">%s</span><br>" +
-            "        <!-- Datum  -->" +
-            "        <small>%s</small><br>" +
-            "        <!-- Port  -->" +
-            "       Port: %s";
-           ;
+            "<!-- Tag -->" +
+            "<span class=\"badge\">%s</span><br>" +
+            "<!-- Datum  -->" +
+            "<small>%s</small><br>" +
+            "<!-- Port  -->" +
+            "Port: %s";
+    private final String stageTemplate =
+            "<!-- Stage/Host -->" +
+            "<b>%s</b><br>" +
+            "<span class=\"label label-default\">"+ANZAHL_APPS+"%s</span>";
+
+
 
     private int anzahlAppsOnStage;
     private DateTimeFormatter shortDateTime;
@@ -53,7 +58,7 @@ public class StageNodeFiller implements Serializable {
         List<Host> hostsPerStage = model.getStageModels().get(stageEnum.name()).getHosts();
         OrganigramNode stageNode = new DefaultOrganigramNode(NODE_TYPE_STAGE, stageEnum.name(), startNode);
         addHosts(stageNode, hostsPerStage);
-        String stageInfo=stageEnum.name()+LINE_BREAK+ANZAHL_APPS+anzahlAppsOnStage;
+        String stageInfo=String.format(stageTemplate,stageEnum.name(),anzahlAppsOnStage);
         stageNode.setData(stageInfo);
         stageNode.setExpanded(false);
         return stageNode;
@@ -70,7 +75,7 @@ public class StageNodeFiller implements Serializable {
             for(Host host: hosts){
                 int numberAppsPerHost = getNumberInList(host.getApplications());
                 anzahlAppsOnStage+=numberAppsPerHost;
-                String hostInfo = host.getName() + LINE_BREAK + ANZAHL_APPS + numberAppsPerHost;
+                String hostInfo=String.format(stageTemplate,host.getName(),numberAppsPerHost);
                 OrganigramNode hostNode = new DefaultOrganigramNode(NODE_TYPE_HOST, hostInfo, parent);
                 hostNode.setExpanded(false);
                 addApps(hostNode, host.getApplications());
@@ -90,7 +95,7 @@ public class StageNodeFiller implements Serializable {
     private void addApps(OrganigramNode parent, List<App> apps){
         if(apps!=null){
             for(App app: apps){
-                String appInfo = String.format(appTemplate, shortenAppImageName(app.getImage()), formatCreatedTime(app.getCreateTime()), app.getPort());
+                String appInfo = String.format(appTemplate, getTagFromImage(app.getImage()), formatCreatedTime(app.getCreateTime()), app.getPort());
                 new DefaultOrganigramNode(NODE_TYPE_APP, appInfo, parent);
             }
         }
@@ -110,7 +115,7 @@ public class StageNodeFiller implements Serializable {
      * @param appImage FullyQualified ImageName
      * @return shortened ImageName
      */
-    private String shortenAppImageName(String appImage){
+    private String getTagFromImage(String appImage){
         String returnImage="";
         String[] addressSplitted = appImage.split("/");
         if(addressSplitted.length>0){
