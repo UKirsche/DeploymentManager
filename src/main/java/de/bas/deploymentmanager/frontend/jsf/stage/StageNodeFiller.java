@@ -24,7 +24,9 @@ public class StageNodeFiller implements Serializable {
     private static final String ANZAHL_APPS = "#Apps: ";
     private final String appTemplate=
             "<!-- Tag -->" +
-            "<span class=\"badge\">%s</span><br>" +
+            "<span class=\"badge\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Projekt: Dmp\">%s</span><br>" +
+            "<!-- Projekt  -->" +
+            "<small>Projekt: Dmp</small><br>" +
             "<!-- Datum  -->" +
             "<small>%s</small><br>" +
             "<!-- Port  -->" +

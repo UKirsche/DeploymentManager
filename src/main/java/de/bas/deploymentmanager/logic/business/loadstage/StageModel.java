@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
@@ -13,4 +15,5 @@ import lombok.Setter;
  */
 public class StageModel {
     private Stage stage;
+    private List<HostModel> hostModels;
 }
