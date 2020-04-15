@@ -21,6 +21,7 @@ public class ProjectRepositoryImpl extends AbstractRepository implements Project
         return selectAll.setParameter("identifier", identifier).getSingleResult();
     }
 
+
     @Override
     public Project save(Project project) {
         Project saved = entityManager.merge(project);

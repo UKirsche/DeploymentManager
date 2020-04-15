@@ -32,6 +32,7 @@ public interface StageService {
      */
     List<App> getAppsForProject(String identifier);
 
+
     /**
      * Prüft ob ein Image in einer Stage deployed ist.
      * Ist das der Fall, wird die jeweilige App zurückgegeben.

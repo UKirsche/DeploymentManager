@@ -22,19 +22,20 @@ public class StageNodeFiller implements Serializable {
     private static final String NODE_TYPE_APP="app";
     private static final String LINE_BREAK = "<br>";
     private static final String ANZAHL_APPS = "#Apps: ";
+    public static final int NAME_MAX_LENGTH = 18;
+    public static final String NAME_APPENDIX = "...";
     private final String appTemplate=
             "<!-- Tag -->" +
-            "<span class=\"badge\">%s</span><br>" +
-            "<!-- Datum  -->" +
-            "<small>%s</small><br>" +
-            "<!-- Port  -->" +
-            "Port: %s";
+                    "<span class=\"badge\">%s</span><br>" +
+                    "<!-- Datum  -->" +
+                    "<small>%s</small><br>" +
+                    "<!-- Port  -->" +
+                    "Port: %s <br>" +
+                    "<span class=\"label label-default\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"%s\">%s</span>";
     private final String stageTemplate =
             "<!-- Stage/Host -->" +
-            "<b>%s</b><br>" +
-            "<span class=\"label label-default\">"+ANZAHL_APPS+"%s</span>";
-
-
+                    "<b>%s</b><br>" +
+                    "<span class=\"label label-default\">"+ANZAHL_APPS+"%s</span>";
 
     private int anzahlAppsOnStage;
     private DateTimeFormatter shortDateTime;
@@ -71,7 +72,7 @@ public class StageNodeFiller implements Serializable {
      */
     private void addHosts(OrganigramNode parent, List<Host> hosts){
         anzahlAppsOnStage = 0;
-        if(hosts!=null){
+        if(hosts !=null){
             for(Host host: hosts){
                 int numberAppsPerHost = getNumberInList(host.getApplications());
                 anzahlAppsOnStage+=numberAppsPerHost;
@@ -88,17 +89,30 @@ public class StageNodeFiller implements Serializable {
     }
 
     /**
-     * Füllt die Appinfos in die Konsten
+     * Füllt die Appinfos in die Knoten
      * @param parent Host
      * @param apps
      */
     private void addApps(OrganigramNode parent, List<App> apps){
-        if(apps!=null){
+        if(apps !=null){
             for(App app: apps){
-                String appInfo = String.format(appTemplate, getTagFromImage(app.getImage()), formatCreatedTime(app.getCreateTime()), app.getPort());
+                String appInfo = String.format(appTemplate, getTagFromImage(app.getImage()),
+                        formatCreatedTime(app.getCreateTime()),
+                        app.getPort(),
+                        app.getName(),
+                        formatMaxLength(app.getName()));
                 new DefaultOrganigramNode(NODE_TYPE_APP, appInfo, parent);
             }
         }
+    }
+
+    private String formatMaxLength(String name){
+        if(name.length()> NAME_MAX_LENGTH){
+            name=name.substring(0,NAME_MAX_LENGTH-1);
+            name+= NAME_APPENDIX;
+        }
+
+        return name;
     }
 
     /**
@@ -131,7 +145,7 @@ public class StageNodeFiller implements Serializable {
 
 
     /**
-     * Kürzt die Datumsanzeige
+     * Kürzt die Datumsanzeige für dd.MM.yyyy
      * @param createdTime
      * @return
      */
