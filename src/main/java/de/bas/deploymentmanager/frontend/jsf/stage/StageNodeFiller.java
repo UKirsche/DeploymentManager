@@ -34,8 +34,6 @@ public class StageNodeFiller implements Serializable {
             "<b>%s</b><br>" +
             "<span class=\"label label-default\">"+ANZAHL_APPS+"%s</span>";
 
-
-
     private int anzahlAppsOnStage;
     private DateTimeFormatter shortDateTime;
 
@@ -88,7 +86,7 @@ public class StageNodeFiller implements Serializable {
     }
 
     /**
-     * Füllt die Appinfos in die Konsten
+     * Füllt die Appinfos in die Knoten
      * @param parent Host
      * @param apps
      */
@@ -131,7 +129,7 @@ public class StageNodeFiller implements Serializable {
 
 
     /**
-     * Kürzt die Datumsanzeige
+     * Kürzt die Datumsanzeige für dd.MM.yyyy
      * @param createdTime
      * @return
      */
