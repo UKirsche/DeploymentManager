@@ -1,5 +1,7 @@
 package de.bas.deploymentmanager.logic.domain.stage.control;
 
+import de.bas.deploymentmanager.logic.domain.project.control.ImageRepository;
+import de.bas.deploymentmanager.logic.domain.project.control.ProjectRepository;
 import de.bas.deploymentmanager.logic.domain.project.entity.Image;
 import de.bas.deploymentmanager.logic.domain.project.entity.Project;
 import de.bas.deploymentmanager.logic.domain.stage.boundary.StageService;
@@ -20,15 +22,19 @@ import java.util.Optional;
 public class StageServiceImpl implements StageService {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
+    private final ProjectRepository projectRepository;
     private final StageRepository stageRepository;
     private final AppRepository appRepository;
     private final HostRepository hostRepository;
+    private final ImageRepository imageRepository;
 
     @Inject
-    public StageServiceImpl(StageRepository stageRepository, AppRepository appRepository, HostRepository hostRepository) {
+    public StageServiceImpl(ProjectRepository projectRepository, StageRepository stageRepository, AppRepository appRepository, HostRepository hostRepository, ImageRepository imageRepository) {
+        this.projectRepository = projectRepository;
         this.stageRepository = stageRepository;
         this.appRepository = appRepository;
         this.hostRepository = hostRepository;
+        this.imageRepository=imageRepository;
     }
 
     @Override
@@ -81,7 +87,8 @@ public class StageServiceImpl implements StageService {
 
     @Override
     public Project getProjectForApp(App app) {
-        return null;
+        Image imageForApp= imageRepository.getById(app.getImageId());
+        return projectRepository.getByImage(imageForApp);
     }
 
     @Override

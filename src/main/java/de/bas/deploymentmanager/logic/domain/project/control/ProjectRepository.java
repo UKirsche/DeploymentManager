@@ -1,7 +1,7 @@
 package de.bas.deploymentmanager.logic.domain.project.control;
 
+import de.bas.deploymentmanager.logic.domain.project.entity.Image;
 import de.bas.deploymentmanager.logic.domain.project.entity.Project;
-import de.bas.deploymentmanager.logic.domain.stage.entity.App;
 
 import javax.persistence.NoResultException;
 import java.util.List;
@@ -17,12 +17,7 @@ public interface ProjectRepository {
      */
     Project getByIfentifier(String identifier) throws NoResultException;
 
-    /**
-     * Holt zu einer App das aktuelle Projekt
-     * @param app
-     * @return
-     */
-    Project getByApp(App app);
+    Project getByImage(Image image);
 
     Project save(Project project);
 

@@ -1,8 +1,8 @@
 package de.bas.deploymentmanager.data;
 
 import de.bas.deploymentmanager.logic.domain.project.control.ProjectRepository;
+import de.bas.deploymentmanager.logic.domain.project.entity.Image;
 import de.bas.deploymentmanager.logic.domain.project.entity.Project;
-import de.bas.deploymentmanager.logic.domain.stage.entity.App;
 
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
@@ -23,9 +23,10 @@ public class ProjectRepositoryImpl extends AbstractRepository implements Project
     }
 
     @Override
-    public Project getByApp(App app) {
-        return null;
+    public Project getByImage(Image image) {
+        return getById(image.getProjectId());
     }
+
 
     @Override
     public Project save(Project project) {
