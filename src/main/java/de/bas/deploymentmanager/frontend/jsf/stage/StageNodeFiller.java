@@ -23,6 +23,8 @@ public class StageNodeFiller implements Serializable {
     private static final String NODE_TYPE_APP="app";
     private static final String LINE_BREAK = "<br>";
     private static final String ANZAHL_APPS = "#Apps: ";
+    public static final int NAME_MAX_LENGTH = 15;
+    public static final String NAME_APPENDIX = "...";
     private final String appTemplate=
             "<!-- Tag -->" +
             "<span class=\"badge\">%s</span><br>" +
@@ -106,9 +108,9 @@ public class StageNodeFiller implements Serializable {
     }
 
     private String formatMaxLength(String name){
-        if(name.length()>15){
-            name=name.substring(0,14);
-            name+="...";
+        if(name.length()> NAME_MAX_LENGTH){
+            name=name.substring(0,NAME_MAX_LENGTH-1);
+            name+= NAME_APPENDIX;
         }
 
         return name;
