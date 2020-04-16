@@ -31,7 +31,11 @@ public class ProjectRepositoryImpl extends AbstractRepository implements Project
     }
 
     @Override
-    public Project getById(Long id) {
-        return entityManager.find(Project.class, id);
+    public Project getById(Long id) throws NoResultException {
+        Project project = entityManager.find(Project.class, id);
+        if (project == null) {
+            throw new NoResultException("Kein Projekt mit Id " + id + " gefunden");
+        }
+        return project;
     }
 }
