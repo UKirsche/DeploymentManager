@@ -10,9 +10,7 @@
         <class>de.bas.deploymentmanager.logic.domain.project.entity.Version</class>
         <class>de.bas.deploymentmanager.logic.domain.project.entity.Tag</class>
         <properties>
-            <property name="javax.persistence.jdbc.user" value="docker"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
-            <property name="javax.persistence.jdbc.password" value="docker"/>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
         </properties>
     </persistence-unit>

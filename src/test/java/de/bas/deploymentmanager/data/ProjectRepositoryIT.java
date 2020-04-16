@@ -1,5 +1,6 @@
 package de.bas.deploymentmanager.data;
 
+import de.bas.deploymentmanager.logic.domain.project.control.ProjectRepository;
 import de.bas.deploymentmanager.logic.domain.project.entity.Project;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,12 +12,13 @@ import java.util.List;
 
 class ProjectRepositoryIT extends AbstarctRepositoryIT {
 
-    ProjectRepositoryImpl repository;
+    ProjectRepository repository;
 
     @BeforeEach
     void setUp() {
-        repository = new ProjectRepositoryImpl();
-        repository.entityManager = em;
+        ProjectRepositoryImpl rep = new ProjectRepositoryImpl();
+        rep.entityManager = em;
+        repository = rep;
     }
 
     @Test
@@ -33,7 +35,7 @@ class ProjectRepositoryIT extends AbstarctRepositoryIT {
     }
 
     @Test
-    void sucheAlleProjekte() {
+    void neusProjektAnlegen() {
         List<Project> allProjects = repository.getAllProjects();
         Assertions.assertEquals(1, allProjects.size());
 

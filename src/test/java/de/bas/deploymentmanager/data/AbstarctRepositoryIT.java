@@ -28,6 +28,10 @@ public class AbstarctRepositoryIT {
     public void init() {
         Map<String, String> configuration = new HashMap();
         configuration.put("javax.persistence.jdbc.url", postgres.getJdbcUrl());
+        configuration.put("javax.persistence.jdbc.user", postgres.getUsername());
+        configuration.put("javax.persistence.jdbc.password", postgres.getPassword());
+
+
         this.em = Persistence.
                 createEntityManagerFactory("integration-test", configuration).
                 createEntityManager();
