@@ -15,7 +15,7 @@ import java.util.Map;
 @Testcontainers
 public class AbstarctRepositoryIT {
 
-    EntityManager em;
+   public EntityManager em;
     EntityTransaction tx;
 
     @Container
@@ -48,6 +48,12 @@ public class AbstarctRepositoryIT {
     public <S extends AbstractRepository> S injectEntityManager(S repository) {
         repository.entityManager = em;
         return repository;
+    }
+
+    public void executeNativQuery(String sql) {
+        tx.begin();
+        em.createNativeQuery(sql).executeUpdate();
+        tx.commit();
     }
 
 
