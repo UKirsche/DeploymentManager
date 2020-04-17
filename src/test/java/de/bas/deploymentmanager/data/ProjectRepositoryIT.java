@@ -16,9 +16,7 @@ class ProjectRepositoryIT extends AbstarctRepositoryIT {
 
     @BeforeEach
     void setUp() {
-        ProjectRepositoryImpl rep = new ProjectRepositoryImpl();
-        rep.entityManager = em;
-        repository = rep;
+        repository = injectEntityManager(new ProjectRepositoryImpl());
     }
 
     @Test

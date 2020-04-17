@@ -45,5 +45,10 @@ public class AbstarctRepositoryIT {
         flyway.migrate();
     }
 
+    public <S extends AbstractRepository> S injectEntityManager(S repository) {
+        repository.entityManager = em;
+        return repository;
+    }
+
 
 }
