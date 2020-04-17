@@ -69,7 +69,11 @@
                                              styleClass="#{pipelineFormBean.getStyle(image, 'PRD')}"
                                              actionListener="#{pipelineFormBean.deploy(image, 'PRD')}"
                                              title="#{image.getDeployment('PRD').createTime}"
-                                             icon="#{pipelineFormBean.getIcon(image, 'PRD')}"/>
+                                             icon="#{pipelineFormBean.getIcon(image, 'PRD')}">
+                                <p:confirm header="Image deployen"
+                                           message="Wollen Sie das Image wirklich in PRODUKTION deployen?"
+                                           icon="pi pi-exclamation-triangle"/>
+                            </p:commandButton>
                         </p:column>
                         <p:column styleClass="text-center" width="50">
                             <p:commandButton actionListener="#{pipelineFormBean.deleteImage(image)}"

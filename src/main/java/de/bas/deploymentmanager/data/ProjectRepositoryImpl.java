@@ -11,7 +11,7 @@ public class ProjectRepositoryImpl extends AbstractRepository implements Project
 
     @Override
     public List<Project> getAllProjects() {
-        TypedQuery<Project> selectAll = entityManager.createQuery("SELECT a FROM Project a", Project.class);
+        TypedQuery<Project> selectAll = entityManager.createQuery("SELECT p FROM Project p ORDER BY p.name ASC ", Project.class);
         return selectAll.getResultList();
     }
 
@@ -31,7 +31,11 @@ public class ProjectRepositoryImpl extends AbstractRepository implements Project
     }
 
     @Override
-    public Project getById(Long id) {
-        return entityManager.find(Project.class, id);
+    public Project getById(Long id) throws NoResultException {
+        Project project = entityManager.find(Project.class, id);
+        if (project == null) {
+            throw new NoResultException("Kein Projekt mit Id " + id + " gefunden");
+        }
+        return project;
     }
 }

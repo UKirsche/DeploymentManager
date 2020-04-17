@@ -29,27 +29,16 @@
                 <div class="box-header with-border">
 
                     <!--@elvariable id="projekt" type="de.bas.deploymentmanager.logic.domain.project.entity.Project"-->
-                    <p:dataTable widgetVar="carsTable" var="projekt" value="#{pipelineTableBean.list}"
-                                 rowKey="#{projekt.id}" paginator="true"
-                                 paginatorPosition="bottom"
-                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {JumpToPageDropdown}"
-                                 currentPageReportTemplate="[ {startRecord} to {endRecord} of {totalRecords} ]"
-                                 rowsPerPageTemplate="20,50,100">
-
-
-                        <p:column headerText="Name" filterable="true" filterBy="#{projekt.name}"
-                                  filterMatchMode="contains">
-                            <h:outputText value="#{projekt.name}"/>
-                        </p:column>
-                        <p:column headerText="Bescheibung">
-                            <h:outputText value="#{projekt.description}"/>
-                        </p:column>
-                        <p:column>
-                            <p:commandButton value="Ansicht" action="#{pipelineTableBean.edit(projekt)}"
-                                             styleClass="btn-info"
-                                             icon="fa fa-search"/>
-                        </p:column>
-                    </p:dataTable>
+                    <p:dataGrid value="#{pipelineTableBean.list}" var="projekt" columns="4">
+                        <div class="box box-solid box-primary">
+                            <div class="box-body">
+                                <p:commandButton value="#{projekt.name}" action="#{pipelineTableBean.edit(projekt)}"
+                                                 style="width: 200px"
+                                                 styleClass="btn-info"
+                                                 icon="fa fa-search"/>
+                            </div>
+                        </div>
+                    </p:dataGrid>
                 </div>
             </div>
 
