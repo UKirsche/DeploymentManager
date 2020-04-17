@@ -11,7 +11,7 @@ public class ProjectRepositoryImpl extends AbstractRepository implements Project
 
     @Override
     public List<Project> getAllProjects() {
-        TypedQuery<Project> selectAll = entityManager.createQuery("SELECT a FROM Project a", Project.class);
+        TypedQuery<Project> selectAll = entityManager.createQuery("SELECT p FROM Project p ORDER BY p.name ASC ", Project.class);
         return selectAll.getResultList();
     }
 
